@@ -19,6 +19,8 @@ namespace RobotShootans
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D bg;
+
         public Game1()
             : base()
         {
@@ -49,6 +51,7 @@ namespace RobotShootans
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            bg = this.Content.Load<Texture2D>("background");
         }
 
         /// <summary>
@@ -84,6 +87,9 @@ namespace RobotShootans
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(bg, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
