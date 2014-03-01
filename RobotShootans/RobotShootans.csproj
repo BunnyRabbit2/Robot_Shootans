@@ -35,7 +35,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Camera2D.cs" />
     <Compile Include="Engine\GameEngine.cs" />
+    <Compile Include="Engine\ResolutionIndependentRenderer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,7 +67,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Content\background.xnb">
+    <None Include="Content\images\background.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

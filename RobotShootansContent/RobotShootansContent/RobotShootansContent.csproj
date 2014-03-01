@@ -41,6 +41,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'PSM' ">
     <MonoGamePlatform>PSM</MonoGamePlatform>
+    <OutputPath>..\..\RobotShootans\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

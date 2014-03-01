@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using RobotShootans.Engine;
 #endregion
 
 namespace RobotShootans
@@ -16,15 +17,19 @@ namespace RobotShootans
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
 
-        Texture2D bg;
+        Texture2D _bg;
+
+        private ResolutionIndependentRenderer _resolutionIndependence;
+        private Camera2D _camera;
 
         public Game1()
             : base()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
+            _resolutionIndependence = new ResolutionIndependentRenderer(this);
             Content.RootDirectory = "Content";
         }
 
@@ -47,11 +52,25 @@ namespace RobotShootans
         /// </summary>
         protected override void LoadContent()
         {
+            _camera = new Camera2D(_resolutionIndependence);
+            _camera.Zoom = 1f;
+            _camera.Position = new Vector2(_resolutionIndependence.VirtualWidth / 2, _resolutionIndependence.VirtualHeight / 2);
+
+            InitializeResolutionIndependence(_graphics.GraphicsDevice.Viewport.Width, _graphics.GraphicsDevice.Viewport.Height);
+
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            bg = this.Content.Load<Texture2D>("background");
+            _bg = Content.Load<Texture2D>("images/background");
+        }
+
+        private void InitializeResolutionIndependence(int realScreenWidth, int realScreenHeight)
+        {
+            _resolutionIndependence.SetWidthAndHeight(1100, 600, realScreenWidth, realScreenHeight);
+            _resolutionIndependence.Initialize();
+
+            _camera.RecalculateTransformationMatrices();
         }
 
         /// <summary>
@@ -84,14 +103,14 @@ namespace RobotShootans
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(bg, Vector2.Zero, Color.White);
-            spriteBatch.End();
+            _resolutionIndependence.BeginDraw();
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, _camera.GetViewTransformationMatrix());
+            _spriteBatch.Draw(_bg, new Vector2(), Color.White);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
     }
 }
