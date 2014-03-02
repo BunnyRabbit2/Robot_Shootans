@@ -101,13 +101,13 @@ namespace RobotShootans.Engine
             var targetAspectRatio = VirtualWidth / (float)VirtualHeight;
             // figure out the largest area that fits in this resolution at the desired aspect ratio
             var width = ScreenWidth;
-            var height = (int)(width / targetAspectRatio + .5f);
+            var height = (int)(width / targetAspectRatio);
 
             if (height > ScreenHeight)
             {
                 height = ScreenHeight;
                 // PillarBox
-                width = (int)(height * targetAspectRatio + .5f);
+                width = (int)(height * targetAspectRatio);
             }
 
             // set up the new viewport centered in the backbuffer

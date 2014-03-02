@@ -35,10 +35,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Camera2D.cs" />
+    <Compile Include="Engine\GameComponent.cs" />
     <Compile Include="Engine\GameEngine.cs" />
+    <Compile Include="Engine\GameScreen.cs" />
     <Compile Include="Engine\ResolutionIndependentRenderer.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="RobotShootans.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
