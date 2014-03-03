@@ -11,7 +11,7 @@ namespace RobotShootans.Engine
     {
         public GameEngine Engine;
 
-        protected HashSet<GameComponent> _gameComponents;
+        protected HashSet<GameEntity> _entities;
         protected bool _loaded;
         public bool Loaded { get { return _loaded; } }
 
@@ -26,12 +26,12 @@ namespace RobotShootans.Engine
         protected string _screenName;
         public string ScreenName { get { return _screenName; } }
 
-        protected HashSet<GameComponent> _componentsToRemove;
+        protected HashSet<GameEntity> _entitiesToRemove;
         
         public GameScreen(bool blockUpdating = false)
         {
-            _gameComponents = new HashSet<GameComponent>();
-            _componentsToRemove = new HashSet<GameComponent>();
+            _entities = new HashSet<GameEntity>();
+            _entitiesToRemove = new HashSet<GameEntity>();
         }
 
         public void loadGameScreen()
@@ -48,40 +48,40 @@ namespace RobotShootans.Engine
         {
             if(!_paused)
             {
-                foreach(GameComponent gc in _gameComponents)
+                foreach(GameEntity ge in _entities)
                 {
-                    gc.Update(gameTime);
+                    ge.Update(gameTime);
                 }
             }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            foreach (GameComponent gc in _gameComponents)
+            foreach (GameEntity ge in _entities)
             {
-                gc.Draw(gameTime, sBatch);
+                ge.Draw(gameTime, sBatch);
             }
         }
 
-        public void addComponent(GameComponent componentIn)
+        public void addEntity(GameEntity entityIn)
         {
-            componentIn.GameScreen = this;
-            componentIn.Load();
-            _gameComponents.Add(componentIn);
+            entityIn.GameScreen = this;
+            entityIn.Load();
+            _entities.Add(entityIn);
         }
 
-        public void removeComponent(GameComponent componentIn)
+        public void removeEntity(GameEntity entityIn)
         {
-            _componentsToRemove.Add(componentIn);
+            _entitiesToRemove.Add(entityIn);
         }
 
         protected void removeComponenets()
         {
-            if(_componentsToRemove.Count > 0)
+            if(_entitiesToRemove.Count > 0)
             {
-                foreach(GameComponent gc in _componentsToRemove)
+                foreach(GameEntity ge in _entitiesToRemove)
                 {
-                    _gameComponents.Remove(gc);
+                    _entities.Remove(ge);
                 }
             }
         }

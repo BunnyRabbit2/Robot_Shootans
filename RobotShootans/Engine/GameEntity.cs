@@ -7,7 +7,7 @@ using System.Text;
 
 namespace RobotShootans.Engine
 {
-    public class GameComponent
+    public class GameEntity
     {
         protected bool _loaded;
         public bool Loaded { get { return _loaded; } }
@@ -17,7 +17,7 @@ namespace RobotShootans.Engine
 
         public GameScreen GameScreen;
 
-        public GameComponent(string componentName)
+        public GameEntity(string componentName)
         {
             _componentName = componentName;
         }
