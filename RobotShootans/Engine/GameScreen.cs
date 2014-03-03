@@ -77,6 +77,11 @@ namespace RobotShootans.Engine
             _entitiesToRemove.Add(entityIn);
         }
 
+        public virtual void removeEntity(string entityIn)
+        {
+            _entitiesToRemove.Add(_entities.FirstOrDefault(e => e.ComponentName == entityIn));
+        }
+
         protected virtual void removeComponenets()
         {
             if(_entitiesToRemove.Count > 0)
