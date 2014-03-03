@@ -14,6 +14,12 @@ namespace RobotShootans.Engine
         private bool _paused;
         private bool blockUpdating;
 
+        private string _screenName;
+        public string ScreenName
+        {
+            get { return _screenName; }
+        }
+
         private HashSet<GameComponent> _componentsToRemove;
         
         public GameScreen()

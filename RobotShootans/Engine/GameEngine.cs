@@ -21,6 +21,7 @@ namespace RobotShootans.Engine
         {
             _gameName = "Robot Shootans";
             _gameScreens = new HashSet<GameScreen>();
+            _screensToRemove = new HashSet<GameScreen>();
         }
 
         public static GameEngine Instance
@@ -55,10 +56,15 @@ namespace RobotShootans.Engine
             _game = game;
 
             _resolutionIndependence = new ResolutionIndependentRenderer(_game.GraphicsDevice);
+
+            LogFile.ClearLogFile();
+            LogFile.LogStringLine("Started Engine for game: " + _gameName, LogType.INFO);
         }
 
         public void LoadContent()
         {
+            LogFile.LogStringLine("Loading Engine Content", LogType.INFO);
+
             InitializeResolutionIndependence(_game.GraphicsDevice.Viewport.Width, _game.GraphicsDevice.Viewport.Height);
 
             _bg = _game.Content.Load<Texture2D>("images/background");
@@ -74,6 +80,12 @@ namespace RobotShootans.Engine
 
         public void pushGameScreen(GameScreen gameScreenIn)
         {
+            if(gameScreenIn.Engine != null)
+            {
+                LogFile.LogStringLine("Failed to add screen " + gameScreenIn.ScreenName + " to the engine. It already belongs to a parent engine", LogType.ERROR);
+                return;
+            }
+
             gameScreenIn.Engine = this;
             gameScreenIn.loadGameScreen();
             _gameScreens.Add(gameScreenIn);

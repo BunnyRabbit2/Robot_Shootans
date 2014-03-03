@@ -38,6 +38,7 @@
     <Compile Include="Engine\GameComponent.cs" />
     <Compile Include="Engine\GameEngine.cs" />
     <Compile Include="Engine\GameScreen.cs" />
+    <Compile Include="Engine\LogFile.cs" />
     <Compile Include="Engine\ResolutionIndependentRenderer.cs" />
     <Compile Include="RobotShootans.cs" />
     <Compile Include="Program.cs" />
