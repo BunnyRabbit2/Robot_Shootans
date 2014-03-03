@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,10 @@ namespace RobotShootans.Engine
     public class GameEngine
     {
         private const int RENDERWIDTH = 1920;
+        public int RenderWidth { get { return RENDERWIDTH; } }
+
         private const int RENDERHEIGHT = 1080;
+        public int RenderHeight { get { return RENDERHEIGHT; } }
 
         private static GameEngine instance;
 
@@ -58,10 +62,14 @@ namespace RobotShootans.Engine
 
         private bool _loaded;
 
+        private ContentManager _content;
+        public ContentManager Content { get { return _content; } }
+
         public void Initialise(string gameName, Game game)
         {
             _gameName = gameName;
             _game = game;
+            _content = game.Content;
 
             _resolutionIndependence = new ResolutionIndependentRenderer(_game.GraphicsDevice);
 
@@ -74,6 +82,7 @@ namespace RobotShootans.Engine
             LogFile.LogStringLine("Loading Engine Content", LogType.INFO);
 
             InitializeResolutionIndependence(_game.GraphicsDevice.Viewport.Width, _game.GraphicsDevice.Viewport.Height);
+            _resolutionIndependence.BackgroundColor = Color.Black;
 
             _bg = _game.Content.Load<Texture2D>("images/background");
 

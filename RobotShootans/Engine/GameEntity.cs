@@ -15,29 +15,29 @@ namespace RobotShootans.Engine
         string _componentName;
         public string ComponentName { get { return _componentName; } }
 
-        public GameScreen GameScreen;
+        public GameScreen Screen;
 
         public GameEntity(string componentName)
         {
             _componentName = componentName;
         }
 
-        public void Load()
+        public virtual void Load()
         {
 
         }
 
-        public void Unload()
+        public virtual void Unload()
         {
 
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
 
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch sBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
 
         }

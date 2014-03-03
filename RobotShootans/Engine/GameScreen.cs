@@ -34,48 +34,50 @@ namespace RobotShootans.Engine
             _entitiesToRemove = new HashSet<GameEntity>();
         }
 
-        public void loadGameScreen()
+        public virtual void loadGameScreen()
         {
 
         }
 
-        public void unloadGameScreen()
+        public virtual void unloadGameScreen()
         {
 
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             if(!_paused)
             {
                 foreach(GameEntity ge in _entities)
                 {
-                    ge.Update(gameTime);
+                    if(ge.Loaded)
+                        ge.Update(gameTime);
                 }
             }
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch sBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
             foreach (GameEntity ge in _entities)
             {
-                ge.Draw(gameTime, sBatch);
+                if (ge.Loaded)
+                    ge.Draw(gameTime, sBatch);
             }
         }
 
-        public void addEntity(GameEntity entityIn)
+        public virtual void addEntity(GameEntity entityIn)
         {
-            entityIn.GameScreen = this;
+            entityIn.Screen = this;
             entityIn.Load();
             _entities.Add(entityIn);
         }
 
-        public void removeEntity(GameEntity entityIn)
+        public virtual void removeEntity(GameEntity entityIn)
         {
             _entitiesToRemove.Add(entityIn);
         }
 
-        protected void removeComponenets()
+        protected virtual void removeComponenets()
         {
             if(_entitiesToRemove.Count > 0)
             {

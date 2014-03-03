@@ -35,7 +35,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\GameComponent.cs" />
+    <Compile Include="Componenets\SplashLogo.cs" />
+    <Compile Include="Engine\GameEntity.cs" />
     <Compile Include="Engine\GameEngine.cs" />
     <Compile Include="Engine\GameScreen.cs" />
     <Compile Include="Engine\LogFile.cs" />
@@ -43,6 +44,7 @@
     <Compile Include="RobotShootans.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\SplashScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
@@ -70,6 +72,9 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="Content\images\background.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\funkyrabbit logo.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

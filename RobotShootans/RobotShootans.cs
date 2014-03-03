@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using RobotShootans.Engine;
+using RobotShootans.Screens;
 #endregion
 
 namespace RobotShootans
@@ -57,6 +58,8 @@ namespace RobotShootans
         {
             // TODO: use this.Content to load your game content here
             _engine.LoadContent();
+
+            _engine.pushGameScreen(new SplashScreen());
         }
 
         /// <summary>
