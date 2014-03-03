@@ -25,6 +25,11 @@ namespace RobotShootans.Engine
             _loaded = false;
         }
 
+        ~GameEngine()
+        {
+            LogFile.LogStringLine("Closing GameEngine down", LogType.INFO);
+        }
+
         public static GameEngine Instance
         {
             get
@@ -125,13 +130,22 @@ namespace RobotShootans.Engine
             }
         }
 
+        public void UnloadContent()
+        {
+            unloadScreens();
+        }
+
         public void unloadScreens()
         {
+            LogFile.LogStringLine("Unloading all screens", LogType.INFO);
+
             foreach(GameScreen s in _gameScreens)
             {
                 s.unloadGameScreen();
             }
             _gameScreens.Clear();
+
+            LogFile.LogStringLine("Finished unloading all screens", LogType.INFO);
         }
 
         public void Update(GameTime gameTime)

@@ -66,6 +66,7 @@ namespace RobotShootans
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            _engine.UnloadContent();
         }
 
         /// <summary>
