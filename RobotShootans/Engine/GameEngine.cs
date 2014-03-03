@@ -22,6 +22,7 @@ namespace RobotShootans.Engine
             _gameName = "Robot Shootans";
             _gameScreens = new HashSet<GameScreen>();
             _screensToRemove = new HashSet<GameScreen>();
+            _loaded = false;
         }
 
         public static GameEngine Instance
@@ -47,8 +48,10 @@ namespace RobotShootans.Engine
         private ResolutionIndependentRenderer _resolutionIndependence;
         private Game _game;
 
-        SpriteBatch _spriteBatch;
-        Texture2D _bg;
+        private SpriteBatch _spriteBatch;
+        private Texture2D _bg;
+
+        private bool _loaded;
 
         public void Initialise(string gameName, Game game)
         {
@@ -70,6 +73,9 @@ namespace RobotShootans.Engine
             _bg = _game.Content.Load<Texture2D>("images/background");
 
             _spriteBatch = new SpriteBatch(_game.GraphicsDevice);
+
+            _loaded = true;
+            LogFile.LogStringLine("Done loading content", LogType.INFO);
         }
 
         private void InitializeResolutionIndependence(int realScreenWidth, int realScreenHeight)
@@ -78,7 +84,7 @@ namespace RobotShootans.Engine
             _resolutionIndependence.Initialize();
         }
 
-        public void pushGameScreen(GameScreen gameScreenIn)
+        public void pushGameScreen(GameScreen gameScreenIn, bool paused = false)
         {
             if(gameScreenIn.Engine != null)
             {
@@ -88,27 +94,68 @@ namespace RobotShootans.Engine
 
             gameScreenIn.Engine = this;
             gameScreenIn.loadGameScreen();
+            if (paused)
+                gameScreenIn.Pause();
             _gameScreens.Add(gameScreenIn);
         }
 
         public void removeGameScreen(GameScreen screenToRemove)
         {
-
+            _screensToRemove.Add(screenToRemove);
         }
 
         public void removeGameScreen(string screenToRemove)
         {
+            GameScreen s = _gameScreens.FirstOrDefault(gs => gs.ScreenName == screenToRemove);
+            if (s != null)
+                _screensToRemove.Add(s);
+            else
+                LogFile.LogStringLine("Could not find screen named " + screenToRemove + "in Engine's Game Screens. Nothing will be done", LogType.ERROR);
+        }
 
+        private void removeScreens()
+        {
+            if(_screensToRemove.Count > 0)
+            {
+                foreach(GameScreen gs in _screensToRemove)
+                {
+                    _gameScreens.Remove(gs);
+                }
+                _screensToRemove.Clear();
+            }
         }
 
         public void unloadScreens()
         {
-
+            foreach(GameScreen s in _gameScreens)
+            {
+                s.unloadGameScreen();
+            }
+            _gameScreens.Clear();
         }
 
         public void Update(GameTime gameTime)
         {
             // TODO: create some sort of input helper
+
+            if(_loaded)
+            {
+                foreach (GameScreen gs in _gameScreens)
+                {
+                    if (gs.Loaded)
+                        gs.Update(gameTime);
+
+                    if (gs.BlockUpdating)
+                        break;
+                }
+
+                removeScreens();
+            }
+            else
+            {
+                // Just in case for some weird reason it hasn't loaded already
+                LoadContent();
+            }
         }
 
         public void Draw(GameTime gameTime)
@@ -116,6 +163,13 @@ namespace RobotShootans.Engine
             _resolutionIndependence.BeginDraw();
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, _resolutionIndependence.GetTransformationMatrix());
             _spriteBatch.Draw(_bg, new Vector2(), Color.White);
+
+            foreach(GameScreen gs in _gameScreens)
+            {
+                if (gs.Loaded)
+                    gs.Draw(gameTime, _spriteBatch);
+            }
+
             _spriteBatch.End();
         }
     }

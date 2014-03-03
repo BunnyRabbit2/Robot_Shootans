@@ -27,10 +27,10 @@ namespace RobotShootans.Engine
                     stringOut += "INFO - ";
                     break;
                 case LogType.ERROR:
-                    stringOut += "INFO - ";
+                    stringOut += "ERROR - ";
                     break;
                 case LogType.WARNING:
-                    stringOut += "INFO - ";
+                    stringOut += "WARNING - ";
                     break;
             }
 
