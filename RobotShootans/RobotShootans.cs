@@ -17,28 +17,22 @@ namespace RobotShootans
     /// </summary>
     public class RobotShootans : Game
     {
-        private const int RENDERWIDTH = 1920;
-        private const int RENDERHEIGHT = 1080;
-
         private const int WINDOWWIDTH = 960;
         private const int WINDOWHEIGHT = 600;
 
         GraphicsDeviceManager _graphics;
-        SpriteBatch _spriteBatch;
-
-        Texture2D _bg;
-
-        private ResolutionIndependentRenderer _resolutionIndependence;
+        GameEngine _engine;
 
         public RobotShootans()
             : base()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _resolutionIndependence = new ResolutionIndependentRenderer(this);
             Content.RootDirectory = "Content";
 
             _graphics.PreferredBackBufferWidth = WINDOWWIDTH;
             _graphics.PreferredBackBufferHeight = WINDOWHEIGHT;
+
+            _engine = GameEngine.Instance;
         }
 
         /// <summary>
@@ -50,6 +44,7 @@ namespace RobotShootans
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            _engine.Initialise("Robot Shootans", this);
 
             base.Initialize();
         }
@@ -60,19 +55,8 @@ namespace RobotShootans
         /// </summary>
         protected override void LoadContent()
         {
-            InitializeResolutionIndependence(_graphics.GraphicsDevice.Viewport.Width, _graphics.GraphicsDevice.Viewport.Height);
-
-            // Create a new SpriteBatch, which can be used to draw textures.
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
-            _bg = Content.Load<Texture2D>("images/background");
-        }
-
-        private void InitializeResolutionIndependence(int realScreenWidth, int realScreenHeight)
-        {
-            _resolutionIndependence.SetWidthAndHeight(RENDERWIDTH, RENDERHEIGHT, realScreenWidth, realScreenHeight);
-            _resolutionIndependence.Initialize();
+            _engine.LoadContent();
         }
 
         /// <summary>
@@ -95,7 +79,7 @@ namespace RobotShootans
                 Exit();
 
             // TODO: Add your update logic here
-            
+            _engine.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -107,12 +91,7 @@ namespace RobotShootans
         protected override void Draw(GameTime gameTime)
         {
             // TODO: Add your drawing code here
-            _resolutionIndependence.BeginDraw();
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, _resolutionIndependence.GetTransformationMatrix());
-            _spriteBatch.Draw(_bg, new Vector2(), Color.White);
-            _spriteBatch.End();
-
-            Viewport check = _graphics.GraphicsDevice.Viewport;
+            _engine.Draw(gameTime);
 
             base.Draw(gameTime);
         }

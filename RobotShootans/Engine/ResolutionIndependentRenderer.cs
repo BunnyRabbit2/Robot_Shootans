@@ -9,17 +9,17 @@ namespace RobotShootans.Engine
 {
     public class ResolutionIndependentRenderer
     {
-        private readonly Game _game;
+        private readonly GraphicsDevice _graphicsDevice;
         private Viewport _viewport;
         private float _ratioX;
         private float _ratioY;
         private Vector2 _virtualMousePosition = new Vector2();
 
-        public Color BackgroundColor = Color.Orange;
+        public Color BackgroundColor = Color.Magenta;
 
-        public ResolutionIndependentRenderer(Game game)
+        public ResolutionIndependentRenderer(GraphicsDevice graphicsDevice)
         {
-            _game = game;
+            _graphicsDevice = graphicsDevice;
             VirtualWidth = 1366;
             VirtualHeight = 768;
 
@@ -50,7 +50,7 @@ namespace RobotShootans.Engine
             vp.X = vp.Y = 0;
             vp.Width = ScreenWidth;
             vp.Height = ScreenHeight;
-            _game.GraphicsDevice.Viewport = vp;
+            _graphicsDevice.Viewport = vp;
             _dirtyMatrix = true;
         }
 
@@ -59,7 +59,7 @@ namespace RobotShootans.Engine
             // Start by reseting viewport to (0,0,1,1)
             SetupFullViewport();
             // Clear to Black
-            _game.GraphicsDevice.Clear(BackgroundColor);
+            _graphicsDevice.Clear(BackgroundColor);
             // Calculate Proper Viewport according to Aspect Ratio
             SetupVirtualScreenViewport();
             // and clear that
@@ -119,7 +119,7 @@ namespace RobotShootans.Engine
                 Height = height
             };
 
-            _game.GraphicsDevice.Viewport = _viewport;
+            _graphicsDevice.Viewport = _viewport;
         }
 
         public void SetWidthAndHeight(int virtualWidth, int virtualHeight, int realWidth, int realHeight)
