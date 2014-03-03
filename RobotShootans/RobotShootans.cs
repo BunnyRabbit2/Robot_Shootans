@@ -76,7 +76,19 @@ namespace RobotShootans
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            PlayerIndex currentPlayer = PlayerIndex.One;
+
+            // get first connected player
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                currentPlayer = PlayerIndex.One;
+            else if (GamePad.GetState(PlayerIndex.Two).IsConnected)
+                currentPlayer = PlayerIndex.Two;
+            else if (GamePad.GetState(PlayerIndex.Three).IsConnected)
+                currentPlayer = PlayerIndex.Three;
+            else if (GamePad.GetState(PlayerIndex.Four).IsConnected)
+                currentPlayer = PlayerIndex.Four;
+
+            if (GamePad.GetState(currentPlayer).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
