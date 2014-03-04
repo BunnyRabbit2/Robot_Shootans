@@ -6,7 +6,7 @@ using RobotShootans.Engine;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace RobotShootans.Componenets
+namespace RobotShootans.Entities
 {
     public class SplashLogo : GameEntity
     {
@@ -24,6 +24,8 @@ namespace RobotShootans.Componenets
         }
 
         private Vector2 _origin;
+
+        private bool _firstUpdate;
 
         public SplashLogo(string logoLocation, Vector2 logoPosition, Color logoColour)
             : base(logoLocation)
@@ -46,13 +48,19 @@ namespace RobotShootans.Componenets
             _image = Screen.Engine.Content.Load<Texture2D>(_logoLocation);
             _origin = new Vector2(_image.Width / 2, _image.Height / 2);
 
-            _fadeTimer = 0;
+            _firstUpdate = true;
 
             _loaded = true;
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (_firstUpdate)
+            {
+                _fadeTimer = 0;
+                _firstUpdate = false;
+            }
+
             _fadeTimer += gameTime.ElapsedGameTime.Milliseconds;
 
             if(_fadeTimer < 1000)
