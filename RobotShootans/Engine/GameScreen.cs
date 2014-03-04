@@ -54,6 +54,8 @@ namespace RobotShootans.Engine
                         ge.Update(gameTime);
                 }
             }
+
+            removeEntities();
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch sBatch)
@@ -82,7 +84,7 @@ namespace RobotShootans.Engine
             _entitiesToRemove.Add(_entities.FirstOrDefault(e => e.ComponentName == entityIn));
         }
 
-        protected virtual void removeComponenets()
+        protected virtual void removeEntities()
         {
             if(_entitiesToRemove.Count > 0)
             {

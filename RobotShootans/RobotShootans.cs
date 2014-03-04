@@ -24,6 +24,8 @@ namespace RobotShootans
         GraphicsDeviceManager _graphics;
         GameEngine _engine;
 
+        private bool _firstUpdate;
+
         public RobotShootans()
             : base()
         {
@@ -34,6 +36,8 @@ namespace RobotShootans
             _graphics.PreferredBackBufferHeight = WINDOWHEIGHT;
 
             _engine = GameEngine.Instance;
+
+            _firstUpdate = true;
         }
 
         /// <summary>
@@ -44,7 +48,6 @@ namespace RobotShootans
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             _engine.Initialise("Robot Shootans", this);
 
             base.Initialize();
@@ -56,10 +59,7 @@ namespace RobotShootans
         /// </summary>
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
             _engine.LoadContent();
-
-            _engine.pushGameScreen(new SplashScreen());
         }
 
         /// <summary>
@@ -68,7 +68,6 @@ namespace RobotShootans
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
             _engine.UnloadContent();
         }
 
@@ -94,7 +93,11 @@ namespace RobotShootans
             if (GamePad.GetState(currentPlayer).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            if (_firstUpdate)
+            {
+                _engine.pushGameScreen(new SplashScreen());
+                _firstUpdate = false;
+            }
             _engine.Update(gameTime);
 
             base.Update(gameTime);
@@ -106,11 +109,9 @@ namespace RobotShootans
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // TODO: Add your drawing code here
             _engine.Draw(gameTime);
 
             base.Draw(gameTime);
         }
-
     }
 }

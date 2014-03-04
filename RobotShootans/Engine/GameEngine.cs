@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 
 namespace RobotShootans.Engine
 {
@@ -65,13 +66,17 @@ namespace RobotShootans.Engine
         private ContentManager _content;
         public ContentManager Content { get { return _content; } }
 
+        private GraphicsDevice _graphics;
+        public GraphicsDevice Graphics { get { return _graphics; } }
+
         public void Initialise(string gameName, Game game)
         {
             _gameName = gameName;
             _game = game;
             _content = game.Content;
+            _graphics = game.GraphicsDevice;
 
-            _resolutionIndependence = new ResolutionIndependentRenderer(_game.GraphicsDevice);
+            _resolutionIndependence = new ResolutionIndependentRenderer(_graphics);
 
             LogFile.ClearLogFile();
             LogFile.LogStringLine("Started Engine for game: " + _gameName, LogType.INFO);
@@ -86,7 +91,7 @@ namespace RobotShootans.Engine
 
             _bg = _game.Content.Load<Texture2D>("images/background");
 
-            _spriteBatch = new SpriteBatch(_game.GraphicsDevice);
+            _spriteBatch = new SpriteBatch(_graphics);
 
             _loaded = true;
             LogFile.LogStringLine("Done loading content", LogType.INFO);
@@ -161,7 +166,7 @@ namespace RobotShootans.Engine
         {
             // TODO: create some sort of input helper
 
-            if(_loaded)
+            if (_loaded)
             {
                 foreach (GameScreen gs in _gameScreens)
                 {
