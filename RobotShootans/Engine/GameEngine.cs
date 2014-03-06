@@ -33,8 +33,8 @@ namespace RobotShootans.Engine
         private GameEngine()
         {
             _gameName = "Robot Shootans";
-            _gameScreens = new HashSet<GameScreen>();
-            _screensToRemove = new HashSet<GameScreen>();
+            _gameScreens = new List<GameScreen>();
+            _screensToRemove = new List<GameScreen>();
             _loaded = false;
         }
 
@@ -69,8 +69,8 @@ namespace RobotShootans.Engine
         {
             get { return _gameName; }
         }
-        private HashSet<GameScreen> _gameScreens;
-        private HashSet<GameScreen> _screensToRemove;
+        private List<GameScreen> _gameScreens;
+        private List<GameScreen> _screensToRemove;
 
         private ResolutionIndependentRenderer _resolutionIndependence;
         private Game _game;
@@ -237,12 +237,13 @@ namespace RobotShootans.Engine
 
             if (_loaded)
             {
-                foreach (GameScreen gs in _gameScreens)
+                // Iterate back to front. When hitting a blocking screen, break the loop
+                for (int i = _gameScreens.Count - 1; i > 0; i-- )
                 {
-                    if (gs.Loaded)
-                        gs.Update(gameTime);
+                    if (_gameScreens[i].Loaded)
+                        _gameScreens[i].Update(gameTime);
 
-                    if (gs.BlockUpdating)
+                    if (_gameScreens[i].BlockUpdating)
                         break;
                 }
 
