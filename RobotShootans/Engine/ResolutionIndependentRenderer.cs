@@ -17,6 +17,10 @@ namespace RobotShootans.Engine
 
         public Color BackgroundColor = Color.Magenta;
 
+        /// <summary>
+        /// Creates a renderer with default settings
+        /// </summary>
+        /// <param name="graphicsDevice"></param>
         public ResolutionIndependentRenderer(GraphicsDevice graphicsDevice)
         {
             _graphicsDevice = graphicsDevice;
@@ -28,7 +32,6 @@ namespace RobotShootans.Engine
         }
 
         public int VirtualHeight;
-
         public int VirtualWidth;
 
         public int ScreenWidth;

@@ -14,14 +14,20 @@ namespace RobotShootans.Engine
     /// </summary>
     public class GameEngine
     {
+        #region Constants
         private const int RENDERWIDTH = 1920;
         public int RenderWidth { get { return RENDERWIDTH; } }
 
         private const int RENDERHEIGHT = 1080;
         public int RenderHeight { get { return RENDERHEIGHT; } }
+        #endregion
 
+        #region Singleton stuff
         private static GameEngine instance;
 
+        /// <summary>
+        /// Private constructor because this will be a Singleton class
+        /// </summary>
         private GameEngine()
         {
             _gameName = "Robot Shootans";
@@ -35,6 +41,9 @@ namespace RobotShootans.Engine
             LogFile.LogStringLine("Closing GameEngine down", LogType.INFO);
         }
 
+        /// <summary>
+        /// The access to the Singleton of GameEngine
+        /// </summary>
         public static GameEngine Instance
         {
             get
@@ -46,7 +55,9 @@ namespace RobotShootans.Engine
                 return instance;
             }
         }
+        #endregion
 
+        #region Variables
         private string _gameName;
         public string GameName
         {
@@ -68,7 +79,14 @@ namespace RobotShootans.Engine
 
         private GraphicsDevice _graphics;
         public GraphicsDevice Graphics { get { return _graphics; } }
+        #endregion
 
+        #region Set up and clean up functions
+        /// <summary>
+        /// Initialises the GameEngine. Must be called before using the GameEngine instance
+        /// </summary>
+        /// <param name="gameName">The name of the game being run</param>
+        /// <param name="game">The Game class that will contain the GameEngine</param>
         public void Initialise(string gameName, Game game)
         {
             _gameName = gameName;
@@ -82,6 +100,9 @@ namespace RobotShootans.Engine
             LogFile.LogStringLine("Started Engine for game: " + _gameName, LogType.INFO);
         }
 
+        /// <summary>
+        /// Loads all of the content needed for the GameEngine and initialises some stuff. Must be called before using the GameEngine.
+        /// </summary>
         public void LoadContent()
         {
             LogFile.LogStringLine("Loading Engine Content", LogType.INFO);
@@ -97,17 +118,59 @@ namespace RobotShootans.Engine
             LogFile.LogStringLine("Done loading content", LogType.INFO);
         }
 
+        /// <summary>
+        /// Unloads any non-ContentManager content
+        /// </summary>
+        public void UnloadContent()
+        {
+            unloadScreens();
+        }
+
+        /// <summary>
+        /// Unloads all screen content and clears the screen set
+        /// </summary>
+        public void unloadScreens()
+        {
+            LogFile.LogStringLine("Unloading all screens", LogType.INFO);
+
+            foreach (GameScreen s in _gameScreens)
+            {
+                s.unloadGameScreen();
+            }
+            _gameScreens.Clear();
+
+            LogFile.LogStringLine("Finished unloading all screens", LogType.INFO);
+        }
+        #endregion
+
+        #region Screen Management
+        /// <summary>
+        /// Sets up or resets the ResolutionIndependence if the screen size has changed.
+        /// </summary>
+        /// <param name="realScreenWidth">The width of the window to be displayed in</param>
+        /// <param name="realScreenHeight">The height of the window to be displayed in</param>
         private void InitializeResolutionIndependence(int realScreenWidth, int realScreenHeight)
         {
             _resolutionIndependence.SetWidthAndHeight(RENDERWIDTH, RENDERHEIGHT, realScreenWidth, realScreenHeight);
             _resolutionIndependence.Initialize();
         }
 
+        /// <summary>
+        /// Adds a GameScreen to the Engine
+        /// </summary>
+        /// <param name="gameScreenIn">The game screen to be added</param>
+        /// <param name="paused">Whether the GameScreen is initially paused</param>
         public void pushGameScreen(GameScreen gameScreenIn, bool paused = false)
         {
             if(gameScreenIn.Engine != null)
             {
                 LogFile.LogStringLine("Failed to add screen " + gameScreenIn.ScreenName + " to the engine. It already belongs to a parent engine", LogType.ERROR);
+                return;
+            }
+
+            if(_gameScreens.FirstOrDefault(gs => gs.ScreenName == gameScreenIn.ScreenName) != null)
+            {
+                LogFile.LogStringLine("Failed to add screen" + gameScreenIn.ScreenName + " to the engine. There's already a screen with that name there", LogType.ERROR);
                 return;
             }
 
@@ -118,11 +181,19 @@ namespace RobotShootans.Engine
             _gameScreens.Add(gameScreenIn);
         }
 
+        /// <summary>
+        /// Removes the screen passed to the Engine
+        /// </summary>
+        /// <param name="screenToRemove">The screen to remove</param>
         public void removeGameScreen(GameScreen screenToRemove)
         {
             _screensToRemove.Add(screenToRemove);
         }
 
+        /// <summary>
+        /// Removes the screen with the name given from the Engine
+        /// </summary>
+        /// <param name="screenToRemove">Name of the screen to remove</param>
         public void removeGameScreen(string screenToRemove)
         {
             GameScreen s = _gameScreens.FirstOrDefault(gs => gs.ScreenName == screenToRemove);
@@ -132,6 +203,9 @@ namespace RobotShootans.Engine
                 LogFile.LogStringLine("Could not find screen named " + screenToRemove + "in Engine's Game Screens. Nothing will be done", LogType.ERROR);
         }
 
+        /// <summary>
+        /// Removes all screens set to be removed at the end of the main loop
+        /// </summary>
         private void removeScreens()
         {
             if(_screensToRemove.Count > 0)
@@ -143,25 +217,13 @@ namespace RobotShootans.Engine
                 _screensToRemove.Clear();
             }
         }
+        #endregion
 
-        public void UnloadContent()
-        {
-            unloadScreens();
-        }
-
-        public void unloadScreens()
-        {
-            LogFile.LogStringLine("Unloading all screens", LogType.INFO);
-
-            foreach(GameScreen s in _gameScreens)
-            {
-                s.unloadGameScreen();
-            }
-            _gameScreens.Clear();
-
-            LogFile.LogStringLine("Finished unloading all screens", LogType.INFO);
-        }
-
+        #region Main Loop functions
+        /// <summary>
+        /// Updates all screens if the content is loaded
+        /// </summary>
+        /// <param name="gameTime">The GameTime object handed in from the Game class</param>
         public void Update(GameTime gameTime)
         {
             // TODO: create some sort of input helper
@@ -186,6 +248,10 @@ namespace RobotShootans.Engine
             }
         }
 
+        /// <summary>
+        /// Sets up the screen to draw and draws all screens
+        /// </summary>
+        /// <param name="gameTime">The GameTime object handed in from the Game class</param>
         public void Draw(GameTime gameTime)
         {
             _resolutionIndependence.BeginDraw();
@@ -200,5 +266,6 @@ namespace RobotShootans.Engine
 
             _spriteBatch.End();
         }
+        #endregion
     }
 }
