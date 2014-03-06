@@ -26,6 +26,9 @@ namespace RobotShootans
 
         private bool _firstUpdate;
 
+        /// <summary>
+        /// Creates the RobotShootans game object
+        /// </summary>
         public RobotShootans()
             : base()
         {

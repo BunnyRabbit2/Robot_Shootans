@@ -16,9 +16,11 @@ namespace RobotShootans.Engine
     {
         #region Constants
         private const int RENDERWIDTH = 1920;
+        /// <summary>The Width of the viewport that everything will be rendered to</summary>
         public int RenderWidth { get { return RENDERWIDTH; } }
 
         private const int RENDERHEIGHT = 1080;
+        /// <summary>The Height of the viewport that everything will be rendered to</summary>
         public int RenderHeight { get { return RENDERHEIGHT; } }
         #endregion
 
@@ -36,6 +38,9 @@ namespace RobotShootans.Engine
             _loaded = false;
         }
 
+        /// <summary>
+        /// GameEngine destructor
+        /// </summary>
         ~GameEngine()
         {
             LogFile.LogStringLine("Closing GameEngine down", LogType.INFO);
@@ -59,6 +64,7 @@ namespace RobotShootans.Engine
 
         #region Variables
         private string _gameName;
+        /// <summary> The name of the game</summary>
         public string GameName
         {
             get { return _gameName; }
@@ -75,9 +81,11 @@ namespace RobotShootans.Engine
         private bool _loaded;
 
         private ContentManager _content;
+        /// <summary>The Content Manager owned by the Engine</summary>
         public ContentManager Content { get { return _content; } }
 
         private GraphicsDevice _graphics;
+        /// <summary>The GraphicsDevice used by the Engine</summary>
         public GraphicsDevice Graphics { get { return _graphics; } }
         #endregion
 
@@ -108,8 +116,7 @@ namespace RobotShootans.Engine
             LogFile.LogStringLine("Loading Engine Content", LogType.INFO);
 
             InitializeResolutionIndependence(_game.GraphicsDevice.Viewport.Width, _game.GraphicsDevice.Viewport.Height);
-            _resolutionIndependence.BackgroundColor = Color.Black;
-
+            
             _bg = _game.Content.Load<Texture2D>("images/background");
 
             _spriteBatch = new SpriteBatch(_graphics);

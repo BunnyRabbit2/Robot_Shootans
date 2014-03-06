@@ -13,23 +13,36 @@ namespace RobotShootans.Engine
     public class GameScreen
     {
         #region variables
+        /// <summary>The Engine that owns the screen</summary>
         public GameEngine Engine;
 
+        /// <summary>The entities owned by the screen</summary>
         protected HashSet<GameEntity> _entities;
+        /// <summary>Whether the screen is loaded or not</summary>
         protected bool _loaded;
+        /// <summary>Whether the screen is loaded or not</summary>
         public bool Loaded { get { return _loaded; } }
 
+        /// <summary>If the screen is to update or not</summary>
         protected bool _paused;
+        /// <summary>If the screen is to update or not</summary>
         public bool Paused { get { return _paused; } }
+        /// <summary>Pauses the screen and stops it from updating</summary>
         public void Pause() { _paused = true; }
+        /// <summary>Unpauses the screen and lets it update</summary>
         public void Unpause() { _paused = false; }
 
+        /// <summary>Whether the screen blocks screens under it from updating or not</summary>
         protected bool _blockUpdating;
+        /// <summary>Whether the screen blocks screens under it from updating or not</summary>
         public bool BlockUpdating { get { return _blockUpdating; } }
 
+        /// <summary>The screens name</summary>
         protected string _screenName;
+        /// <summary>The screens name</summary>
         public string ScreenName { get { return _screenName; } }
 
+        /// <summary>The entities to be removed after updating all entities</summary>
         protected HashSet<GameEntity> _entitiesToRemove;
         #endregion
 
@@ -120,7 +133,7 @@ namespace RobotShootans.Engine
         /// <param name="entityIn"></param>
         public void removeEntity(string entityIn)
         {
-            _entitiesToRemove.Add(_entities.FirstOrDefault(e => e.ComponentName == entityIn));
+            _entitiesToRemove.Add(_entities.FirstOrDefault(e => e.EntityName == entityIn));
         }
 
         /// <summary>

@@ -13,28 +13,33 @@ namespace RobotShootans.Engine
     public class GameEntity
     {
         #region variables
+        /// <summary>Whether the Entity has loaded or not</summary>
         protected bool _loaded;
+        /// <summary>Whether the Entity has loaded or not</summary>
         public bool Loaded { get { return _loaded; } }
 
-        string _componentName;
-        public string ComponentName { get { return _componentName; } }
+        string _entityName;
+        /// <summary>The entity name</summary>
+        public string EntityName { get { return _entityName; } }
 
+        /// <summary>The screen that owns the Entity</summary>
         public GameScreen Screen;
 
         private Guid _id;
+        /// <summary>The ID of the entity</summary>
         public Guid ID { get { return _id; } }
-        #endregion
-
+        
         /// <summary>
         /// Creates the Entity
         /// </summary>
-        /// <param name="componentName">The name of the component</param>
-        public GameEntity(string componentName)
+        /// <param name="entityName">The name of the entity</param>
+        public GameEntity(string entityName)
         {
             _id = Guid.NewGuid();
 
-            _componentName = componentName;
+            _entityName = entityName;
         }
+        #endregion
 
         #region Virtual functions
         /// <summary>
