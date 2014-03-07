@@ -36,6 +36,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\SplashLogo.cs" />
     <Compile Include="Engine\GameEntity.cs" />
