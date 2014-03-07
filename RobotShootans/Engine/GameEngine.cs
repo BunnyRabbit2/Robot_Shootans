@@ -238,7 +238,7 @@ namespace RobotShootans.Engine
             if (_loaded)
             {
                 // Iterate back to front. When hitting a blocking screen, break the loop
-                for (int i = _gameScreens.Count - 1; i > 0; i-- )
+                for (int i = _gameScreens.Count - 1; i >= 0; i-- )
                 {
                     if (_gameScreens[i].Loaded)
                         _gameScreens[i].Update(gameTime);

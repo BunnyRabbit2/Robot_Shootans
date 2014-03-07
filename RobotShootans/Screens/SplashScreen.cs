@@ -6,6 +6,7 @@ using RobotShootans.Engine;
 using RobotShootans.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace RobotShootans.Screens
 {
@@ -25,6 +26,8 @@ namespace RobotShootans.Screens
         /// </summary>
         public override void loadGameScreen()
         {
+            _screenName = "SPLASH SCREEN";
+
             addEntity(new ColouredRectangle(new Rectangle(0, 0, 1920, 1080), Color.DarkGray));
             
             _firstUpdate = true;
@@ -61,6 +64,9 @@ namespace RobotShootans.Screens
 
             _splashTimer += gameTime.ElapsedGameTime.Milliseconds;
 
+            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+                _splashTimer = 100000; // Should be enough to skip anything but the longest splash screens
+
             // Waits two seconds before doing anything because reasons.
             if(_splashTimer > _waitTime && !_addedFirstScreen)
             {
@@ -76,6 +82,7 @@ namespace RobotShootans.Screens
             else if(_splashTimer > _waitTime + (_displayTime*2))
             {
                 Engine.removeGameScreen(this);
+                Engine.pushGameScreen(new GameplayScreen());
             }
 
             base.Update(gameTime);

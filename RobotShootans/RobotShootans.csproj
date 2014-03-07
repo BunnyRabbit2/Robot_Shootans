@@ -43,6 +43,7 @@
     <Compile Include="Engine\GameScreen.cs" />
     <Compile Include="Engine\LogFile.cs" />
     <Compile Include="Engine\ResolutionIndependentRenderer.cs" />
+    <Compile Include="Entities\TiledBackground.cs" />
     <Compile Include="RobotShootans.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +79,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\images\funkyrabbit logo.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\bg.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\images\MonogameLogo512x512.xnb">
