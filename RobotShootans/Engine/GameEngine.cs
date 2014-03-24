@@ -22,6 +22,13 @@ namespace RobotShootans.Engine
         private const int RENDERHEIGHT = 1080;
         /// <summary>The Height of the viewport that everything will be rendered to</summary>
         public int RenderHeight { get { return RENDERHEIGHT; } }
+
+        private const int RENDERCENTERX = RENDERWIDTH / 2;
+        private const int RENDERCENTERY = RENDERHEIGHT / 2;
+        /// <summary>
+        /// Gets the center of the screen in render co-ords
+        /// </summary>
+        public Vector2 RenderOrigin { get { return new Vector2(RENDERCENTERX, RENDERCENTERY); } }
         #endregion
 
         #region Singleton stuff
