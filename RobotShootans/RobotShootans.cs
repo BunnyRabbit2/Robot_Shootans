@@ -52,7 +52,7 @@ namespace RobotShootans
         protected override void Initialize()
         {
             _engine.Initialise("Robot Shootans", this);
-
+            
             base.Initialize();
         }
 
@@ -93,7 +93,7 @@ namespace RobotShootans
             else if (GamePad.GetState(PlayerIndex.Four).IsConnected)
                 currentPlayer = PlayerIndex.Four;
 
-            if (GamePad.GetState(currentPlayer).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (InputHelper.isKeyPressNew(Keys.Enter) || InputHelper.isButtonPressNew(Buttons.Back, currentPlayer) )
                 Exit();
 
             if (_firstUpdate)

@@ -22,6 +22,9 @@ namespace RobotShootans.Engine
         {
             _oldKeystate = Keyboard.GetState();
             _oldPadState = new[] { GamePad.GetState(PlayerIndex.One), GamePad.GetState(PlayerIndex.Two), GamePad.GetState(PlayerIndex.Three), GamePad.GetState(PlayerIndex.Four) };
+
+            _newKeyState = Keyboard.GetState();
+            _newPadState = new[] { GamePad.GetState(PlayerIndex.One), GamePad.GetState(PlayerIndex.Two), GamePad.GetState(PlayerIndex.Three), GamePad.GetState(PlayerIndex.Four) };
         }
 
         /// <summary>

@@ -87,6 +87,12 @@ namespace RobotShootans.Engine
         private GraphicsDevice _graphics;
         /// <summary>The GraphicsDevice used by the Engine</summary>
         public GraphicsDevice Graphics { get { return _graphics; } }
+
+        private bool _exitGame;
+        /// <summary>
+        /// A readonly value for if the game is exiting
+        /// </summary>
+        public bool ExitGame { get { return _exitGame; } }
         #endregion
 
         #region Set up and clean up functions
@@ -101,8 +107,11 @@ namespace RobotShootans.Engine
             _game = game;
             _content = game.Content;
             _graphics = game.GraphicsDevice;
+            _exitGame = false;
 
             _resolutionIndependence = new ResolutionIndependentRenderer(_graphics);
+
+            InputHelper.InitialiseInputHelper();
 
             LogFile.ClearLogFile();
             LogFile.LogStringLine("Started Engine for game: " + _gameName, LogType.INFO);
@@ -123,6 +132,14 @@ namespace RobotShootans.Engine
 
             _loaded = true;
             LogFile.LogStringLine("Done loading content", LogType.INFO);
+        }
+
+        /// <summary>
+        /// Sets the engine to exit at the end of the current update loop
+        /// </summary>
+        public void Exit()
+        {
+            _exitGame = true;
         }
 
         /// <summary>
@@ -233,7 +250,7 @@ namespace RobotShootans.Engine
         /// <param name="gameTime">The GameTime object handed in from the Game class</param>
         public void Update(GameTime gameTime)
         {
-            // TODO: create some sort of input helper
+            InputHelper.UpdateInput();
 
             if (_loaded)
             {
@@ -248,6 +265,9 @@ namespace RobotShootans.Engine
                 }
 
                 removeScreens();
+
+                if (_exitGame)
+                    _game.Exit();
             }
             else
             {
