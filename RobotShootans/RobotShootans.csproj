@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\InputHelper.cs" />
+    <Compile Include="Engine\HelperFunctions.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\SplashLogo.cs" />

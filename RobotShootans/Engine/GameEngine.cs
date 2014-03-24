@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -302,5 +303,14 @@ namespace RobotShootans.Engine
             _spriteBatch.End();
         }
         #endregion
+
+        /// <summary>
+        /// Gets render position of the mouse
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetMousePosition()
+        {
+            return _resolutionIndependence.ScaleMouseToScreenCoordinates(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
+        }
     }
 }
