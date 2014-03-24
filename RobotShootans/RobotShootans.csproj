@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
+    <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\SplashLogo.cs" />
     <Compile Include="Engine\GameEntity.cs" />
     <Compile Include="Engine\GameEngine.cs" />
@@ -83,6 +84,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\images\game\bg.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\metal-bg.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\player-sheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\images\MonogameLogo512x512.xnb">
