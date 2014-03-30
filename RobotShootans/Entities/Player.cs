@@ -20,6 +20,9 @@ namespace RobotShootans.Entities
         Vector2 _position;
         float _rotation;
 
+        Vector2 _velocity;
+        float _speed;
+
         /// <summary>
         /// Creates the Player object
         /// </summary>
@@ -49,6 +52,9 @@ namespace RobotShootans.Entities
             _animationFrames[6] = new Rectangle(0, 420, 132, 140);
             _animationFrames[7] = new Rectangle(132, 420, 132, 140);
 
+            _velocity = Vector2.Zero;
+            _speed = Screen.Engine.RenderHeight / 3.0f; // The float is the number of seconds to cross the height of the screen
+
             _loaded = true;
         }
 
@@ -59,6 +65,32 @@ namespace RobotShootans.Entities
         public override void Update(GameTime gameTime)
         {
             _rotation = HelperFunctions.GetBearingBetweenTwoPoints(_position, Screen.Engine.GetMousePosition(), false);
+
+            float _deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (InputHelper.isKeyPressNew(Keys.W))
+                _velocity.Y -= _deltaSpeed;
+            if (InputHelper.isKeyUpNew(Keys.W))
+                _velocity.Y += _deltaSpeed;
+            if (InputHelper.isKeyPressNew(Keys.S))
+                _velocity.Y += _deltaSpeed;
+            if (InputHelper.isKeyUpNew(Keys.S))
+                _velocity.Y -= _deltaSpeed;
+            if (InputHelper.isKeyPressNew(Keys.D))
+                _velocity.X += _deltaSpeed;
+            if (InputHelper.isKeyUpNew(Keys.D))
+                _velocity.X -= _deltaSpeed;
+            if (InputHelper.isKeyPressNew(Keys.A))
+                _velocity.X -= _deltaSpeed;
+            if (InputHelper.isKeyUpNew(Keys.A))
+                _velocity.X += _deltaSpeed;
+
+            _position += _velocity;
+
+            // Binds the position to within 5% and 95% of the render screen size
+            _position = HelperFunctions.KeepVectorInBounds(_position,
+                (int)(Screen.Engine.RenderWidth * 0.05), (int)(Screen.Engine.RenderWidth * 0.95),
+                (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95));
         }
 
         /// <summary>

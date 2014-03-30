@@ -12,6 +12,29 @@ namespace RobotShootans.Engine
     public static class HelperFunctions
     {
         /// <summary>
+        /// Will check if the vector is within the bounds and if so, returns new Vector Value
+        /// </summary>
+        /// <param name="vectorIn">The vector to check</param>
+        /// <param name="minX">Minimum X value</param>
+        /// <param name="maxX">Maximum X value</param>
+        /// <param name="minY">Minimum Y value</param>
+        /// <param name="maxY">Maximum Y value</param>
+        /// <returns>Corrected vector</returns>
+        public static Vector2 KeepVectorInBounds(Vector2 vectorIn, int minX, int maxX, int minY, int maxY)
+        {
+            if (vectorIn.X < minX)
+                vectorIn.X = minX;
+            if (vectorIn.X > maxX)
+                vectorIn.X = maxX;
+            if (vectorIn.Y < minY)
+                vectorIn.Y = minY;
+            if (vectorIn.Y > maxY)
+                vectorIn.Y = maxY;
+
+            return vectorIn;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="p1"></param>

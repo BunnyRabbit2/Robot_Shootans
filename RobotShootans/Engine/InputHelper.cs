@@ -53,6 +53,19 @@ namespace RobotShootans.Engine
         }
 
         /// <summary>
+        /// Returns if a key release is new or not
+        /// </summary>
+        /// <param name="keyIn">The key to check</param>
+        /// <returns></returns>
+        public static bool isKeyUpNew(Keys keyIn)
+        {
+            if (_oldKeystate.IsKeyDown(keyIn) && _newKeyState.IsKeyUp(keyIn))
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
         /// Checks to see if a button is pressed on any pad
         /// </summary>
         /// <param name="buttonIn">The button to check</param>
