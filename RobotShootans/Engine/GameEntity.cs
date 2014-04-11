@@ -28,6 +28,8 @@ namespace RobotShootans.Engine
         private Guid _id;
         /// <summary>The ID of the entity</summary>
         public Guid ID { get { return _id; } }
+
+        private HashSet<string> _tags;
         
         /// <summary>
         /// Creates the Entity
@@ -38,6 +40,47 @@ namespace RobotShootans.Engine
             _id = Guid.NewGuid();
 
             _entityName = entityName;
+        }
+        #endregion
+
+        #region Tag Management
+        /// <summary>
+        /// Adds a tag to the entity
+        /// </summary>
+        /// <param name="tagToAdd">The tag to add to the entity</param>
+        public void addTag(string tagToAdd)
+        {
+            if (_tags.Contains(tagToAdd))
+                LogFile.LogStringLine("Entity " + _entityName + " (ID:" + _id + ") already contains tag: " + tagToAdd, LogType.INFO);
+            else
+                _tags.Add(tagToAdd);
+        }
+
+        /// <summary>
+        /// Checks if the entity contains the tag
+        /// </summary>
+        /// <param name="tagToCheck">The tag to check</param>
+        /// <returns></returns>
+        public bool containsTag(string tagToCheck)
+        {
+            return _tags.Contains(tagToCheck);
+        }
+
+        /// <summary>
+        /// Removes a tag from the entity
+        /// </summary>
+        /// <param name="tagToRemove">The tag to remove</param>
+        public void removeTag(string tagToRemove)
+        {
+            _tags.Remove(tagToRemove);
+        }
+
+        /// <summary>
+        /// Clears all tags from the entity
+        /// </summary>
+        public void clearTags()
+        {
+            _tags.Clear();
         }
         #endregion
 

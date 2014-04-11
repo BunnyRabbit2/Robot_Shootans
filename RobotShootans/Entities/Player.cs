@@ -6,6 +6,7 @@ using RobotShootans.Engine;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace RobotShootans.Entities
 {
@@ -39,7 +40,8 @@ namespace RobotShootans.Entities
         public override void Load()
         {
             int numberOfFrames = 8;
-            _playersheet = Screen.Engine.Content.Load<Texture2D>("images/game/player-sheet");
+            if(File.Exists("images/game/player-sheet.xnb"))
+                _playersheet = Screen.Engine.Content.Load<Texture2D>("images/game/player-sheet");
             _origin = new Vector2(132/2, 140/2);
 
             _animationFrames = new Rectangle[numberOfFrames];
