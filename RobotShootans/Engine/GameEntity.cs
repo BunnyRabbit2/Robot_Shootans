@@ -39,6 +39,8 @@ namespace RobotShootans.Engine
         {
             _id = Guid.NewGuid();
 
+            _tags = new HashSet<string>();
+
             _entityName = entityName;
         }
         #endregion

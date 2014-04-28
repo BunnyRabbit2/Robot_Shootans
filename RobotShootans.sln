@@ -4,10 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotShootans", "RobotShootans\RobotShootans.csproj", "{CD4AE56C-2A00-4605-A2CA-1E76C3CA21BE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{83BD3DA4-AA7C-42E1-B1C1-A48E0EF1488F} = {83BD3DA4-AA7C-42E1-B1C1-A48E0EF1488F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotShootansContent", "RobotShootansContent\RobotShootansContent\RobotShootansContent.csproj", "{83BD3DA4-AA7C-42E1-B1C1-A48E0EF1488F}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "RobotShootansContentContent", "RobotShootansContent\RobotShootansContentContent\RobotShootansContentContent.contentproj", "{1C4BFE37-87A9-4BE2-8CCA-CCC5F67C1DB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotShootansContentContent", "RobotShootansContent\RobotShootansContentContent\RobotShootansContentContent.contentproj", "{1C4BFE37-87A9-4BE2-8CCA-CCC5F67C1DB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

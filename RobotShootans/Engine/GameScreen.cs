@@ -16,8 +16,8 @@ namespace RobotShootans.Engine
         /// <summary>The Engine that owns the screen</summary>
         public GameEngine Engine;
 
-        /// <summary>The entities owned by the screen</summary>
-        protected HashSet<GameEntity> _entities;
+        /// <summary>The container for the Entities</summary>
+        protected EntityBag _entityBag;
         /// <summary>Whether the screen is loaded or not</summary>
         protected bool _loaded;
         /// <summary>Whether the screen is loaded or not</summary>
@@ -41,9 +41,6 @@ namespace RobotShootans.Engine
         protected string _screenName;
         /// <summary>The screens name</summary>
         public string ScreenName { get { return _screenName; } }
-
-        /// <summary>The entities to be removed after updating all entities</summary>
-        protected HashSet<GameEntity> _entitiesToRemove;
         #endregion
 
         /// <summary>
@@ -52,8 +49,7 @@ namespace RobotShootans.Engine
         /// <param name="blockUpdating">Sets if the screen blocks screens under it from updating</param>
         public GameScreen(bool blockUpdating = false)
         {
-            _entities = new HashSet<GameEntity>();
-            _entitiesToRemove = new HashSet<GameEntity>();
+            _entityBag = new EntityBag();
         }
 
         #region Virtual functions
@@ -81,14 +77,8 @@ namespace RobotShootans.Engine
         {
             if(!_paused)
             {
-                foreach(GameEntity ge in _entities)
-                {
-                    if(ge.Loaded)
-                        ge.Update(gameTime);
-                }
+                _entityBag.Update(gameTime);
             }
-
-            removeEntities();
         }
 
         /// <summary>
@@ -98,11 +88,7 @@ namespace RobotShootans.Engine
         /// <param name="sBatch">The SpriteBatch from the Engine used for drawing</param>
         public virtual void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            foreach (GameEntity ge in _entities)
-            {
-                if (ge.Loaded)
-                    ge.Draw(gameTime, sBatch);
-            }
+            _entityBag.Draw(gameTime, sBatch);
         }
         #endregion
 
@@ -113,9 +99,7 @@ namespace RobotShootans.Engine
         /// <param name="entityIn">Entity to be added</param>
         public void addEntity(GameEntity entityIn)
         {
-            entityIn.Screen = this;
-            entityIn.Load();
-            _entities.Add(entityIn);
+            _entityBag.addEntity(entityIn, this);
         }
 
         /// <summary>
@@ -124,7 +108,7 @@ namespace RobotShootans.Engine
         /// <param name="entityIn">The entity to remove</param>
         public void removeEntity(GameEntity entityIn)
         {
-            _entitiesToRemove.Add(entityIn);
+            _entityBag.removeEntity(entityIn);
         }
 
         /// <summary>
@@ -133,21 +117,7 @@ namespace RobotShootans.Engine
         /// <param name="entityIn"></param>
         public void removeEntity(string entityIn)
         {
-            _entitiesToRemove.Add(_entities.FirstOrDefault(e => e.EntityName == entityIn));
-        }
-
-        /// <summary>
-        /// Removes all entities set to be removed
-        /// </summary>
-        protected void removeEntities()
-        {
-            if(_entitiesToRemove.Count > 0)
-            {
-                foreach(GameEntity ge in _entitiesToRemove)
-                {
-                    _entities.Remove(ge);
-                }
-            }
+            _entityBag.removeEntity(entityIn);
         }
         #endregion
     }
