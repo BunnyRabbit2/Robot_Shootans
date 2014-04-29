@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Timers;
@@ -311,6 +312,25 @@ namespace RobotShootans.Engine
         public Vector2 GetMousePosition()
         {
             return _resolutionIndependence.ScaleMouseToScreenCoordinates(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
+        }
+
+        /// <summary>
+        /// Loads a texture in a safe way and returns the texture asked for or a default if it fails to find it.
+        /// Already includes "Content/image/" in the path to load
+        /// </summary>
+        /// <param name="textureToLoad">The texture to load</param>
+        /// <returns></returns>
+        public Texture2D loadTexture(string textureToLoad)
+        {
+            if (File.Exists("Content/images/" + textureToLoad + ".xnb"))
+            {
+                return Content.Load<Texture2D>("images/" + textureToLoad);
+            }
+            else
+            {
+                LogFile.LogStringLine("Failed to load image: " + textureToLoad + ". Nothing loaded", LogType.ERROR);
+                return Content.Load<Texture2D>("images/default");
+            }
         }
     }
 }

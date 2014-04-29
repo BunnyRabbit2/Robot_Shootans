@@ -26,6 +26,8 @@ namespace RobotShootans.Screens
 
             addEntity(new Player(Engine.RenderOrigin));
 
+            addEntity(new Crosshair());
+
             _loaded = true;
         }
 

@@ -40,6 +40,7 @@
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
+    <Compile Include="Entities\Crosshair.cs" />
     <Compile Include="Entities\Sprite.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\SplashLogo.cs" />
@@ -83,10 +84,16 @@
     <None Include="Content\images\background.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\images\default.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\images\funkyrabbit logo.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\images\game\bg.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\crosshair.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\images\game\metal-bg.xnb">
