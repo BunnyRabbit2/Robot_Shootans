@@ -15,11 +15,8 @@ namespace RobotShootans.Entities
     /// </summary>
     public class Player : GameEntity
     {
-        Texture2D _playersheet;
-        Rectangle[] _animationFrames;
-        Vector2 _origin;
-        Vector2 _position;
-        float _rotation;
+        EntityBag _bag;
+        Sprite _playerSprite;
 
         Vector2 _velocity;
         float _speed;
@@ -35,7 +32,9 @@ namespace RobotShootans.Entities
         public Player(Vector2 startPos)
             : base("Player")
         {
-            _position = startPos;
+            _playerSprite = new Sprite();
+            _playerSprite.Position = startPos;
+            _bag = new EntityBag();
         }
 
         /// <summary>
@@ -43,30 +42,32 @@ namespace RobotShootans.Entities
         /// </summary>
         public override void Load()
         {
-            int numberOfFrames = 8;
-            _playersheet = Screen.Engine.loadTexture("game/player-sheet");
-
             int frameWidth = 90;
             int frameHeight = 150;
 
-            _origin = new Vector2(frameWidth / 2, frameHeight / 2);
+            _bag.addEntity(_playerSprite, Screen);
+            _playerSprite.setImage("game/player-sheet");
+            _playerSprite.addAnimation("IDLE", 1000, new Rectangle[] { new Rectangle(0, 0, frameWidth, frameHeight) });
+            _playerSprite.addAnimation("WALK", 125,
+                new Rectangle[] {
+                    new Rectangle(0, 0, frameWidth, frameHeight),
+                    new Rectangle(frameWidth, 0, frameWidth, frameHeight),
+                    new Rectangle(0, frameHeight, frameWidth, frameHeight),
+                    new Rectangle(frameWidth, frameHeight, frameWidth, frameHeight),
+                    new Rectangle(0, frameHeight*2, frameWidth, frameHeight),
+                    new Rectangle(frameWidth, frameHeight*2, frameWidth, frameHeight)
+                });
+            _playerSprite.addAnimation("IDLE_GUN", 1000, new Rectangle[] { new Rectangle(0, frameHeight * 3, frameWidth, frameHeight) });
+            _playerSprite.addAnimation("SHOOT_GUN", 1000, new Rectangle[] { new Rectangle(frameWidth, frameHeight * 3, frameWidth, frameHeight) });
+            _playerSprite.Animation = "IDLE_GUN";
+            _playerSprite.setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
 
 #if DEBUG
-            _debugRect = new ColouredRectangle(new Rectangle((int)_position.X, (int)_position.Y, 4, 4), Color.Red);
+            _debugRect = new ColouredRectangle(new Rectangle((int)_playerSprite.X, (int)_playerSprite.Y, 4, 4), Color.Red);
             _debugRect.Screen = Screen;
             _debugRect.Load();
 #endif
-
-            _animationFrames = new Rectangle[numberOfFrames];
-            _animationFrames[0] = new Rectangle(0, 0, frameWidth, frameHeight);
-            _animationFrames[1] = new Rectangle(frameWidth, 0, frameWidth, frameHeight);
-            _animationFrames[2] = new Rectangle(0, frameHeight, frameWidth, frameHeight);
-            _animationFrames[3] = new Rectangle(frameWidth, frameHeight, frameWidth, frameHeight);
-            _animationFrames[4] = new Rectangle(0, frameHeight*2, frameWidth, frameHeight);
-            _animationFrames[5] = new Rectangle(frameWidth, frameHeight*2, frameWidth, frameHeight);
-            _animationFrames[6] = new Rectangle(0, frameHeight*3, frameWidth, frameHeight);
-            _animationFrames[7] = new Rectangle(frameWidth, frameHeight*3, frameWidth, frameHeight);
-
+            
             _velocity = Vector2.Zero;
             _speed = Screen.Engine.RenderHeight / 3.0f; // The float is the number of seconds to cross the height of the screen
 
@@ -79,7 +80,7 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            _rotation = HelperFunctions.GetBearingBetweenTwoPoints(_position, Screen.Engine.GetMousePosition(), false);
+            _playerSprite.setRotation(HelperFunctions.GetBearingBetweenTwoPoints(_playerSprite.Position, Screen.Engine.GetMousePosition(), false));
 
             float _deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -100,17 +101,28 @@ namespace RobotShootans.Entities
             if (InputHelper.isKeyUpNew(Keys.A))
                 _velocity.X += _deltaSpeed;
 
-            _position += _velocity;
+            _playerSprite.Position += _velocity;
+
+            if (_velocity != Vector2.Zero)
+            {
+                _playerSprite.Animation = "WALK";
+            }
+            else if (_velocity == Vector2.Zero)
+            {
+                _playerSprite.Animation = "IDLE";
+            }
 
             // Binds the position to within 5% and 95% of the render screen size
-            _position = HelperFunctions.KeepVectorInBounds(_position,
+            _playerSprite.Position = HelperFunctions.KeepVectorInBounds(_playerSprite.Position,
                 (int)(Screen.Engine.RenderWidth * 0.05), (int)(Screen.Engine.RenderWidth * 0.95),
                 (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95));
 
 #if DEBUG
-            _debugRect.X = (int)_position.X - _debugRect.Width / 2;
-            _debugRect.Y = (int)_position.Y - _debugRect.Height / 2;
+            _debugRect.X = (int)_playerSprite.Position.X - _debugRect.Width / 2;
+            _debugRect.Y = (int)_playerSprite.Position.Y - _debugRect.Height / 2;
 #endif
+
+            _bag.Update(gameTime);
         }
 
         /// <summary>
@@ -120,7 +132,7 @@ namespace RobotShootans.Entities
         /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            sBatch.Draw(_playersheet, _position, _animationFrames[0], Color.White, _rotation, _origin, 1f, SpriteEffects.None, 0f);
+            _bag.Draw(gameTime, sBatch);
             //sBatch.Draw(_playersheet, _position, _animationFrames[0], Color.White);
 
 #if DEBUG

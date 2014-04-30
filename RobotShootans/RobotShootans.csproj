@@ -36,6 +36,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\EntityBag.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />

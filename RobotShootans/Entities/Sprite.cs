@@ -37,12 +37,32 @@ namespace RobotShootans.Entities
         protected Vector2 _position;
         /// <summary>The position of the image</summary>
         public Vector2 Position { get { return _position; } set { _position = value; } }
+        /// <summary>The X position of the sprite</summary>
+        public float X { get { return _position.X; } set { _position.X = value; } }
+        /// <summary>The Y position of the sprite</summary>
+        public float Y { get { return _position.Y; } set { _position.Y = value; } }
 
         /// <summary>The origin of the image</summary>
         protected Vector2 _origin;
 
         /// <summary>The scale of the image</summary>
         protected Vector2 _scale;
+
+        /// <summary>The rotation of the image</summary>
+        protected float _rotation;
+
+        string _currentAnimation, _previousAnimation;
+        /// <summary>The current animation being used</summary>
+        public string Animation
+        {
+            get { return _currentAnimation; }
+            set
+            {
+                if (_animations.ContainsKey(value))
+                    _currentAnimation = value;
+            }
+        }
+        Dictionary<string, Animation> _animations;
 
         /// <summary>Creates the Sprite object</summary>
         public Sprite()
@@ -51,6 +71,7 @@ namespace RobotShootans.Entities
             _color = Color.White;
             _origin = Vector2.Zero;
             _scale = Vector2.One;
+            _animations = new Dictionary<string, Animation>();
         }
 
         /// <summary>Creates the Sprite object</summary>
@@ -60,6 +81,7 @@ namespace RobotShootans.Entities
             _color = Color.White;
             _origin = Vector2.Zero;
             _scale = Vector2.One;
+            _animations = new Dictionary<string, Animation>();
         }
 
         /// <summary>
@@ -118,6 +140,11 @@ namespace RobotShootans.Entities
             }
         }
 
+        public void setOrigin(Vector2 originIn)
+        {
+            _origin = originIn;
+        }
+
         /// <summary>Sets the scale of the sprite</summary>
         /// <param name="scaleIn"></param>
         public void setScale(float scaleIn)
@@ -139,12 +166,34 @@ namespace RobotShootans.Entities
             _scale.Y = scaleYIn;
         }
 
+        /// <summary>Sets the rotation of the image</summary>
+        /// <param name="rotationIn"></param>
+        public void setRotation(float rotationIn)
+        {
+            _rotation = rotationIn;
+        }
+
+        /// <summary>
+        /// Adds an animation to the sprite
+        /// </summary>
+        /// <param name="nameIn"></param>
+        /// <param name="frameTimeIn"></param>
+        /// <param name="framesIn"></param>
+        public void addAnimation(string nameIn, int frameTimeIn, Rectangle[] framesIn)
+        {
+            _animations.Add(nameIn, new Animation(nameIn, frameTimeIn, framesIn));
+            _currentAnimation = nameIn;
+        }
+
+        #region entity functions
         /// <summary>
         /// Loads to sprite texture and sets some private variables
         /// </summary>
         public override void Load()
         {
             // Nothing loaded here. Sprite will not display until the image is set
+            _currentAnimation = "";
+            _previousAnimation = "";
         }
 
         /// <summary>
@@ -153,7 +202,15 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            
+            if(_previousAnimation != _currentAnimation)
+            {
+                if(!string.IsNullOrEmpty(_previousAnimation))
+                    _animations[_previousAnimation].stopAnimation();
+                if (!_animations[_currentAnimation].Running)
+                    _animations[_currentAnimation].startAnimation();
+            }
+
+            _previousAnimation = _currentAnimation;
         }
 
         /// <summary>
@@ -163,7 +220,11 @@ namespace RobotShootans.Entities
         /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            sBatch.Draw(_image, position: _position, color: _color, origin: _origin, scale: _scale);
+            if(_animations.Count != 0)
+                sBatch.Draw(_image, position: _position, sourceRectangle: _animations[_currentAnimation].getCurrentframe(), rotation: _rotation, color: _color, origin: _origin, scale: _scale);
+            else
+                sBatch.Draw(_image, position: _position, color: _color, origin: _origin, scale: _scale);
         }
+        #endregion
     }
 }
