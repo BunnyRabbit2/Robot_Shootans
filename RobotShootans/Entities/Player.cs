@@ -80,7 +80,8 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            _playerSprite.setRotation(HelperFunctions.GetBearingBetweenTwoPoints(_playerSprite.Position, Screen.Engine.GetMousePosition(), false));
+            float bearing = HelperFunctions.GetBearingBetweenTwoPoints(_playerSprite.Position, Screen.Engine.GetMousePosition(), false);
+            _playerSprite.setRotation(bearing);
 
             float _deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -110,6 +111,11 @@ namespace RobotShootans.Entities
             else if (_velocity == Vector2.Zero)
             {
                 _playerSprite.Animation = "IDLE";
+            }
+
+            if(InputHelper.isKeyPressNew(Keys.Space))
+            {
+                Screen.addEntity(new Bullet(_playerSprite.Position, 5, Screen.Engine.RenderHeight / 2.0f, bearing));
             }
 
             // Binds the position to within 5% and 95% of the render screen size

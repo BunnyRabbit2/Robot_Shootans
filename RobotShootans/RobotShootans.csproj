@@ -40,6 +40,7 @@
     <Compile Include="Engine\EntityBag.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
+    <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />
     <Compile Include="Entities\Sprite.cs" />

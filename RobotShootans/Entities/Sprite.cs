@@ -140,6 +140,9 @@ namespace RobotShootans.Entities
             }
         }
 
+        /// <summary>
+        /// Sets the origin to draw the image from
+        /// </summary>
         public void setOrigin(Vector2 originIn)
         {
             _origin = originIn;

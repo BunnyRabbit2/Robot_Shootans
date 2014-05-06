@@ -18,6 +18,9 @@ namespace RobotShootans.Engine
         /// <summary>The entities to be removed after updating all entities</summary>
         protected HashSet<GameEntity> _entitiesToRemove;
 
+        /// <summary>Entities to add after updating</summary>
+        protected HashSet<GameEntity> _entitiesToAdd;
+
         /// <summary>
         /// Creates the EntityBag
         /// </summary>
@@ -25,6 +28,7 @@ namespace RobotShootans.Engine
         {
             _entities = new HashSet<GameEntity>();
             _entitiesToRemove = new HashSet<GameEntity>();
+            _entitiesToAdd = new HashSet<GameEntity>();
         }
 
         /// <summary>
@@ -36,7 +40,7 @@ namespace RobotShootans.Engine
         {
             entityIn.Screen = screenIn;
             entityIn.Load();
-            _entities.Add(entityIn);
+            _entitiesToAdd.Add(entityIn);
         }
 
         /// <summary>
@@ -69,6 +73,22 @@ namespace RobotShootans.Engine
                     _entities.Remove(ge);
                 }
             }
+            _entitiesToRemove.Clear();
+        }
+
+        /// <summary>
+        /// Adds all entities set to be added
+        /// </summary>
+        protected void addEntities()
+        {
+            if (_entitiesToAdd.Count > 0)
+            {
+                foreach (GameEntity ge in _entitiesToAdd)
+                {
+                    _entities.Add(ge);
+                }
+            }
+            _entitiesToAdd.Clear();
         }
 
         /// <summary>
@@ -83,6 +103,7 @@ namespace RobotShootans.Engine
                     ge.Update(gameTimeIn);
             }
 
+            addEntities();
             removeEntities();
         }
 

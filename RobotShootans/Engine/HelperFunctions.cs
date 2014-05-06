@@ -88,5 +88,76 @@ namespace RobotShootans.Engine
             else
                 return theta * (3.142f / 180.0f);
         }
+
+        /// <summary>
+        /// Returns a Vector2 with a speedX and speedY given a bearing
+        /// </summary>
+        /// <param name="bearingIn"></param>
+        /// <param name="speedIn"></param>
+        /// <returns></returns>
+        public static Vector2 GetVectorFromBearingAndSpeed(double bearingIn, double speedIn)
+        {
+            Vector2 result = Vector2.Zero;
+
+            double theta = bearingIn;
+            double h = speedIn;
+            int Xmulti = 1;
+            int Ymulti = 1;
+
+            if(bearingIn % 90.0 == 0)
+            {
+                if(bearingIn == 0.0 || bearingIn == 360.0)
+                {
+                    result.X = 0f;
+                    result.Y = (float)-h;
+                }
+                else if(bearingIn == 180.0)
+                {
+                    result.X = 0f;
+                    result.Y = (float)h;
+                }
+                if (bearingIn == 90.0)
+                {
+                    result.X = (float)h;
+                    result.Y = 0f;
+                }
+                else if (bearingIn == 270.0)
+                {
+                    result.X = (float)-h;
+                    result.Y = 0f;
+                }
+            }
+            else
+            {
+                if(bearingIn > 0.0 && bearingIn < 90.0)
+                {
+                    theta = bearingIn;
+                    Ymulti = -1;
+                }
+                else if(bearingIn > 90.0 && bearingIn < 180.0)
+                {
+                    theta = bearingIn - 90.0;
+                }
+                else if(bearingIn > 180.0 && bearingIn < 270.0)
+                {
+                    theta = bearingIn - 180.0;
+                    Xmulti = -1;
+                }
+                else if(bearingIn > 270.0 && bearingIn < 360.0)
+                {
+                    theta = bearingIn - 270.0;
+                    Xmulti = -1;
+                    Ymulti = -1;
+                }
+
+                double o = Math.Cos(theta) * h;
+                double a = Math.Sin(theta) * h;
+
+                result.X = (float)(a * Xmulti);
+                result.Y = (float)(o * Ymulti);
+            }
+
+            return result;
+        }
     }
 }
