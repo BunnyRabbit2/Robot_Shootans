@@ -52,6 +52,7 @@
     <Compile Include="Engine\LogFile.cs" />
     <Compile Include="Engine\ResolutionIndependentRenderer.cs" />
     <Compile Include="Entities\TiledBackground.cs" />
+    <Compile Include="Entities\Weapon.cs" />
     <Compile Include="RobotShootans.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

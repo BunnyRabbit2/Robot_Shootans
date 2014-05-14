@@ -66,6 +66,26 @@ namespace RobotShootans.Engine
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyIn"></param>
+        /// <returns></returns>
+        public static bool isKeyDown(Keys keyIn)
+        {
+            return _newKeyState.IsKeyDown(keyIn);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyIn"></param>
+        /// <returns></returns>
+        public static bool isKeyUp(Keys keyIn)
+        {
+            return _newKeyState.IsKeyUp(keyIn);
+        }
+
+        /// <summary>
         /// Checks to see if a button is pressed on any pad
         /// </summary>
         /// <param name="buttonIn">The button to check</param>

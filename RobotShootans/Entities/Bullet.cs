@@ -39,6 +39,28 @@ namespace RobotShootans.Entities
         }
 
         /// <summary>
+        /// Creates the bullet and sets the vector
+        /// </summary>
+        public Bullet(Vector2 positionIn, int sizeIn, float speedIn, float bearingToTravel, Color colorIn)
+            : base(new Rectangle((int)positionIn.X, (int)positionIn.Y, sizeIn, sizeIn), colorIn)
+        {
+            _position = positionIn;
+            _speed = speedIn;
+            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+        }
+
+        /// <summary>
+        /// Creates the bullet and sets the vector
+        /// </summary>
+        public Bullet(int xIn, int yIn, int sizeIn, float speedIn, float bearingToTravel, Color colorIn)
+            : base(new Rectangle(xIn, yIn, sizeIn, sizeIn), colorIn)
+        {
+            _position = new Vector2(xIn, yIn);
+            _speed = speedIn;
+            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+        }
+
+        /// <summary>
         /// Loads the bullet and sets a tag so they are easier to find
         /// </summary>
         public override void Load()

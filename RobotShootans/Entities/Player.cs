@@ -21,6 +21,8 @@ namespace RobotShootans.Entities
         Vector2 _velocity;
         float _speed;
 
+        Weapon _currentWeapon;
+
 #if DEBUG
         ColouredRectangle _debugRect;
 #endif
@@ -71,6 +73,9 @@ namespace RobotShootans.Entities
             _velocity = Vector2.Zero;
             _speed = Screen.Engine.RenderHeight / 3.0f; // The float is the number of seconds to cross the height of the screen
 
+            _currentWeapon = new Weapon(WeaponType.SHOTGUN);
+            Screen.addEntity(_currentWeapon);
+
             _loaded = true;
         }
 
@@ -113,9 +118,9 @@ namespace RobotShootans.Entities
                 _playerSprite.Animation = "IDLE";
             }
 
-            if(InputHelper.isKeyPressNew(Keys.Space))
+            if(InputHelper.isKeyDown(Keys.Space))
             {
-                Screen.addEntity(new Bullet(_playerSprite.Position, 5, Screen.Engine.RenderHeight / 2.0f, bearing));
+                  _currentWeapon.shoot(_playerSprite.Position, bearing);
             }
 
             // Binds the position to within 5% and 95% of the render screen size
