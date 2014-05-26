@@ -19,6 +19,8 @@ namespace RobotShootans.Entities
 
         Weapon _currentWeapon;
 
+        GUI_TextItem _ammoCounter;
+
 #if DEBUG
         ColouredRectangle _debugRect;
 #endif
@@ -33,6 +35,7 @@ namespace RobotShootans.Entities
             _playerSprite = new Sprite();
             _playerSprite.Position = startPos;
             _bag = new EntityBag();
+            _ammoCounter = new GUI_TextItem();
         }
 
         /// <summary>
@@ -71,6 +74,13 @@ namespace RobotShootans.Entities
 
             _currentWeapon = new MachineGun();
             Screen.addEntity(_currentWeapon);
+
+            // Testing text item
+            _ammoCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
+            _ammoCounter.setText(_currentWeapon.Ammo.ToString());
+            _ammoCounter.Position = new Vector2(100, 100);
+            _ammoCounter.setColor(Color.Red);
+            Screen.addEntity(_ammoCounter);
 
             _loaded = true;
         }
@@ -121,8 +131,10 @@ namespace RobotShootans.Entities
                   {
                       Screen.removeEntity(_currentWeapon);
                       _currentWeapon = new Pistol();
+                      Screen.addEntity(_currentWeapon);
                   }
             }
+            _ammoCounter.setText(_currentWeapon.Ammo.ToString());
 
             // Binds the position to within 5% and 95% of the render screen size
             _playerSprite.Position = HelperFunctions.KeepVectorInBounds(_playerSprite.Position,

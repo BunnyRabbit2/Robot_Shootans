@@ -22,7 +22,7 @@ namespace RobotShootans.Entities.Weapons
                 Screen.addEntity(new Bullet(positionIn, 5, Screen.Engine.RenderHeight / 2.0f, bearingIn, Color.Yellow));
                 _fireRateCounter = 0;
 
-                _ammo--;
+                // Find way to have ammo display infinite
             }
         }
     }

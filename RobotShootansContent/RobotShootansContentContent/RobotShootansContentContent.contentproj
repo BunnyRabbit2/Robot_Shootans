@@ -56,7 +56,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="fonts\" />
     <Folder Include="music\" />
     <Folder Include="sound\" />
   </ItemGroup>
@@ -107,6 +106,13 @@
       <Name>crosshair</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fonts\SourceSansPro-Regular.spritefont">
+      <Name>SourceSansPro-Regular</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

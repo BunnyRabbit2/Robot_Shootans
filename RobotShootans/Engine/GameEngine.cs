@@ -332,5 +332,23 @@ namespace RobotShootans.Engine
                 return Content.Load<Texture2D>("images/default");
             }
         }
+
+        /// <summary>
+        /// Loads a spritefont if able. Returns null if not
+        /// </summary>
+        /// <param name="fontToLoad"></param>
+        /// <returns></returns>
+        public SpriteFont loadFont(string fontToLoad)
+        {
+            if(File.Exists("Content/fonts/" + fontToLoad + ".xnb"))
+            {
+                return Content.Load<SpriteFont>("fonts/" + fontToLoad);
+            }
+            else
+            {
+                LogFile.LogStringLine("Failed to load font: " + fontToLoad + ". Nothing loaded", LogType.ERROR);
+                return null;
+            }
+        }
     }
 }

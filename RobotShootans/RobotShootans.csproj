@@ -40,6 +40,7 @@
     <Compile Include="Engine\EntityBag.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
+    <Compile Include="Engine\OriginPosition.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />
@@ -86,9 +87,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
+    <None Include="source-sans-pro\SIL Open Font License.txt" />
+    <None Include="source-sans-pro\SourceSansPro-Black.otf" />
+    <None Include="source-sans-pro\SourceSansPro-BlackIt.otf" />
+    <None Include="source-sans-pro\SourceSansPro-Bold.otf" />
+    <None Include="source-sans-pro\SourceSansPro-BoldIt.otf" />
+    <None Include="source-sans-pro\SourceSansPro-ExtraLight.otf" />
+    <None Include="source-sans-pro\SourceSansPro-ExtraLightIt.otf" />
+    <None Include="source-sans-pro\SourceSansPro-It.otf" />
+    <None Include="source-sans-pro\SourceSansPro-Light.otf" />
+    <None Include="source-sans-pro\SourceSansPro-LightIt.otf" />
+    <None Include="source-sans-pro\SourceSansPro-Semibold.otf" />
+    <None Include="source-sans-pro\SourceSansPro-SemiboldIt.otf" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Content\fonts\SourceSansPro-Regular.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\images\background.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
