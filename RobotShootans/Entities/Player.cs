@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RobotShootans.Engine;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.IO;
+using RobotShootans.Engine;
+using RobotShootans.Entities.Weapons;
 
 namespace RobotShootans.Entities
 {
@@ -73,7 +69,7 @@ namespace RobotShootans.Entities
             _velocity = Vector2.Zero;
             _speed = Screen.Engine.RenderHeight / 3.0f; // The float is the number of seconds to cross the height of the screen
 
-            _currentWeapon = new Weapon(WeaponType.SHOTGUN);
+            _currentWeapon = new MachineGun();
             Screen.addEntity(_currentWeapon);
 
             _loaded = true;
@@ -121,6 +117,11 @@ namespace RobotShootans.Entities
             if(InputHelper.isKeyDown(Keys.Space))
             {
                   _currentWeapon.shoot(_playerSprite.Position, bearing);
+                  if (_currentWeapon.Ammo == 0)
+                  {
+                      Screen.removeEntity(_currentWeapon);
+                      _currentWeapon = new Pistol();
+                  }
             }
 
             // Binds the position to within 5% and 95% of the render screen size

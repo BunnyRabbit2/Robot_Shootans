@@ -43,6 +43,7 @@
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />
+    <Compile Include="Entities\GUI_TextItem.cs" />
     <Compile Include="Entities\Sprite.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\SplashLogo.cs" />
@@ -53,6 +54,10 @@
     <Compile Include="Engine\ResolutionIndependentRenderer.cs" />
     <Compile Include="Entities\TiledBackground.cs" />
     <Compile Include="Entities\Weapon.cs" />
+    <Compile Include="Entities\Weapons\MachineGun.cs" />
+    <Compile Include="Entities\Weapons\Pistol.cs" />
+    <Compile Include="Entities\Weapons\RocketLauncher.cs" />
+    <Compile Include="Entities\Weapons\Shotgun.cs" />
     <Compile Include="RobotShootans.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
