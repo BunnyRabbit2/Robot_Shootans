@@ -1,0 +1,12 @@
+﻿- Robots
+- Robot AI
+	0.6
+- Physics
+	0.7
+- Scoring
+	0.8
+- Pre-game screen
+- Game Over screen
+	0.9
+- Clean up and polish
+	1.0

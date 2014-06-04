@@ -86,6 +86,7 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Docs\TODO list.txt" />
     <Content Include="Icon.ico" />
     <None Include="source-sans-pro\SIL Open Font License.txt" />
     <None Include="source-sans-pro\SourceSansPro-Black.otf" />

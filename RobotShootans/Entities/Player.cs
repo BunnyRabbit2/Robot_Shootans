@@ -134,7 +134,11 @@ namespace RobotShootans.Entities
                       Screen.addEntity(_currentWeapon);
                   }
             }
-            _ammoCounter.setText(_currentWeapon.Ammo.ToString());
+
+            if (_currentWeapon.Ammo == -1)
+                _ammoCounter.setText("\u221E");
+            else
+                _ammoCounter.setText(_currentWeapon.Ammo.ToString());
 
             // Binds the position to within 5% and 95% of the render screen size
             _playerSprite.Position = HelperFunctions.KeepVectorInBounds(_playerSprite.Position,
