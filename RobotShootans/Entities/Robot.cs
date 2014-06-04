@@ -12,6 +12,8 @@ namespace RobotShootans.Entities
     {
         ColouredRectangle _displayRect;
         RobotSpawner _spawner;
+        float _speed;
+
 
         /// <summary>Creates the robot and sets the start position</summary>
         /// <param name="positionIn"></param>
@@ -26,6 +28,7 @@ namespace RobotShootans.Entities
         public override void Load()
         {
             Screen.addEntity(_displayRect);
+            _speed = Screen.Engine.RenderHeight / 4.0f;
 
             _loaded = true;
         }
@@ -34,7 +37,19 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            
+            float deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector2 pos1 = _displayRect.Position;
+            Vector2 pos2 = _spawner.playerPosition;
+
+            float dist = (float)HelperFunctions.GetDistanceBetweenTwoPoints(pos1, pos2);
+            float distX = pos1.X - pos2.X;
+            float distY = pos1.Y - pos2.Y;
+
+            float multi = deltaSpeed / dist;
+
+            Vector2 velocity = new Vector2(multi*distX, multi*distY);
+
+            _displayRect.Position -= velocity;
         }
     }
 }
