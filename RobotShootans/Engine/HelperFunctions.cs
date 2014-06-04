@@ -159,5 +159,16 @@ namespace RobotShootans.Engine
 
             return result;
         }
+
+        /// <summary>
+        /// Returns distance between two points
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <returns></returns>
+        public static double GetDistanceBetweenTwoPoints(Vector2 point1, Vector2 point2)
+        {
+            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
+        }
     }
 }

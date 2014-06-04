@@ -119,6 +119,14 @@ namespace RobotShootans.Engine
         {
             _entityBag.removeEntity(entityIn);
         }
+
+        /// <summary>Gets all entities with the name given</summary>
+        /// <param name="nameIn"></param>
+        /// <returns></returns>
+        public List<GameEntity> getEntityByName(string nameIn)
+        {
+            return _entityBag.getEntitiesByName(nameIn);
+        }
         #endregion
     }
 }

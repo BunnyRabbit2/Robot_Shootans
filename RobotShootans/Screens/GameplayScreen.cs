@@ -14,6 +14,8 @@ namespace RobotShootans.Screens
     /// </summary>
     public class GameplayScreen : GameScreen
     {
+        Player _player;
+        RobotSpawner _robotSpawner;
 
         /// <summary>
         /// Loads the content for the GameplayScreen
@@ -24,7 +26,11 @@ namespace RobotShootans.Screens
 
             addEntity( new TiledBackground("images/game/metal-bg", new Rectangle(0,0,1920,1080)) );
 
-            addEntity(new Player(Engine.RenderOrigin));
+            _player = new Player(Engine.RenderOrigin);
+            addEntity(_player);
+
+            _robotSpawner = new RobotSpawner();
+            addEntity(_robotSpawner);
 
             addEntity(new Crosshair());
 
@@ -49,6 +55,8 @@ namespace RobotShootans.Screens
             {
                 Engine.Exit();
             }
+
+            _robotSpawner.playerPosition = _player.getPosition();
 
             base.Update(gameTime);
         }

@@ -91,6 +91,14 @@ namespace RobotShootans.Engine
             _entitiesToAdd.Clear();
         }
 
+        /// <summary>Gets all entities with a name given</summary>
+        /// <param name="nameIn"></param>
+        /// <returns></returns>
+        public List<GameEntity> getEntitiesByName(string nameIn)
+        {
+            return _entities.Where(s => s.EntityName == nameIn).ToList<GameEntity>();
+        }
+
         /// <summary>
         /// Updates all entities in the entity bag
         /// </summary>

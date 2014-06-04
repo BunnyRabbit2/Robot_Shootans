@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Timers;
 
@@ -124,6 +125,7 @@ namespace RobotShootans.Engine
 
             LogFile.ClearLogFile();
             LogFile.LogStringLine("Started Engine for game: " + _gameName, LogType.INFO);
+            LogFile.LogStringLine("Version number: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
         /// <summary>

@@ -124,7 +124,7 @@ namespace RobotShootans.Entities
                 _playerSprite.Animation = "IDLE";
             }
 
-            if(InputHelper.isKeyDown(Keys.Space))
+            if (InputHelper.isKeyDown(Keys.Space))
             {
                   _currentWeapon.shoot(_playerSprite.Position, bearing);
                   if (_currentWeapon.Ammo == 0)
@@ -136,7 +136,7 @@ namespace RobotShootans.Entities
             }
 
             if (_currentWeapon.Ammo == -1)
-                _ammoCounter.setText("\u221E");
+                _ammoCounter.setText("\u221E"); // Infinity symbol
             else
                 _ammoCounter.setText(_currentWeapon.Ammo.ToString());
 
@@ -144,6 +144,8 @@ namespace RobotShootans.Entities
             _playerSprite.Position = HelperFunctions.KeepVectorInBounds(_playerSprite.Position,
                 (int)(Screen.Engine.RenderWidth * 0.05), (int)(Screen.Engine.RenderWidth * 0.95),
                 (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95));
+
+
 
 #if DEBUG
             _debugRect.X = (int)_playerSprite.Position.X - _debugRect.Width / 2;
@@ -166,6 +168,13 @@ namespace RobotShootans.Entities
 #if DEBUG
             _debugRect.Draw(gameTime, sBatch);
 #endif
+        }
+
+        /// <summary>Gets position of the player</summary>
+        /// <returns></returns>
+        public Vector2 getPosition()
+        {
+            return _playerSprite.Position;
         }
     }
 }

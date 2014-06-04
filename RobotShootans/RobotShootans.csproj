@@ -45,6 +45,8 @@
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />
     <Compile Include="Entities\GUI_TextItem.cs" />
+    <Compile Include="Entities\Robot.cs" />
+    <Compile Include="Entities\RobotSpawner.cs" />
     <Compile Include="Entities\Sprite.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\SplashLogo.cs" />
