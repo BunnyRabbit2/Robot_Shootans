@@ -22,6 +22,7 @@ namespace RobotShootans.Entities
         {
             _spawner = spawnerIn;
             _displayRect = new ColouredRectangle(new Rectangle((int)positionIn.X, (int)positionIn.Y, 20, 20), Color.Red);
+            _displayRect.setOrigin(OriginPosition.CENTER);
         }
 
         /// <summary></summary>
@@ -40,14 +41,19 @@ namespace RobotShootans.Entities
             float deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 pos1 = _displayRect.Position;
             Vector2 pos2 = _spawner.playerPosition;
+            Vector2 velocity = Vector2.Zero;
 
-            float dist = (float)HelperFunctions.GetDistanceBetweenTwoPoints(pos1, pos2);
-            float distX = pos1.X - pos2.X;
-            float distY = pos1.Y - pos2.Y;
+            if (pos1 != pos2)
+            {
 
-            float multi = deltaSpeed / dist;
+                float dist = (float)HelperFunctions.GetDistanceBetweenTwoPoints(pos1, pos2);
+                float distX = pos1.X - pos2.X;
+                float distY = pos1.Y - pos2.Y;
 
-            Vector2 velocity = new Vector2(multi*distX, multi*distY);
+                float multi = deltaSpeed / dist;
+
+                velocity = new Vector2(multi * distX, multi * distY);
+            }
 
             _displayRect.Position -= velocity;
         }

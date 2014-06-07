@@ -65,6 +65,35 @@ namespace RobotShootans.Entities
                 _rectangle.Height = (int)value.Y;
             }
         }
+
+        /// <summary>The origin of the image</summary>
+        protected Vector2 _origin;
+
+        /// <summary>
+        /// Sets the origin to draw the image from
+        /// </summary>
+        public void setOrigin(OriginPosition originIn)
+        {
+            switch (originIn)
+            {
+                case OriginPosition.TOPLEFT:
+                    _origin = new Vector2(0f, 0f);
+                    break;
+                case OriginPosition.TOPRIGHT:
+                    _origin = new Vector2(_rectangle.Width, 0f);
+                    break;
+                case OriginPosition.BOTTOMLEFT:
+                    _origin = new Vector2(0f, _rectangle.Height);
+                    break;
+                case OriginPosition.BOTTOMRIGHT:
+                    _origin = new Vector2(_rectangle.Width, _rectangle.Height);
+                    break;
+                case OriginPosition.CENTER:
+                    _origin = new Vector2(_rectangle.Width / 2f, _rectangle.Height / 2f);
+                    break;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -97,7 +126,13 @@ namespace RobotShootans.Entities
         /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            sBatch.Draw(_texture, _rectangle, _color);
+            // sBatch.Draw(_texture, origin: _origin, color: _color, drawRectangle: _rectangle);
+
+            Rectangle newRect = _rectangle;
+            newRect.X -= (int)_origin.X;
+            newRect.Y -= (int)_origin.Y;
+
+            sBatch.Draw(_texture, newRect, _color);
         }
     }
 }
