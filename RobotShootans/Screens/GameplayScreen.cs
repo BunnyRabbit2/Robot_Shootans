@@ -17,6 +17,12 @@ namespace RobotShootans.Screens
         Player _player;
         RobotSpawner _robotSpawner;
 
+        public GameplayScreen(bool blockUpdating = false)
+            : base(blockUpdating)
+        {
+
+        }
+
         /// <summary>
         /// Loads the content for the GameplayScreen
         /// </summary>

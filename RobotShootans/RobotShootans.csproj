@@ -65,9 +65,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
+    <Compile Include="Screens\PhysicsTestScreen.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FarseerPhysics MonoGame">
+      <HintPath>..\..\..\..\Libraries\Farseer Physics Engine 3.5\bin\WindowsGL\Debug\FarseerPhysics MonoGame.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
     </Reference>
@@ -90,6 +94,9 @@
     </Content>
     <Content Include="Docs\TODO list.txt" />
     <Content Include="Icon.ico" />
+    <None Include="Content\images\farseer-logo-512px.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="source-sans-pro\SIL Open Font License.txt" />
     <None Include="source-sans-pro\SourceSansPro-Black.otf" />
     <None Include="source-sans-pro\SourceSansPro-BlackIt.otf" />

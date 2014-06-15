@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -41,6 +43,7 @@ namespace RobotShootans.Engine
         {
             _gameName = "Robot Shootans";
             _gameScreens = new List<GameScreen>();
+            _gameScreensToAdd = new List<GameScreen>();
             _screensToRemove = new List<GameScreen>();
             _loaded = false;
         }
@@ -77,6 +80,7 @@ namespace RobotShootans.Engine
             get { return _gameName; }
         }
         private List<GameScreen> _gameScreens;
+        private List<GameScreen> _gameScreensToAdd;
         private List<GameScreen> _screensToRemove;
 
         private ResolutionIndependentRenderer _resolutionIndependence;
@@ -210,7 +214,19 @@ namespace RobotShootans.Engine
             gameScreenIn.loadGameScreen();
             if (paused)
                 gameScreenIn.Pause();
-            _gameScreens.Add(gameScreenIn);
+            _gameScreensToAdd.Add(gameScreenIn);
+        }
+
+        /// <summary>
+        /// Adds all screens to be added
+        /// </summary>
+        private void addGameScreens()
+        {
+            foreach(GameScreen s in _gameScreensToAdd)
+            {
+                _gameScreens.Add(s);
+            }
+            _gameScreensToAdd.Clear();
         }
 
         /// <summary>
@@ -249,6 +265,16 @@ namespace RobotShootans.Engine
                 _screensToRemove.Clear();
             }
         }
+
+        /// <summary>
+        /// Checks if the engine contains a screen with the name given
+        /// </summary>
+        /// <param name="nameIn">The name of the screen to look for</param>
+        /// <returns>If the game screen is in the stack</returns>
+        public bool containsScreen(string nameIn)
+        {
+            return _gameScreens.Any(s => s.ScreenName == nameIn);
+        }
         #endregion
 
         #region Main Loop functions
@@ -273,6 +299,7 @@ namespace RobotShootans.Engine
                 }
 
                 removeScreens();
+                addGameScreens();
 
                 if (_exitGame)
                     _game.Exit();
@@ -313,6 +340,7 @@ namespace RobotShootans.Engine
             return _resolutionIndependence.ScaleMouseToScreenCoordinates(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
         }
 
+        #region Content loading
         /// <summary>
         /// Loads a texture in a safe way and returns the texture asked for or a default if it fails to find it.
         /// Already includes "Content/image/" in the path to load
@@ -349,5 +377,6 @@ namespace RobotShootans.Engine
                 return null;
             }
         }
+        #endregion
     }
 }

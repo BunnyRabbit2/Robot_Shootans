@@ -49,6 +49,7 @@ namespace RobotShootans.Engine
         /// <param name="blockUpdating">Sets if the screen blocks screens under it from updating</param>
         public GameScreen(bool blockUpdating = false)
         {
+            _blockUpdating = blockUpdating;
             _entityBag = new EntityBag();
         }
 

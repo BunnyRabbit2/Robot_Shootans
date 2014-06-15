@@ -94,6 +94,16 @@ namespace RobotShootans.Entities
             }
         }
 
+        /// <summary>The rotation of the image</summary>
+        protected float _rotation;
+
+        /// <summary>Sets the rotation of the image</summary>
+        /// <param name="rotationIn"></param>
+        public void setRotation(float rotationIn)
+        {
+            _rotation = rotationIn;
+        }
+
         #endregion
 
         /// <summary>
@@ -101,11 +111,12 @@ namespace RobotShootans.Entities
         /// </summary>
         /// <param name="size">The position and size wanted</param>
         /// <param name="colour">The colour wanted</param>
-        public ColouredRectangle(Rectangle size, Color colour)
+        public ColouredRectangle(Rectangle size, Color colour, OriginPosition originIn = OriginPosition.TOPLEFT)
             : base ("Rect")
         {
             _rectangle = size;
             _color = colour;
+            setOrigin(originIn);
         }
 
         /// <summary>
@@ -132,7 +143,9 @@ namespace RobotShootans.Entities
             newRect.X -= (int)_origin.X;
             newRect.Y -= (int)_origin.Y;
 
-            sBatch.Draw(_texture, newRect, _color);
+            //sBatch.Draw(_texture, newRect, _color);
+            sBatch.Draw(_texture, new Vector2(_rectangle.X, _rectangle.Y), newRect, _color, _rotation, _origin, 1f, SpriteEffects.None, 0f);
+            //sBatch.Draw(_texture, color: _color, origin: _origin, rotation: _rotation, drawRectangle: newRect, sourceRectangle: newRect);
         }
     }
 }

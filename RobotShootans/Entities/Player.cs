@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
@@ -20,6 +21,8 @@ namespace RobotShootans.Entities
         Weapon _currentWeapon;
 
         GUI_TextItem _ammoCounter;
+
+        Body _physicsBody;
 
 #if DEBUG
         ColouredRectangle _debugRect;

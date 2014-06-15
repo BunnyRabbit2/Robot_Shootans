@@ -96,6 +96,16 @@ namespace RobotShootans
             if (InputHelper.isKeyPressNew(Keys.Enter) || InputHelper.isButtonPressNew(Buttons.Back, currentPlayer) )
                 Exit();
 
+#if DEBUG
+            if (InputHelper.isKeyPressNew(Keys.F2))
+            {
+                if (_engine.containsScreen("PHYSICS TEST SCREEN"))
+                    _engine.removeGameScreen("PHYSICS TEST SCREEN");
+                else
+                    _engine.pushGameScreen(new PhysicsTestScreen(true));
+            }
+#endif
+
             if (_firstUpdate)
             {
                 _engine.pushGameScreen(new SplashScreen());

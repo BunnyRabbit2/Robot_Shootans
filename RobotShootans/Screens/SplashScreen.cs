@@ -19,7 +19,17 @@ namespace RobotShootans.Screens
         private int _displayTime; // How long to display each logo for in milliseconds
         private int _fadeTime; // How long to fade each logo in/out in milliseconds
         private int _waitTime; // Time to wait before displaying logos
-        private bool _firstUpdate, _addedFirstScreen, _addedSecondScreen;
+        private bool _firstUpdate, _addedFirstScreen, _addedSecondScreen, _addedThirdScreen;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="blockUpdating"></param>
+        public SplashScreen(bool blockUpdating = false)
+            : base(blockUpdating)
+        {
+
+        }
 
         /// <summary>
         /// Loads the background and sets variables.
@@ -34,6 +44,7 @@ namespace RobotShootans.Screens
 
             _addedFirstScreen = false;
             _addedSecondScreen = false;
+            _addedThirdScreen = false;
 
             _displayTime = 5000;
             _fadeTime = 1000;
@@ -79,7 +90,13 @@ namespace RobotShootans.Screens
                 addEntity(new SplashLogo("images/MonogameLogo512x512", new Vector2(Engine.RenderWidth / 2, Engine.RenderHeight / 2), _displayTime, _fadeTime));
                 _addedSecondScreen = true;
             }
-            else if(_splashTimer > _waitTime + (_displayTime*2))
+            else if (_splashTimer > _waitTime + _displayTime * 2 && !_addedThirdScreen)
+            {
+                removeEntity("images/MonogameLogo512x512");
+                addEntity(new SplashLogo("images/farseer-logo-512px", new Vector2(Engine.RenderWidth / 2, Engine.RenderHeight / 2), _displayTime, _fadeTime));
+                _addedThirdScreen = true;
+            }
+            else if(_splashTimer > _waitTime + (_displayTime*3))
             {
                 Engine.removeGameScreen(this);
                 Engine.pushGameScreen(new GameplayScreen());
