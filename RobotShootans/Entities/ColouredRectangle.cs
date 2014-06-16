@@ -111,6 +111,7 @@ namespace RobotShootans.Entities
         /// </summary>
         /// <param name="size">The position and size wanted</param>
         /// <param name="colour">The colour wanted</param>
+        /// <param name="originIn">The origin of the rectangle to use. Defaults to top left</param>
         public ColouredRectangle(Rectangle size, Color colour, OriginPosition originIn = OriginPosition.TOPLEFT)
             : base ("Rect")
         {

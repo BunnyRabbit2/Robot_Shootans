@@ -22,8 +22,6 @@ namespace RobotShootans.Entities
 
         GUI_TextItem _ammoCounter;
 
-        Body _physicsBody;
-
 #if DEBUG
         ColouredRectangle _debugRect;
 #endif

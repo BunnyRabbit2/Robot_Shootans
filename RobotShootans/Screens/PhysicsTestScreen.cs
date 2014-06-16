@@ -12,6 +12,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace RobotShootans.Screens
 {
+    /// <summary>
+    /// A screen used to test implementation of Farseer physics system
+    /// </summary>
     public class PhysicsTestScreen : GameScreen
     {
         Body _ground;
@@ -21,15 +24,25 @@ namespace RobotShootans.Screens
 
         ColouredRectangle _groundDisp, _plat1Disp, _plat2Disp;
 
-        public World _physicsWorld;
+        private World _physicsWorld;
+        /// <summary>
+        /// The physics world for the screen
+        /// </summary>
         public World PhysicsWorld { get { return _physicsWorld; } }
 
+        /// <summary>
+        /// Constructor for the Physics Test Screen
+        /// </summary>
+        /// <param name="blockUpdating">Sets whether the screen block screens under it from updating</param>
         public PhysicsTestScreen(bool blockUpdating = false)
             : base(blockUpdating)
         {
             _screenName = "PHYSICS TEST SCREEN";
         }
         
+        /// <summary>
+        /// Loads the screen and sets up all the required platforms for the screen
+        /// </summary>
         public override void loadGameScreen()
         {
             _physicsWorld = new World(new Vector2(0f, 10f));
@@ -40,7 +53,7 @@ namespace RobotShootans.Screens
             addEntity(new ColouredRectangle(new Rectangle(0, 0, 1920, 1080), Color.DarkGray));
 
             _ground = BodyFactory.CreateRectangle(_physicsWorld, ConvertUnits.ToSimUnits(Engine.RenderWidth * 2), ConvertUnits.ToSimUnits(50), 10f);
-            _ground.Position = ConvertUnits.ToSimUnits(Engine.RenderWidth / 2, Engine.RenderHeight-50);
+            _ground.Position = ConvertUnits.ToSimUnits(Engine.RenderOrigin.X, Engine.RenderHeight-50);
             _ground.IsStatic = true;
             _ground.Restitution = 0.2f;
             _ground.Friction = 0.2f;
@@ -81,11 +94,18 @@ namespace RobotShootans.Screens
             _loaded = true;
         }
 
+        /// <summary>
+        /// Unloads all content for the game screen
+        /// </summary>
         public override void unloadGameScreen()
         {
             
         }
 
+        /// <summary>
+        /// Updates the physics test screen
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             if(InputHelper.isKeyPressNew(Keys.Space))
@@ -126,9 +146,23 @@ namespace RobotShootans.Screens
 
             for (int i = 0; i < _displayBoxes.Count; i++)
             {
-                _displayBoxes[i].Position = ConvertUnits.ToDisplayUnits(_boxes[i].Position);
-                //_displayBoxes[i].Position = ConvertUnits.ToDisplayUnits(_boxes[i].Position);
-                _displayBoxes[i].setRotation(_boxes[i].Rotation);
+                Vector2 boxP = ConvertUnits.ToDisplayUnits(_boxes[i].Position);
+
+                if (boxP.X < 0 || boxP.X > Engine.RenderWidth
+                    || boxP.Y > Engine.RenderHeight)
+                {
+                    Body b = _boxes[i];
+                    _boxes.Remove(_boxes[i]);
+                    b.Dispose();
+                    removeEntity(_displayBoxes[i]);
+                    _displayBoxes.Remove(_displayBoxes[i]);
+                }
+                else
+                {
+                    _displayBoxes[i].Position = boxP;
+                    //_displayBoxes[i].Position = ConvertUnits.ToDisplayUnits(_boxes[i].Position);
+                    _displayBoxes[i].setRotation(_boxes[i].Rotation);
+                }
             }
 
             _physicsWorld.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -136,6 +170,11 @@ namespace RobotShootans.Screens
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draws the physics test screen
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
             

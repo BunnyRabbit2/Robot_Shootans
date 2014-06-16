@@ -17,6 +17,10 @@ namespace RobotShootans.Screens
         Player _player;
         RobotSpawner _robotSpawner;
 
+        /// <summary>
+        /// Creates the GameplayScreen
+        /// </summary>
+        /// <param name="blockUpdating">sets whether the screen blocks updating of screens below it</param>
         public GameplayScreen(bool blockUpdating = false)
             : base(blockUpdating)
         {
