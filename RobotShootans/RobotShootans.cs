@@ -104,6 +104,13 @@ namespace RobotShootans
                 else
                     _engine.pushGameScreen(new PhysicsTestScreen(true));
             }
+            if (InputHelper.isKeyPressNew(Keys.F3))
+            {
+                if (_engine.containsScreen("PHYSICS TEST SCREEN TWO"))
+                    _engine.removeGameScreen("PHYSICS TEST SCREEN TWO");
+                else
+                    _engine.pushGameScreen(new PhysicsTestScreenTwo(true));
+            }
 #endif
 
             if (_firstUpdate)

@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Input;
 namespace RobotShootans.Screens
 {
     /// <summary>
-    /// A screen used to test implementation of Farseer physics system
+    /// A screen used to test implementation of Farseer physics system with falling boxes
     /// </summary>
     public class PhysicsTestScreen : GameScreen
     {
