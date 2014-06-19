@@ -101,10 +101,9 @@ namespace RobotShootans.Screens
                 if (boxP.X < 0 || boxP.X > Engine.RenderWidth
                     || boxP.Y > Engine.RenderHeight)
                 {
-                    PhysicsBox b = _boxes[i];
                     _boxes.Remove(_boxes[i]);
-                    b.Dispose();
                     removeEntity(_boxes[i]);
+                    i--; // Sets the iterator back to account for the removal of the box from the list
                 }
             }
 

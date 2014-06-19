@@ -18,7 +18,9 @@ namespace RobotShootans.Entities
         Body _physicsBody;
         ColouredRectangle _displayRect;
 
+        /// <summary>The position of the box in the physics simulation</summary>
         public Vector2 SimPos { get { return _physicsBody.Position; } }
+        /// <summary>The position of the box on the display</summary>
         public Vector2 Position { get { return new Vector2(_displayRect.X, _displayRect.Y); } }
 
         /// <summary>
@@ -30,11 +32,27 @@ namespace RobotShootans.Entities
             
         }
 
+        /// <summary>
+        /// Loads the physics box. Does not actually load anything
+        /// </summary>
         public override void Load()
         {
             
         }
 
+        /// <summary>
+        /// Sets up the box to display
+        /// </summary>
+        /// <param name="worldIn">The physics world to associate the box with</param>
+        /// <param name="width">The width of the box</param>
+        /// <param name="height">The height of the box</param>
+        /// <param name="isStaticIn">Whether the box is static or not</param>
+        /// <param name="position">The starting position of the box</param>
+        /// <param name="rotationIn">The starting rotation of the box</param>
+        /// <param name="restitution">The restitution of the box</param>
+        /// <param name="friction">The friction of the box</param>
+        /// <param name="colorIn">The colour of the box</param>
+        /// <param name="originIn">The origin of the box</param>
         public void SetupBox(World worldIn, int width, int height, bool isStaticIn, Vector2 position, float rotationIn, float restitution, float friction, Color colorIn, OriginPosition originIn = OriginPosition.CENTER)
         {
             if (Screen != null)
@@ -57,16 +75,19 @@ namespace RobotShootans.Entities
             }
         }
 
+        /// <summary>
+        /// Updates the position of the display box to be the same ad the sim box
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             _displayRect.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
             _displayRect.setRotation(_physicsBody.Rotation);
         }
 
-        public void Dispose()
+        public override void Unload()
         {
-            if (_physicsBody != null)
-                _physicsBody.Dispose();
+            _physicsBody.Dispose();
         }
     }
 }
