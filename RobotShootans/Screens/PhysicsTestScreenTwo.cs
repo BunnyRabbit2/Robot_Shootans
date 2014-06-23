@@ -25,7 +25,9 @@ namespace RobotShootans.Screens
 
         PhysicsBox _player;
 
-        float _maxVelocity, _moveImpulse;
+        float _maxVelocity, _moveImpulse, _angleMoveImpulse;
+
+        GUI_TextItem _dirDisplay, _impulseDisplay;
 
         /// <summary>Creates the physics screen</summary>
         /// <param name="blockUpdating"></param>
@@ -45,12 +47,26 @@ namespace RobotShootans.Screens
             addEntity(new ColouredRectangle(new Rectangle(0, 0, 1920, 1080), Color.DarkBlue));
 
             _maxVelocity = 10f;
+            _moveImpulse = 10f;
+            _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
             _player = new PhysicsBox();
             addEntity(_player);
-            _player.SetupBox(_physicsWorld, 64, 64, false, Engine.RenderOrigin, 0f, 0.2f, 0.2f, Color.Red, OriginPosition.CENTER);
+            _player.SetupBox(_physicsWorld, 64, 64, false, Engine.RenderOrigin, 0f, 0.2f, 0f, Color.Red, OriginPosition.CENTER);
 
             _loaded = true;
+
+            _dirDisplay = new GUI_TextItem();
+            _dirDisplay.setFont(Engine.loadFont("SourceSansPro-Regular"));
+            _dirDisplay.Position = new Vector2(100, 100);
+            _dirDisplay.setColor(Color.Red);
+            addEntity(_dirDisplay);
+
+            _impulseDisplay = new GUI_TextItem();
+            _impulseDisplay.setFont(Engine.loadFont("SourceSansPro-Regular"));
+            _impulseDisplay.Position = new Vector2(100, 200);
+            _impulseDisplay.setColor(Color.Red);
+            addEntity(_impulseDisplay);
         }
 
         /// <summary>
@@ -59,6 +75,66 @@ namespace RobotShootans.Screens
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            int vertDir = 0;
+            int horiDir = 0;
+            Vector2 linearImpulse = Vector2.Zero;
+
+            if (InputHelper.isKeyDown(Keys.W))
+                vertDir++;
+            if (InputHelper.isKeyDown(Keys.S))
+                vertDir--;
+            if (InputHelper.isKeyDown(Keys.D))
+                horiDir++;
+            if (InputHelper.isKeyDown(Keys.A))
+                horiDir--;
+
+            if (vertDir == 0)
+            {
+                if (horiDir == 1)
+                    linearImpulse.X = _moveImpulse;
+                else if (horiDir == -1)
+                    linearImpulse.X = -_moveImpulse;
+            }
+            else
+            {
+                if (horiDir != 0)
+                {
+                    if(vertDir == 1)
+                    {
+                        if (horiDir == 1)
+                            linearImpulse = new Vector2(_angleMoveImpulse, _angleMoveImpulse);
+                        else if (horiDir == -1)
+                            linearImpulse = new Vector2(-_angleMoveImpulse, _angleMoveImpulse);
+                    }
+                    else if(vertDir == -1)
+                    {
+                        if (horiDir == 1)
+                            linearImpulse = new Vector2(_angleMoveImpulse, -_angleMoveImpulse);
+                        else if (horiDir == -1)
+                            linearImpulse = new Vector2(-_angleMoveImpulse, -_angleMoveImpulse);
+                    }
+                }
+                else
+                {
+                    if (vertDir == 1)
+                        linearImpulse.Y = _moveImpulse;
+                    else if (vertDir == -1)
+                        linearImpulse.Y = -_moveImpulse;
+                }
+            }
+
+            _dirDisplay.setText(horiDir + ", " + vertDir);
+            _impulseDisplay.setText(linearImpulse.ToString());
+
+            if(linearImpulse != Vector2.Zero)
+            {
+                _player.Body.ApplyLinearImpulse(linearImpulse, _player.SimPos);
+            }
+            else
+            {
+                _player.Body.LinearVelocity = Vector2.Zero;
+            }
+
             base.Update(gameTime);
         }
 
