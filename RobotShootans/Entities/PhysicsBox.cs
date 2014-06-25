@@ -26,6 +26,7 @@ namespace RobotShootans.Entities
 #if DEBUG
         // Surrounding this until I figure out a better way of doing this
         // Hopefully this will force me to check it before compiling as Release
+        /// <summary>Public access to the physics body</summary>
         public Body Body { get { return _physicsBody; } }
 #endif
 
@@ -91,6 +92,7 @@ namespace RobotShootans.Entities
             _displayRect.setRotation(_physicsBody.Rotation);
         }
 
+        /// <summary>Disposes the physics body when the box is unloaded</summary>
         public override void Unload()
         {
             _physicsBody.Dispose();
