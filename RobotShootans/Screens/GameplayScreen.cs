@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RobotShootans.Engine;
-using RobotShootans.Entities;
+﻿using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using FarseerPhysics.Dynamics;
+using RobotShootans.Engine;
+using RobotShootans.Entities;
 
 namespace RobotShootans.Screens
 {

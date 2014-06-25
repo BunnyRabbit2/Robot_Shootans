@@ -1,16 +1,14 @@
-﻿// http://www.badlogicgames.com/forum/viewtopic.php?f=11&t=14129
-
-using FarseerPhysics;
+﻿using FarseerPhysics;
 using FarseerPhysics.Dynamics;
-using FarseerPhysics.Factories;
-using FarseerPhysics.Common;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities;
 using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Input;
+
+// I used the following post as inspiration and a guide for getting the movement working how I wanted it
+// http://www.badlogicgames.com/forum/viewtopic.php?f=11&t=14129
 
 namespace RobotShootans.Screens
 {

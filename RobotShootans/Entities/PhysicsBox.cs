@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RobotShootans.Engine;
+﻿using FarseerPhysics;
 using FarseerPhysics.Dynamics;
-using Microsoft.Xna.Framework;
 using FarseerPhysics.Factories;
-using FarseerPhysics;
+using Microsoft.Xna.Framework;
+using RobotShootans.Engine;
 
 namespace RobotShootans.Entities
 {
