@@ -6,6 +6,7 @@ using RobotShootans.Engine;
 using RobotShootans.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using FarseerPhysics.Dynamics;
 
 namespace RobotShootans.Screens
 {
@@ -16,6 +17,10 @@ namespace RobotShootans.Screens
     {
         Player _player;
         RobotSpawner _robotSpawner;
+
+        World _physicsWorld;
+        /// <summary>The Physics World of the screen</summary>
+        public World PhysicsWorld { get { return _physicsWorld; } }
 
         /// <summary>
         /// Creates the GameplayScreen
@@ -34,9 +39,11 @@ namespace RobotShootans.Screens
         {
             _screenName = "GAMEPLAY SCREEN";
 
+            _physicsWorld = new World(Vector2.Zero);
+
             addEntity( new TiledBackground("images/game/metal-bg", new Rectangle(0,0,1920,1080)) );
 
-            _player = new Player(Engine.RenderOrigin);
+            _player = new Player(Engine.RenderOrigin, _physicsWorld);
             addEntity(_player);
 
             _robotSpawner = new RobotSpawner();
@@ -69,6 +76,8 @@ namespace RobotShootans.Screens
             _robotSpawner.playerPosition = _player.getPosition();
 
             base.Update(gameTime);
+
+            _physicsWorld.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         /// <summary>

@@ -1,9 +1,12 @@
-﻿using FarseerPhysics.Dynamics;
+﻿using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities.Weapons;
+using System;
 
 namespace RobotShootans.Entities
 {
@@ -15,8 +18,10 @@ namespace RobotShootans.Entities
         EntityBag _bag;
         Sprite _playerSprite;
 
-        Vector2 _velocity;
-        float _speed;
+        float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
+
+        Body _physicsBody;
+        World _physicsWorld;
 
         Weapon _currentWeapon;
 
@@ -30,9 +35,11 @@ namespace RobotShootans.Entities
         /// Creates the Player object
         /// </summary>
         /// <param name="startPos"></param>
-        public Player(Vector2 startPos)
+        /// <param name="worldIn"></param>
+        public Player(Vector2 startPos, World worldIn)
             : base("Player")
         {
+            _physicsWorld = worldIn;
             _playerSprite = new Sprite();
             _playerSprite.Position = startPos;
             _bag = new EntityBag();
@@ -46,6 +53,8 @@ namespace RobotShootans.Entities
         {
             int frameWidth = 90;
             int frameHeight = 150;
+
+            int collisionBoxSize = 45; 
 
             _bag.addEntity(_playerSprite, Screen);
             _playerSprite.setImage("game/player-sheet");
@@ -65,18 +74,28 @@ namespace RobotShootans.Entities
             _playerSprite.setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
 
 #if DEBUG
-            _debugRect = new ColouredRectangle(new Rectangle((int)_playerSprite.X, (int)_playerSprite.Y, 4, 4), Color.Red);
+            _debugRect = new ColouredRectangle(
+                new Rectangle((int)_playerSprite.X, (int)_playerSprite.Y, collisionBoxSize, collisionBoxSize),
+                new Color(Color.Red, 48), OriginPosition.CENTER);
             _debugRect.Screen = Screen;
             _debugRect.Load();
 #endif
-            
-            _velocity = Vector2.Zero;
-            _speed = Screen.Engine.RenderHeight / 3.0f; // The float is the number of seconds to cross the height of the screen
+
+            _maxVelocity =5f; // The maximum velocity the player can move at
+            _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
+
+            _moveImpulse = 10f;
+            _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
+
+            _physicsBody = BodyFactory.CreateRectangle(_physicsWorld, ConvertUnits.ToSimUnits(collisionBoxSize), ConvertUnits.ToSimUnits(collisionBoxSize), 10f);
+            _physicsBody.Restitution = 0f;
+            _physicsBody.Friction = 0.2f;
+            _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);
+            _physicsBody.IsStatic = false;
 
             _currentWeapon = new MachineGun();
             Screen.addEntity(_currentWeapon);
 
-            // Testing text item
             _ammoCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
             _ammoCounter.setText(_currentWeapon.Ammo.ToString());
             _ammoCounter.Position = new Vector2(100, 100);
@@ -94,36 +113,86 @@ namespace RobotShootans.Entities
         {
             float bearing = HelperFunctions.GetBearingBetweenTwoPoints(_playerSprite.Position, Screen.Engine.GetMousePosition(), false);
             _playerSprite.setRotation(bearing);
+            _physicsBody.Rotation = bearing;
 
-            float _deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            int vertDir = 0;
+            int horiDir = 0;
+            Vector2 linearImpulse = Vector2.Zero;
 
-            if (InputHelper.isKeyPressNew(Keys.W))
-                _velocity.Y -= _deltaSpeed;
-            if (InputHelper.isKeyUpNew(Keys.W))
-                _velocity.Y += _deltaSpeed;
-            if (InputHelper.isKeyPressNew(Keys.S))
-                _velocity.Y += _deltaSpeed;
-            if (InputHelper.isKeyUpNew(Keys.S))
-                _velocity.Y -= _deltaSpeed;
-            if (InputHelper.isKeyPressNew(Keys.D))
-                _velocity.X += _deltaSpeed;
-            if (InputHelper.isKeyUpNew(Keys.D))
-                _velocity.X -= _deltaSpeed;
-            if (InputHelper.isKeyPressNew(Keys.A))
-                _velocity.X -= _deltaSpeed;
-            if (InputHelper.isKeyUpNew(Keys.A))
-                _velocity.X += _deltaSpeed;
+            if (InputHelper.isKeyDown(Keys.W))
+                vertDir--;
+            if (InputHelper.isKeyDown(Keys.S))
+                vertDir++;
+            if (InputHelper.isKeyDown(Keys.D))
+                horiDir++;
+            if (InputHelper.isKeyDown(Keys.A))
+                horiDir--;
 
-            _playerSprite.Position += _velocity;
-
-            if (_velocity != Vector2.Zero)
+            if (vertDir == 0)
             {
-                _playerSprite.Animation = "WALK";
+                if (horiDir == 1)
+                    linearImpulse.X = _moveImpulse;
+                else if (horiDir == -1)
+                    linearImpulse.X = -_moveImpulse;
             }
-            else if (_velocity == Vector2.Zero)
+            else
             {
-                _playerSprite.Animation = "IDLE";
+                if (horiDir != 0)
+                {
+                    if (vertDir == 1)
+                    {
+                        if (horiDir == 1)
+                            linearImpulse = new Vector2(_angleMoveImpulse, _angleMoveImpulse);
+                        else if (horiDir == -1)
+                            linearImpulse = new Vector2(-_angleMoveImpulse, _angleMoveImpulse);
+                    }
+                    else if (vertDir == -1)
+                    {
+                        if (horiDir == 1)
+                            linearImpulse = new Vector2(_angleMoveImpulse, -_angleMoveImpulse);
+                        else if (horiDir == -1)
+                            linearImpulse = new Vector2(-_angleMoveImpulse, -_angleMoveImpulse);
+                    }
+                }
+                else
+                {
+                    if (vertDir == 1)
+                        linearImpulse.Y = _moveImpulse;
+                    else if (vertDir == -1)
+                        linearImpulse.Y = -_moveImpulse;
+                }
             }
+
+            if (linearImpulse != Vector2.Zero)
+            {
+                _physicsBody.ApplyLinearImpulse(linearImpulse, _physicsBody.Position);
+
+                if (horiDir == 0)
+                    _physicsBody.LinearVelocity = new Vector2(0f, MathHelper.Clamp(_physicsBody.LinearVelocity.Y, -_maxVelocity, _maxVelocity));
+                else if (vertDir == 0)
+                    _physicsBody.LinearVelocity = new Vector2(MathHelper.Clamp(_physicsBody.LinearVelocity.X, -_maxVelocity, _maxVelocity), 0f);
+                else
+                    _physicsBody.LinearVelocity = new Vector2(
+                        MathHelper.Clamp(_physicsBody.LinearVelocity.X, -_maxAngleVelocity, _maxAngleVelocity),
+                        MathHelper.Clamp(_physicsBody.LinearVelocity.Y, -_maxAngleVelocity, _maxAngleVelocity));
+            }
+            else
+            {
+                _physicsBody.LinearVelocity = Vector2.Zero;
+            }
+
+            // Binds the position to within 5% and 95% of the render screen size
+            _physicsBody.Position = ConvertUnits.ToSimUnits(
+                HelperFunctions.KeepVectorInBounds(ConvertUnits.ToDisplayUnits(_physicsBody.Position),
+                (int)(Screen.Engine.RenderWidth * 0.05), (int)(Screen.Engine.RenderWidth * 0.95),
+                (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95)));
+
+            _playerSprite.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
+
+#if DEBUG
+            _debugRect.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
+            _debugRect.setRotation(_physicsBody.Rotation);
+#endif
 
             if (InputHelper.isKeyDown(Keys.Space))
             {
@@ -141,16 +210,9 @@ namespace RobotShootans.Entities
             else
                 _ammoCounter.setText(_currentWeapon.Ammo.ToString());
 
-            // Binds the position to within 5% and 95% of the render screen size
-            _playerSprite.Position = HelperFunctions.KeepVectorInBounds(_playerSprite.Position,
-                (int)(Screen.Engine.RenderWidth * 0.05), (int)(Screen.Engine.RenderWidth * 0.95),
-                (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95));
-
-
-
 #if DEBUG
-            _debugRect.X = (int)_playerSprite.Position.X - _debugRect.Width / 2;
-            _debugRect.Y = (int)_playerSprite.Position.Y - _debugRect.Height / 2;
+            _debugRect.X = (int)_playerSprite.Position.X;
+            _debugRect.Y = (int)_playerSprite.Position.Y;
 #endif
 
             _bag.Update(gameTime);

@@ -104,6 +104,17 @@ namespace RobotShootans.Entities
             _rotation = rotationIn;
         }
 
+        /// <summary>
+        /// The alpha of the rectangle
+        /// </summary>
+        public int Alpha {
+            get { return _color.A; }
+            set
+            {
+                _color.A = (byte)MathHelper.Clamp(value, 0, 255);
+            }
+        }
+
         #endregion
 
         /// <summary>
