@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -38,6 +39,15 @@ namespace RobotShootans.Engine
         protected string _screenName;
         /// <summary>The screens name</summary>
         public string ScreenName { get { return _screenName; } }
+
+        /// <summary>Sets whether the screen is physics enabled or not</summary>
+        protected bool _physicsEnabled;
+        /// <summary>Does the screen have a physics world?</summary>
+        public bool PhysicsEnabled { get { return _physicsEnabled; } }
+        /// <summary>The screens physics world</summary>
+        protected World _physicsWorld;
+        /// <summary>Public access to the screen's physics world</summary>
+        public World PhysicsWorld { get { return _physicsWorld; } }
         #endregion
 
         /// <summary>

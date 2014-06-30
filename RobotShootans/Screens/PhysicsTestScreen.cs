@@ -18,12 +18,6 @@ namespace RobotShootans.Screens
 
         PhysicsBox _groundBox, _platform1, _platform2;
 
-        private World _physicsWorld;
-        /// <summary>
-        /// The physics world for the screen
-        /// </summary>
-        public World PhysicsWorld { get { return _physicsWorld; } }
-
         /// <summary>
         /// Constructor for the Physics Test Screen
         /// </summary>

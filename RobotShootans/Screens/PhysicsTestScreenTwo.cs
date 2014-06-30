@@ -17,10 +17,6 @@ namespace RobotShootans.Screens
     /// </summary>
     public class PhysicsTestScreenTwo : GameScreen
     {
-        private World _physicsWorld;
-        /// <summary>The Screen's physics world</summary>
-        public World PhysicsWorld { get { return _physicsWorld; } }
-
         PhysicsBox _player;
 
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;

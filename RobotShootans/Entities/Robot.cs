@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework;
 using RobotShootans.Engine;
+using System;
 
 namespace RobotShootans.Entities
 {
@@ -7,25 +9,45 @@ namespace RobotShootans.Entities
     public class Robot : GameEntity
     {
         ColouredRectangle _displayRect;
+        PhysicsBox _displayBox;
         RobotSpawner _spawner;
         float _speed;
 
+        Vector2 _startPos;
+
+        int _robotSize;
+
+        float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
 
         /// <summary>Creates the robot and sets the start position</summary>
         /// <param name="positionIn"></param>
         /// /// <param name="spawnerIn"></param>
-        public Robot(Vector2 positionIn, RobotSpawner spawnerIn) : base ("ROBOT")
+        public Robot(Vector2 positionIn, RobotSpawner spawnerIn, int sizeIn) : base ("ROBOT")
         {
             _spawner = spawnerIn;
-            _displayRect = new ColouredRectangle(new Rectangle((int)positionIn.X, (int)positionIn.Y, 20, 20), Color.Red);
+            _robotSize = sizeIn;
+
+            _startPos = positionIn;
+
+            _displayBox = new PhysicsBox();
+            _displayRect = new ColouredRectangle(new Rectangle((int)positionIn.X, (int)positionIn.Y, _robotSize, _robotSize), Color.Red);
             _displayRect.setOrigin(OriginPosition.CENTER);
         }
 
         /// <summary></summary>
         public override void Load()
         {
-            Screen.addEntity(_displayRect);
+            // Screen.addEntity(_displayRect);
+            Screen.addEntity(_displayBox);
             _speed = Screen.Engine.RenderHeight / 4.0f;
+
+            _displayBox.SetupBox(Screen.PhysicsWorld, _robotSize, _robotSize, false, _startPos, 0.0f, 0.0f, 0.2f, Color.Red);
+
+            _maxVelocity = 3f; // Max velocity at which the robot can move
+            _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
+
+            _moveImpulse = 10f;
+            _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
             _loaded = true;
         }
@@ -34,24 +56,37 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            float deltaSpeed = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 pos1 = _displayRect.Position;
+            Vector2 pos1 = _displayBox.Position;
             Vector2 pos2 = _spawner.playerPosition;
-            Vector2 velocity = Vector2.Zero;
 
-            if (pos1 != pos2)
+            if (pos2 != null)
             {
+                float _travelDirection = HelperFunctions.GetBearingBetweenTwoPoints(pos1, pos2);
 
-                float dist = (float)HelperFunctions.GetDistanceBetweenTwoPoints(pos1, pos2);
-                float distX = pos1.X - pos2.X;
-                float distY = pos1.Y - pos2.Y;
+                Vector2 impulse = Vector2.Zero;
 
-                float multi = deltaSpeed / dist;
+                double h = Math.Sqrt(_angleMoveImpulse * _angleMoveImpulse + _angleMoveImpulse * _angleMoveImpulse);
 
-                velocity = new Vector2(multi * distX, multi * distY);
+                // soh cah
+
+                // fucking trig always fucking with my shit
+
+                //if(_displayBox.Body.LinearVelocity.X == 0)
+                //{
+                //    MathHelper.Clamp(_displayBox.Body.LinearVelocity.Y, -_maxVelocity, _maxVelocity);
+                //}
+                //else if(_displayBox.Body.LinearVelocity.Y == 0)
+                //{
+                //    MathHelper.Clamp(_displayBox.Body.LinearVelocity.X, -_maxVelocity, _maxVelocity);
+                //}
+                //else
+                //{
+                _displayBox.Body.LinearVelocity = new Vector2(
+                    MathHelper.Clamp(_displayBox.Body.LinearVelocity.Y, -_maxAngleVelocity, _maxAngleVelocity),
+                    MathHelper.Clamp(_displayBox.Body.LinearVelocity.X, -_maxAngleVelocity, _maxAngleVelocity)
+                    );
+                //}
             }
-
-            _displayRect.Position -= velocity;
         }
     }
 }

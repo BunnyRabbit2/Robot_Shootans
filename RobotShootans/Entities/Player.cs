@@ -21,7 +21,6 @@ namespace RobotShootans.Entities
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
 
         Body _physicsBody;
-        World _physicsWorld;
 
         Weapon _currentWeapon;
 
@@ -36,10 +35,9 @@ namespace RobotShootans.Entities
         /// </summary>
         /// <param name="startPos"></param>
         /// <param name="worldIn"></param>
-        public Player(Vector2 startPos, World worldIn)
+        public Player(Vector2 startPos)
             : base("Player")
         {
-            _physicsWorld = worldIn;
             _playerSprite = new Sprite();
             _playerSprite.Position = startPos;
             _bag = new EntityBag();
@@ -51,6 +49,12 @@ namespace RobotShootans.Entities
         /// </summary>
         public override void Load()
         {
+            if(!Screen.PhysicsEnabled)
+            {
+                LogFile.LogStringLine("FAILED TO LOAD PLAYER. SCREEN OWNER IS NOT PHYSICS ENABLED", LogType.ERROR);
+                return;
+            }
+
             int frameWidth = 90;
             int frameHeight = 150;
 
@@ -81,13 +85,13 @@ namespace RobotShootans.Entities
             _debugRect.Load();
 #endif
 
-            _maxVelocity =5f; // The maximum velocity the player can move at
+            _maxVelocity = 5f; // The maximum velocity the player can move at
             _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
 
             _moveImpulse = 10f;
             _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
-            _physicsBody = BodyFactory.CreateRectangle(_physicsWorld, ConvertUnits.ToSimUnits(collisionBoxSize), ConvertUnits.ToSimUnits(collisionBoxSize), 10f);
+            _physicsBody = BodyFactory.CreateRectangle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(collisionBoxSize), ConvertUnits.ToSimUnits(collisionBoxSize), 10f);
             _physicsBody.Restitution = 0f;
             _physicsBody.Friction = 0.2f;
             _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);

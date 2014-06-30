@@ -14,10 +14,6 @@ namespace RobotShootans.Screens
         Player _player;
         RobotSpawner _robotSpawner;
 
-        World _physicsWorld;
-        /// <summary>The Physics World of the screen</summary>
-        public World PhysicsWorld { get { return _physicsWorld; } }
-
         /// <summary>
         /// Creates the GameplayScreen
         /// </summary>
@@ -39,7 +35,9 @@ namespace RobotShootans.Screens
 
             addEntity( new TiledBackground("images/game/metal-bg", new Rectangle(0,0,1920,1080)) );
 
-            _player = new Player(Engine.RenderOrigin, _physicsWorld);
+            _physicsEnabled = true;
+
+            _player = new Player(Engine.RenderOrigin);
             addEntity(_player);
 
             _robotSpawner = new RobotSpawner();
