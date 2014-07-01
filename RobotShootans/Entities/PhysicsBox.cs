@@ -19,6 +19,16 @@ namespace RobotShootans.Entities
         /// <summary>The position of the box on the display</summary>
         public Vector2 Position { get { return new Vector2(_displayRect.X, _displayRect.Y); } }
 
+        /// <summary>The rotation of the image</summary>
+        protected float _rotation;
+
+        /// <summary>Sets the rotation of the image</summary>
+        /// <param name="rotationIn"></param>
+        public void setRotation(float rotationIn)
+        {
+            _physicsBody.Rotation = rotationIn;
+        }
+
 #if DEBUG
         // Surrounding this until I figure out a better way of doing this
         // Hopefully this will force me to check it before compiling as Release

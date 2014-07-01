@@ -42,11 +42,12 @@ namespace RobotShootans.Entities
             _speed = Screen.Engine.RenderHeight / 4.0f;
 
             _displayBox.SetupBox(Screen.PhysicsWorld, _robotSize, _robotSize, false, _startPos, 0.0f, 0.0f, 0.2f, Color.Red);
+            // _displayBox.Body.FixedRotation = true;
 
             _maxVelocity = 3f; // Max velocity at which the robot can move
             _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
 
-            _moveImpulse = 10f;
+            _moveImpulse = 3f;
             _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
             _loaded = true;
@@ -62,10 +63,48 @@ namespace RobotShootans.Entities
             if (pos2 != null)
             {
                 float _travelDirection = HelperFunctions.GetBearingBetweenTwoPoints(pos1, pos2);
+                _displayBox.setRotation(_travelDirection);
 
                 Vector2 impulse = Vector2.Zero;
 
-                double h = Math.Sqrt(_angleMoveImpulse * _angleMoveImpulse + _angleMoveImpulse * _angleMoveImpulse);
+                double h = Math.Sqrt(_maxVelocity * _maxVelocity + _maxVelocity * _maxVelocity);
+                // double h = Math.Sqrt(_angleMoveImpulse * _angleMoveImpulse + _angleMoveImpulse * _angleMoveImpulse);
+
+                double theta = 0;
+
+                int hori = 0;
+                int vert = 0;
+
+                if (_travelDirection >= 0 || _travelDirection < 90)
+                {
+                    theta = 90 - _travelDirection;
+                    hori = 1;
+                    vert = 1;
+                }
+                else if (_travelDirection >= 90 || _travelDirection < 180)
+                {
+                    theta = _travelDirection - 90;
+                    hori = 1;
+                    vert = -1;
+                }
+                else if (_travelDirection >= 180 || _travelDirection < 270)
+                {
+                    theta = 270 - _travelDirection;
+                    hori = -1;
+                    vert = -1;
+                }
+                else if (_travelDirection >= 270 || _travelDirection < 360)
+                {
+                    theta = _travelDirection - 270;
+                    hori = -1;
+                    vert = 1;
+                }
+
+                float vertI = (float)(Math.Sin(theta) * h) * vert;
+                float horiI = (float)(Math.Cos(theta) * h) * hori;
+
+                _displayBox.Body.LinearVelocity = new Vector2(horiI, vertI);
+                //_displayBox.Body.ApplyLinearImpulse(new Vector2(horiI, vertI), _displayBox.SimPos);
 
                 // soh cah
 
