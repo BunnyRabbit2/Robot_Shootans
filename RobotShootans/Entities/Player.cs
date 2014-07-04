@@ -34,7 +34,6 @@ namespace RobotShootans.Entities
         /// Creates the Player object
         /// </summary>
         /// <param name="startPos"></param>
-        /// <param name="worldIn"></param>
         public Player(Vector2 startPos)
             : base("Player")
         {
@@ -96,6 +95,8 @@ namespace RobotShootans.Entities
             _physicsBody.Friction = 0.2f;
             _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);
             _physicsBody.IsStatic = false;
+
+            _physicsBody.CollisionCategories = Category.Cat1;
 
             _currentWeapon = new MachineGun();
             Screen.addEntity(_currentWeapon);

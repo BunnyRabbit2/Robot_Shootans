@@ -27,6 +27,14 @@ namespace RobotShootans.Entities
         /// <summary>The position of the origin of the text</summary>
         protected OriginPosition _originPosition;
 
+        /// <summary>
+        /// Sets the origin to draw the image from
+        /// </summary>
+        public void setOrigin(OriginPosition originIn)
+        {
+            _originPosition = originIn;
+        }
+
         /// <summary>The scale of the text</summary>
         protected Vector2 _scale;
         /// <summary>Text Scale</summary>
@@ -35,7 +43,6 @@ namespace RobotShootans.Entities
         public float scaleX { get { return _scale.X; } set { _scale.X = value; } }
         /// <summary>The Y scale of the text</summary>
         public float scaleY { get { return _scale.Y; } set { _scale.Y = value; } }
-
 
         /// <summary>The rotation of the text</summary>
         protected float _rotation;
@@ -55,15 +62,27 @@ namespace RobotShootans.Entities
             _textColour = colorIn;
         }
 
+        public bool DrawOutline;
+
+        private Color _outlineColour;
+        /// <summary>Sets the color of the text</summary>
+        /// <param name="colorIn"></param>
+        public void setOutlineColor(Color colorIn)
+        {
+            _outlineColour = colorIn;
+        }
+
         /// <summary>Constructor for the TextItem</summary>
         public GUI_TextItem()
             : base ("GUI_TextItem")
         {
+            _displayText = "";
             _textColour = Color.White;
             _origin = Vector2.Zero;
             _scale = Vector2.One;
             _position = Vector2.Zero;
             _rotation = 0f;
+            DrawOutline = false;
         }
 
         /// <summary>Sets the text in the </summary>
@@ -71,7 +90,27 @@ namespace RobotShootans.Entities
         public void setText(string textIn)
         {
             _displayText = textIn;
-            // create new origin
+
+            Vector2 stringSize = _textFont.MeasureString(textIn);
+
+            switch (_originPosition)
+            {
+                case OriginPosition.TOPLEFT:
+                    _origin = new Vector2(0f, 0f);
+                    break;
+                case OriginPosition.TOPRIGHT:
+                    _origin = new Vector2(stringSize.X, 0f);
+                    break;
+                case OriginPosition.BOTTOMLEFT:
+                    _origin = new Vector2(0f, stringSize.Y);
+                    break;
+                case OriginPosition.BOTTOMRIGHT:
+                    _origin = new Vector2(stringSize.X, stringSize.Y);
+                    break;
+                case OriginPosition.CENTER:
+                    _origin = new Vector2(stringSize.X / 2f, stringSize.Y / 2f);
+                    break;
+            }
         }
 
         /// <summary>Sets the font of the text item</summary>
@@ -90,7 +129,25 @@ namespace RobotShootans.Entities
         /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            sBatch.DrawString(_textFont, _displayText, _position, _textColour, _rotation, _origin, _scale, SpriteEffects.None, 0f);
+            if (DrawOutline)
+                DrawTextWithOutline(sBatch, _displayText, _outlineColour, _textColour, (_scale.X + _scale.Y)/2f, _rotation, _position);
+            else
+                sBatch.DrawString(_textFont, _displayText, _position, _textColour, _rotation, _origin, _scale, SpriteEffects.None, 0f);
+        }
+
+        private void DrawTextWithOutline(SpriteBatch sb, string text, Color backColor, Color frontColor, float scale, float rotation, Vector2 position)
+        {
+            //These 4 draws are the background of the text and each of them have a certain displacement each way.
+            sb.DrawString(_textFont, text, position + new Vector2(1 * scale, 1 * scale),
+                backColor, rotation, _origin, scale, SpriteEffects.None, 1f);
+            sb.DrawString(_textFont, text, position + new Vector2(-1 * scale, -1 * scale),
+                backColor, rotation, _origin, scale, SpriteEffects.None, 1f);
+            sb.DrawString(_textFont, text, position + new Vector2(-1 * scale, 1 * scale),
+                backColor, rotation, _origin, scale, SpriteEffects.None, 1f);
+            sb.DrawString(_textFont, text, position + new Vector2(1 * scale, -1 * scale),
+                backColor, rotation, _origin, scale, SpriteEffects.None, 1f);
+            sb.DrawString(_textFont, text, position,
+                frontColor, rotation, _origin, scale, SpriteEffects.None, 1f); 
         }
     }
 }

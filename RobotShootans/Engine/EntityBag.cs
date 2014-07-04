@@ -87,6 +87,7 @@ namespace RobotShootans.Engine
                 }
             }
             _entitiesToAdd.Clear();
+            _entities = new HashSet<GameEntity>(_entities.OrderBy(e => e.DrawOrder));
         }
 
         /// <summary>Gets all entities with a name given</summary>

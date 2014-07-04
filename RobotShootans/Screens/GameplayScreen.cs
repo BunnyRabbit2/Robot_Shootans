@@ -45,7 +45,14 @@ namespace RobotShootans.Screens
 
             addEntity(new Crosshair());
 
+            _physicsWorld.ContactManager.OnBroadphaseCollision += onBroadPhaseCollision;
+
             _loaded = true;
+        }
+
+        private void onBroadPhaseCollision(ref FixtureProxy fp1, ref FixtureProxy fp2)
+        {
+            
         }
 
         /// <summary>

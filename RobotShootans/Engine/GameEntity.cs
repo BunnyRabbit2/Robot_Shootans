@@ -39,8 +39,12 @@ namespace RobotShootans.Engine
 
             _tags = new HashSet<string>();
 
+            DrawOrder = 0;
+
             _entityName = entityName;
         }
+
+        public int DrawOrder;
         #endregion
 
         #region Tag Management

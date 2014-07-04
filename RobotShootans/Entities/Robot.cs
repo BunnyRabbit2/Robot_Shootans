@@ -22,7 +22,8 @@ namespace RobotShootans.Entities
 
         /// <summary>Creates the robot and sets the start position</summary>
         /// <param name="positionIn"></param>
-        /// /// <param name="spawnerIn"></param>
+        /// <param name="spawnerIn"></param>
+        /// <param name="sizeIn"></param>
         public Robot(Vector2 positionIn, RobotSpawner spawnerIn, int sizeIn) : base ("ROBOT")
         {
             _spawner = spawnerIn;
@@ -46,6 +47,8 @@ namespace RobotShootans.Entities
             _physicsBody.Position = ConvertUnits.ToSimUnits(_startPos);
             _physicsBody.IsStatic = false;
             _physicsBody.FixedRotation = true;
+
+            _physicsBody.CollisionCategories = Category.Cat2;
 
             _displayRect = new ColouredRectangle(new Rectangle((int)_startPos.X, (int)_startPos.Y, _robotSize, _robotSize), Color.Red);
             _displayRect.setOrigin(OriginPosition.CENTER);
