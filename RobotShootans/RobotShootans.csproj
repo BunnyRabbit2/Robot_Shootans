@@ -41,6 +41,7 @@
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
     <Compile Include="Engine\OriginPosition.cs" />
+    <Compile Include="Engine\PhysicsGameEntity.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />

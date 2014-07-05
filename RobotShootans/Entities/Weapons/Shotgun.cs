@@ -12,6 +12,8 @@ namespace RobotShootans.Entities.Weapons
             _weaponType = "SHOTGUN";
             _fireRate = 2000;
 
+            _speed = 5f;
+
             _ammo = 25;
         }
 
@@ -21,13 +23,13 @@ namespace RobotShootans.Entities.Weapons
             if (_fireRateCounter >= _fireRate)
             {
                 float spread = 0.130f;
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn - spread * 1.5f, Color.Black));
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn - spread, Color.Black));
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn - spread * 0.5f, Color.Black));
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn, Color.Black));
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn + spread * 0.5f, Color.Black));
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn + spread, Color.Black));
-                Screen.addEntity(new Bullet(positionIn, 6, Screen.Engine.RenderHeight / 2.0f, bearingIn + spread * 1.5f, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn - spread * 1.5f, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn - spread, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn - spread * 0.5f, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn + spread * 0.5f, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn + spread, Color.Black));
+                Screen.addEntity(new Bullet(positionIn, 6, _speed, bearingIn + spread * 1.5f, Color.Black));
                 _fireRateCounter = 0;
 
                 _ammo--;

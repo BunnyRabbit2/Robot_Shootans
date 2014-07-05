@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities;
 using System;
@@ -55,6 +56,17 @@ namespace RobotShootans.Screens
             _gameOverText[3].setText("PRESS SPACE TO RESTART");
 
             _loaded = true;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if(InputHelper.isKeyPressNew(Keys.Space))
+            {
+                Engine.removeGameScreen(this);
+                Engine.pushGameScreen(new GameplayScreen());
+            }
+
+            base.Update(gameTime);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace RobotShootans.Entities.Weapons
             _weaponType = "MACHINE GUN";
             _fireRate = 100;
 
+            _speed = 5f;
+
             _ammo = 100;
         }
 
@@ -20,7 +22,7 @@ namespace RobotShootans.Entities.Weapons
         {
             if (_fireRateCounter >= _fireRate)
             {
-                Screen.addEntity(new Bullet(positionIn, 5, Screen.Engine.RenderHeight / 2.0f, bearingIn, Color.Red));
+                Screen.addEntity(new Bullet(positionIn, 5, _speed, bearingIn, Color.Red));
                 _fireRateCounter = 0;
 
                 _ammo--;

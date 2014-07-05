@@ -138,9 +138,22 @@ namespace RobotShootans.Engine
         }
         #endregion
 
-        public List<Body> getBodiesByUserData(object UserData)
+        /// <summary>Gets all bodies with UserData matching the UserData in</summary>
+        /// <param name="UserDataIn"></param>
+        /// <returns></returns>
+        public List<Body> getBodiesByUserData(object UserDataIn)
         {
-            return _physicsWorld.BodyList.Where(b => b.UserData == UserData).ToList<Body>();
+            return _physicsWorld.BodyList.Where(b => b.UserData == UserDataIn).ToList<Body>();
+        }
+
+        /// <summary>Gets the physics entity with the body id given</summary>
+        /// <param name="idIn"></param>
+        /// <returns></returns>
+        public GameEntity getEntityWithBodyID(int idIn)
+        {
+            var list = _entityBag.getPhysicsEntities();
+
+            return list.First(e => e.PhysicsBody.BodyId == idIn);
         }
     }
 }

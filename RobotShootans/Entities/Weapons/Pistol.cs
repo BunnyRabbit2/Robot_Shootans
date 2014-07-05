@@ -11,6 +11,8 @@ namespace RobotShootans.Entities.Weapons
             _weaponType = "PISTOL";
             _fireRate = 1000;
 
+            _speed = 5f;
+
             _ammo = -1;
         }
 
@@ -19,7 +21,7 @@ namespace RobotShootans.Entities.Weapons
         {
             if (_fireRateCounter >= _fireRate)
             {
-                Screen.addEntity(new Bullet(positionIn, 5, Screen.Engine.RenderHeight / 2.0f, bearingIn, Color.Yellow));
+                Screen.addEntity(new Bullet(positionIn, 5, _speed, bearingIn, Color.Yellow));
                 _fireRateCounter = 0;
 
                 // Find way to have ammo display infinite

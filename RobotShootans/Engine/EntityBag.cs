@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace RobotShootans.Engine
 {
@@ -14,10 +15,10 @@ namespace RobotShootans.Engine
         protected HashSet<GameEntity> _entities;
 
         /// <summary>The entities to be removed after updating all entities</summary>
-        protected HashSet<GameEntity> _entitiesToRemove;
+        protected List<GameEntity> _entitiesToRemove;
 
         /// <summary>Entities to add after updating</summary>
-        protected HashSet<GameEntity> _entitiesToAdd;
+        protected List<GameEntity> _entitiesToAdd;
 
         /// <summary>
         /// Creates the EntityBag
@@ -25,8 +26,8 @@ namespace RobotShootans.Engine
         public EntityBag()
         {
             _entities = new HashSet<GameEntity>();
-            _entitiesToRemove = new HashSet<GameEntity>();
-            _entitiesToAdd = new HashSet<GameEntity>();
+            _entitiesToRemove = new List<GameEntity>();
+            _entitiesToAdd = new List<GameEntity>();
         }
 
         /// <summary>
@@ -66,9 +67,10 @@ namespace RobotShootans.Engine
         {
             if (_entitiesToRemove.Count > 0)
             {
-                foreach (GameEntity ge in _entitiesToRemove)
+                for (int i = 0; i < _entitiesToRemove.Count; i++ )
                 {
-                    _entities.Remove(ge);
+                    _entitiesToRemove[i].Unload();
+                    _entities.Remove(_entitiesToRemove[i]);
                 }
             }
             _entitiesToRemove.Clear();
@@ -96,6 +98,19 @@ namespace RobotShootans.Engine
         public List<GameEntity> getEntitiesByName(string nameIn)
         {
             return _entities.Where(s => s.EntityName == nameIn).ToList<GameEntity>();
+        }
+
+        public List<PhysicsGameEntity> getPhysicsEntities()
+        {
+            List<PhysicsGameEntity> list = new List<PhysicsGameEntity>();
+
+            foreach (var e in _entities)
+            {
+                if (e is PhysicsGameEntity)
+                    list.Add((PhysicsGameEntity)e);
+            }
+
+            return list;
         }
 
         /// <summary>

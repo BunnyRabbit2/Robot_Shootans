@@ -11,15 +11,14 @@ namespace RobotShootans.Entities
     /// <summary>
     /// Bullet class. A form of coloured rectangle with a physics body
     /// </summary>
-    public class Bullet : GameEntity
+    public class Bullet : PhysicsGameEntity
     {
-        float _speed, _angleSpeed;
+        float _speed, _angleSpeed, _travelDirection;
         int _size;
         Vector2 _vector, _position;
         Color _bulletColour;
 
         ColouredRectangle _displayRect;
-        Body _physicsBody;
 
         /// <summary>
         /// Creates the bullet and sets the vector
@@ -30,7 +29,7 @@ namespace RobotShootans.Entities
             _position = positionIn;
             _speed = speedIn;
             _size = sizeIn;
-            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+            _travelDirection = bearingToTravel;
             _bulletColour = Color.Yellow;
         }
 
@@ -43,7 +42,7 @@ namespace RobotShootans.Entities
             _position = new Vector2(xIn, yIn);
             _speed = speedIn;
             _size = sizeIn;
-            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+            _travelDirection = bearingToTravel;
             _bulletColour = Color.Yellow;
         }
 
@@ -56,7 +55,8 @@ namespace RobotShootans.Entities
             _position = positionIn;
             _speed = speedIn;
             _size = sizeIn;
-            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+            _travelDirection = bearingToTravel;
+            _bulletColour = colorIn;
         }
 
         /// <summary>
@@ -68,7 +68,8 @@ namespace RobotShootans.Entities
             _position = new Vector2(xIn, yIn);
             _speed = speedIn;
             _size = sizeIn;
-            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+            _travelDirection = bearingToTravel;
+            _bulletColour = colorIn;
         }
 
         /// <summary>
@@ -81,6 +82,8 @@ namespace RobotShootans.Entities
             _physicsBody.Restitution = 0.0f;
             _physicsBody.Friction = 0.2f;
             _physicsBody.IsStatic = false;
+
+            _vector = HelperFunctions.GetVectorFromBearingAndSpeed(_travelDirection, _speed * 3);
 
             _vector = ConvertUnits.ToSimUnits(_vector);
             _physicsBody.ApplyLinearImpulse(_vector, _physicsBody.Position);
@@ -110,6 +113,8 @@ namespace RobotShootans.Entities
         public override void Update(GameTime gameTime)
         {
             _displayRect.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
+
+            // LogFile.LogStringLine("PIECE OF SHIT BULLET IS AT: " + _displayRect.Position.ToString());
 
             _physicsBody.LinearVelocity = new Vector2(
                 MathHelper.Clamp(_physicsBody.LinearVelocity.X, -_angleSpeed, _angleSpeed),

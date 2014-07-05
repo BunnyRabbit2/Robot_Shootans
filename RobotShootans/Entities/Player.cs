@@ -15,14 +15,12 @@ namespace RobotShootans.Entities
     /// <summary>
     /// The player class
     /// </summary>
-    public class Player : GameEntity
+    public class Player : PhysicsGameEntity
     {
         EntityBag _bag;
         Sprite _playerSprite;
 
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
-
-        Body _physicsBody;
 
         Weapon _currentWeapon;
 
@@ -100,7 +98,7 @@ namespace RobotShootans.Entities
 
             _physicsBody.OnCollision += onCollision;
 
-            _currentWeapon = new Pistol();
+            _currentWeapon = new MachineGun();
             Screen.addEntity(_currentWeapon);
 
             _ammoCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
@@ -116,6 +114,10 @@ namespace RobotShootans.Entities
         public override void Unload()
         {
             _physicsBody.Dispose();
+            Screen.removeEntity(_debugRect);
+            Screen.removeEntity(_playerSprite);
+            Screen.removeEntity(_currentWeapon);
+            Screen.removeEntity(_ammoCounter);
         }
 
         private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -126,8 +128,8 @@ namespace RobotShootans.Entities
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "ROBOT")
             {
-                //Screen.Engine.removeGameScreen(Screen);
-                //Screen.Engine.pushGameScreen(new GameOverScreen());
+                Screen.Engine.removeGameScreen(Screen);
+                Screen.Engine.pushGameScreen(new GameOverScreen());
             }
 
             return true;

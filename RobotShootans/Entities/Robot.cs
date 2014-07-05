@@ -9,10 +9,9 @@ using System;
 namespace RobotShootans.Entities
 {
     /// <summary>Robot class. Might make abstract</summary>
-    public class Robot : GameEntity
+    public class Robot : PhysicsGameEntity
     {
         ColouredRectangle _displayRect;
-        Body _physicsBody;
         RobotSpawner _spawner;
 
         Vector2 _startPos;
@@ -49,6 +48,8 @@ namespace RobotShootans.Entities
             _physicsBody.IsStatic = false;
             _physicsBody.FixedRotation = true;
 
+            _physicsBody.OnCollision += onCollision;
+
             _displayRect = new ColouredRectangle(new Rectangle((int)_startPos.X, (int)_startPos.Y, _robotSize, _robotSize), Color.Red);
             _displayRect.setOrigin(OriginPosition.CENTER);
             Screen.addEntity(_displayRect);
@@ -64,13 +65,12 @@ namespace RobotShootans.Entities
 
         private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-#if DEBUG
-            LogFile.LogStringLine(fixtureA.Body.UserData.ToString() + " collides with " + fixtureB.Body.UserData.ToString());
-#endif
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "BULLET")
             {
                 Screen.removeEntity(this);
+                //fixtureB.Body.BodyId
+                Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
             }
 
             return true;
@@ -80,6 +80,7 @@ namespace RobotShootans.Entities
         public override void Unload()
         {
             _physicsBody.Dispose();
+            Screen.removeEntity(_displayRect);
         }
 
         /// <summary>Updates the robot and sends it towars the player</summary>

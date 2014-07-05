@@ -23,6 +23,9 @@ namespace RobotShootans.Entities
         /// <summary>Ammo remaining in the weapon</summary>
         public int Ammo { get { return _ammo; } }
 
+        /// <summary>Speed of the bullet</summary>
+        protected float _speed;
+
         /// <summary>The constructor for the weapon</summary>
         public Weapon()
             : base("WEAPON")

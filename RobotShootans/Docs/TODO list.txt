@@ -10,3 +10,7 @@
 	0.9
 - Clean up and polish
 	1.0
+
+TODO:
+	- Add a PhysicsEntity child class to GameEntity
+	- Create function to get entity by the bodyid of it's physics body
