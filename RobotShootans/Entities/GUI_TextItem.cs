@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using RobotShootans.Engine;
 
+// Outline drawing code was taken from this excellent blog
+// http://erikskoglund.wordpress.com/2009/09/10/super-simple-text-outlining-in-xna/
+
 namespace RobotShootans.Entities
 {
     /// <summary>A GUI item that will display text</summary>
@@ -62,6 +65,7 @@ namespace RobotShootans.Entities
             _textColour = colorIn;
         }
 
+        /// <summary>Sets whether the outline will be drawn</summary>
         public bool DrawOutline;
 
         private Color _outlineColour;

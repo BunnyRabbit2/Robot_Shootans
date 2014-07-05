@@ -1,47 +1,61 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
+using FarseerPhysics.Factories;
+using Microsoft.Xna.Framework;
 using RobotShootans.Engine;
+using System;
 
 namespace RobotShootans.Entities
 {
     /// <summary>
     /// Bullet class. A form of coloured rectangle with a physics body
     /// </summary>
-    public class Bullet : ColouredRectangle
+    public class Bullet : GameEntity
     {
-        private float _speed;
-        private Vector2 _vector;
-        private Vector2 _position;
+        float _speed, _angleSpeed;
+        int _size;
+        Vector2 _vector, _position;
+        Color _bulletColour;
+
+        ColouredRectangle _displayRect;
+        Body _physicsBody;
 
         /// <summary>
         /// Creates the bullet and sets the vector
         /// </summary>
         public Bullet(Vector2 positionIn, int sizeIn, float speedIn, float bearingToTravel)
-            : base(new Rectangle((int)positionIn.X, (int)positionIn.Y, sizeIn, sizeIn), Color.Yellow)
+            : base("BULLET")
         {
             _position = positionIn;
             _speed = speedIn;
+            _size = sizeIn;
             _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+            _bulletColour = Color.Yellow;
         }
 
         /// <summary>
         /// Creates the bullet and sets the vector
         /// </summary>
         public Bullet(int xIn, int yIn, int sizeIn, float speedIn, float bearingToTravel)
-            : base(new Rectangle(xIn, yIn, sizeIn, sizeIn), Color.Yellow)
+            : base("BULLET")
         {
             _position = new Vector2(xIn, yIn);
             _speed = speedIn;
+            _size = sizeIn;
             _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
+            _bulletColour = Color.Yellow;
         }
 
         /// <summary>
         /// Creates the bullet and sets the vector
         /// </summary>
         public Bullet(Vector2 positionIn, int sizeIn, float speedIn, float bearingToTravel, Color colorIn)
-            : base(new Rectangle((int)positionIn.X, (int)positionIn.Y, sizeIn, sizeIn), colorIn)
+            : base("BULLET")
         {
             _position = positionIn;
             _speed = speedIn;
+            _size = sizeIn;
             _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
         }
 
@@ -49,10 +63,11 @@ namespace RobotShootans.Entities
         /// Creates the bullet and sets the vector
         /// </summary>
         public Bullet(int xIn, int yIn, int sizeIn, float speedIn, float bearingToTravel, Color colorIn)
-            : base(new Rectangle(xIn, yIn, sizeIn, sizeIn), colorIn)
+            : base("BULLET")
         {
             _position = new Vector2(xIn, yIn);
             _speed = speedIn;
+            _size = sizeIn;
             _vector = HelperFunctions.GetVectorFromBearingAndSpeed(bearingToTravel, speedIn);
         }
 
@@ -61,28 +76,47 @@ namespace RobotShootans.Entities
         /// </summary>
         public override void Load()
         {
-            base.Load();
+            _physicsBody = BodyFactory.CreateRectangle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(_size), ConvertUnits.ToSimUnits(_size), 10f, "BULLET");
+            _physicsBody.Position = ConvertUnits.ToSimUnits(_position);
+            _physicsBody.Restitution = 0.0f;
+            _physicsBody.Friction = 0.2f;
+            _physicsBody.IsStatic = false;
 
-            // TODO: Add a physics body to this when I get that done
-            addTag("BULLET");
+            _vector = ConvertUnits.ToSimUnits(_vector);
+            _physicsBody.ApplyLinearImpulse(_vector, _physicsBody.Position);
+
+            // Sets it so bullets don't collide with player
+            _physicsBody.IgnoreCollisionWith(Screen.getBodiesByUserData("PLAYER")[0]);
+
+            _angleSpeed = (float)Math.Sqrt(((double)_speed * (double)_speed) / 2.0);
+
+            DrawOrder = 2;
+
+            _displayRect = new ColouredRectangle(new Rectangle((int)_position.X, (int)_position.Y, _size, _size), _bulletColour, OriginPosition.CENTER);
+            Screen.addEntity(_displayRect);
 
             _loaded = true;
         }
 
-        /// <summary>
-        /// Adds the vector to the position.
-        /// </summary>
+        /// <summary>Disposes of the physics body</summary>
+        public override void Unload()
+        {
+            _physicsBody.Dispose();
+            Screen.removeEntity(_displayRect);
+        }
+
+        /// <summary></summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            _position.X += _vector.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _position.Y += _vector.Y * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _displayRect.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
 
-            X = (int)_position.X;
-            Y = (int)_position.Y;
+            _physicsBody.LinearVelocity = new Vector2(
+                MathHelper.Clamp(_physicsBody.LinearVelocity.X, -_angleSpeed, _angleSpeed),
+                MathHelper.Clamp(_physicsBody.LinearVelocity.Y, -_angleSpeed, _angleSpeed));
 
-            if(X > Screen.Engine.RenderWidth * 1.1 || X < -10
-                || Y < -10 || Y > Screen.Engine.RenderHeight * 1.1)
+            if(_displayRect.X < 0 || _displayRect.X > Screen.Engine.RenderWidth ||
+               _displayRect.Y < 0 || _displayRect.Y > Screen.Engine.RenderHeight)
             {
                 Screen.removeEntity(this);
             }

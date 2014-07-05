@@ -44,6 +44,7 @@ namespace RobotShootans.Engine
             _entityName = entityName;
         }
 
+        /// <summary>Draw Order for the entity. Defaults to 0</summary>
         public int DrawOrder;
         #endregion
 

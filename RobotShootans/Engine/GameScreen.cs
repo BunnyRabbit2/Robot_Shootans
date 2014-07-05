@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RobotShootans.Engine
 {
@@ -136,5 +137,10 @@ namespace RobotShootans.Engine
             return _entityBag.getEntitiesByName(nameIn);
         }
         #endregion
+
+        public List<Body> getBodiesByUserData(object UserData)
+        {
+            return _physicsWorld.BodyList.Where(b => b.UserData == UserData).ToList<Body>();
+        }
     }
 }

@@ -26,7 +26,11 @@ namespace RobotShootans.Engine
         /// </summary>
         public static void ClearLogFile()
         {
+#if DEBUG
+            File.Delete("../../../Docs/logFile.txt");
+#else
             File.Delete("logFile.txt");
+#endif
         }
 
         /// <summary>
@@ -52,7 +56,11 @@ namespace RobotShootans.Engine
 
             stringOut += stringToLog;
 
+#if DEBUG
+            File.AppendAllText("../../../Docs/logFile.txt", stringOut);
+#else
             File.AppendAllText("logFile.txt", stringOut);
+#endif
         }
 
         /// <summary>

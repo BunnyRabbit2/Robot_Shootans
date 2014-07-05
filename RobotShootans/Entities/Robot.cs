@@ -1,5 +1,6 @@
 ﻿using FarseerPhysics;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using RobotShootans.Engine;
@@ -41,14 +42,12 @@ namespace RobotShootans.Entities
                 return;
             }
 
-            _physicsBody = BodyFactory.CreateRectangle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(_robotSize), ConvertUnits.ToSimUnits(_robotSize), 10f);
+            _physicsBody = BodyFactory.CreateRectangle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(_robotSize), ConvertUnits.ToSimUnits(_robotSize), 10f, "ROBOT");
             _physicsBody.Restitution = 0f;
             _physicsBody.Friction = 0.2f;
             _physicsBody.Position = ConvertUnits.ToSimUnits(_startPos);
             _physicsBody.IsStatic = false;
             _physicsBody.FixedRotation = true;
-
-            _physicsBody.CollisionCategories = Category.Cat2;
 
             _displayRect = new ColouredRectangle(new Rectangle((int)_startPos.X, (int)_startPos.Y, _robotSize, _robotSize), Color.Red);
             _displayRect.setOrigin(OriginPosition.CENTER);
@@ -61,6 +60,26 @@ namespace RobotShootans.Entities
             _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
             _loaded = true;
+        }
+
+        private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+#if DEBUG
+            LogFile.LogStringLine(fixtureA.Body.UserData.ToString() + " collides with " + fixtureB.Body.UserData.ToString());
+#endif
+            // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
+            if (fixtureB.Body.UserData.ToString() == "BULLET")
+            {
+                Screen.removeEntity(this);
+            }
+
+            return true;
+        }
+
+        /// <summary></summary>
+        public override void Unload()
+        {
+            _physicsBody.Dispose();
         }
 
         /// <summary>Updates the robot and sends it towars the player</summary>

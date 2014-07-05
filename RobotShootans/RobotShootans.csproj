@@ -95,6 +95,7 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Docs\logFile.txt" />
     <Content Include="Docs\TODO list.txt" />
     <Content Include="Icon.ico" />
     <None Include="Content\images\farseer-logo-512px.xnb">

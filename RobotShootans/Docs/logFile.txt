@@ -1,0 +1,7 @@
+[05/07/2014][15:11:07]: INFO - Started Engine for game: Robot Shootans
+[05/07/2014][15:11:07]: INFO - Version number: 0.6.5299.25532
+[05/07/2014][15:11:07]: INFO - Loading Engine Content
+[05/07/2014][15:11:07]: INFO - Done loading content
+[05/07/2014][15:11:09]: INFO - Unloading all screens
+[05/07/2014][15:11:09]: INFO - Finished unloading all screens
+[05/07/2014][15:11:09]: INFO - Closing GameEngine down

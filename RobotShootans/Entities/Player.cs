@@ -1,11 +1,13 @@
 ﻿using FarseerPhysics;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities.Weapons;
+using RobotShootans.Screens;
 using System;
 
 namespace RobotShootans.Entities
@@ -90,15 +92,15 @@ namespace RobotShootans.Entities
             _moveImpulse = 10f;
             _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
-            _physicsBody = BodyFactory.CreateRectangle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(collisionBoxSize), ConvertUnits.ToSimUnits(collisionBoxSize), 10f);
+            _physicsBody = BodyFactory.CreateRectangle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(collisionBoxSize), ConvertUnits.ToSimUnits(collisionBoxSize), 10f, "PLAYER");
             _physicsBody.Restitution = 0f;
             _physicsBody.Friction = 0.2f;
             _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);
             _physicsBody.IsStatic = false;
 
-            _physicsBody.CollisionCategories = Category.Cat1;
+            _physicsBody.OnCollision += onCollision;
 
-            _currentWeapon = new MachineGun();
+            _currentWeapon = new Pistol();
             Screen.addEntity(_currentWeapon);
 
             _ammoCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
@@ -108,6 +110,27 @@ namespace RobotShootans.Entities
             Screen.addEntity(_ammoCounter);
 
             _loaded = true;
+        }
+
+        /// <summary></summary>
+        public override void Unload()
+        {
+            _physicsBody.Dispose();
+        }
+
+        private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
+        {
+#if DEBUG
+            LogFile.LogStringLine(fixtureA.Body.UserData.ToString() + " collides with " + fixtureB.Body.UserData.ToString());
+#endif
+            // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
+            if (fixtureB.Body.UserData.ToString() == "ROBOT")
+            {
+                //Screen.Engine.removeGameScreen(Screen);
+                //Screen.Engine.pushGameScreen(new GameOverScreen());
+            }
+
+            return true;
         }
 
         /// <summary>
