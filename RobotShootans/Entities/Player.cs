@@ -17,7 +17,6 @@ namespace RobotShootans.Entities
     /// </summary>
     public class Player : PhysicsGameEntity
     {
-        EntityBag _bag;
         Sprite _playerSprite;
 
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
@@ -39,7 +38,6 @@ namespace RobotShootans.Entities
         {
             _playerSprite = new Sprite();
             _playerSprite.Position = startPos;
-            _bag = new EntityBag();
             _ammoCounter = new GUI_TextItem();
         }
 
@@ -57,9 +55,10 @@ namespace RobotShootans.Entities
             int frameWidth = 90;
             int frameHeight = 150;
 
-            int collisionBoxSize = 45; 
+            int collisionBoxSize = 45;
 
-            _bag.addEntity(_playerSprite, Screen);
+            Screen.addEntity(_playerSprite);
+
             _playerSprite.setImage("game/player-sheet");
             _playerSprite.addAnimation("IDLE", 1000, new Rectangle[] { new Rectangle(0, 0, frameWidth, frameHeight) });
             _playerSprite.addAnimation("WALK", 125,
@@ -75,13 +74,14 @@ namespace RobotShootans.Entities
             _playerSprite.addAnimation("SHOOT_GUN", 1000, new Rectangle[] { new Rectangle(frameWidth, frameHeight * 3, frameWidth, frameHeight) });
             _playerSprite.Animation = "IDLE_GUN";
             _playerSprite.setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
+            _playerSprite.DrawOrder = 3;
 
 #if DEBUG
             _debugRect = new ColouredRectangle(
                 new Rectangle((int)_playerSprite.X, (int)_playerSprite.Y, collisionBoxSize, collisionBoxSize),
                 new Color(Color.Red, 48), OriginPosition.CENTER);
-            _debugRect.Screen = Screen;
-            _debugRect.Load();
+            _debugRect.DrawOrder = 4;
+            Screen.addEntity(_debugRect);
 #endif
 
             _maxVelocity = 5f; // The maximum velocity the player can move at
@@ -244,8 +244,6 @@ namespace RobotShootans.Entities
             _debugRect.X = (int)_playerSprite.Position.X;
             _debugRect.Y = (int)_playerSprite.Position.Y;
 #endif
-
-            _bag.Update(gameTime);
         }
 
         /// <summary>
@@ -255,9 +253,6 @@ namespace RobotShootans.Entities
         /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            _bag.Draw(gameTime, sBatch);
-            //sBatch.Draw(_playersheet, _position, _animationFrames[0], Color.White);
-
 #if DEBUG
             _debugRect.Draw(gameTime, sBatch);
 #endif

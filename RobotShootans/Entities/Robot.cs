@@ -52,6 +52,7 @@ namespace RobotShootans.Entities
 
             _displayRect = new ColouredRectangle(new Rectangle((int)_startPos.X, (int)_startPos.Y, _robotSize, _robotSize), Color.Red);
             _displayRect.setOrigin(OriginPosition.CENTER);
+            _displayRect.DrawOrder = 1;
             Screen.addEntity(_displayRect);
 
             _maxVelocity = 3f; // Max velocity at which the robot can move

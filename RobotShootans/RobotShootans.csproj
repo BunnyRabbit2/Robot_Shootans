@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\EntityBag.cs" />
+    <Compile Include="Engine\GameEvent.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
     <Compile Include="Engine\OriginPosition.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />
     <Compile Include="Entities\GUI_TextItem.cs" />
+    <Compile Include="Entities\GUI_HUD.cs" />
     <Compile Include="Entities\PhysicsBox.cs" />
     <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\RobotSpawner.cs" />

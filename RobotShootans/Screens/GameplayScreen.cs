@@ -14,6 +14,8 @@ namespace RobotShootans.Screens
         Player _player;
         RobotSpawner _robotSpawner;
 
+        GUI_TextItem _lives;
+
         /// <summary>
         /// Creates the GameplayScreen
         /// </summary>
@@ -33,7 +35,9 @@ namespace RobotShootans.Screens
 
             _physicsWorld = new World(Vector2.Zero);
 
-            addEntity( new TiledBackground("images/game/metal-bg", new Rectangle(0,0,1920,1080)) );
+            TiledBackground bg = new TiledBackground("images/game/metal-bg", new Rectangle(0, 0, 1920, 1080));
+            bg.DrawOrder = 0;
+            addEntity(bg);
 
             _physicsEnabled = true;
 

@@ -44,8 +44,9 @@ namespace RobotShootans.Engine
             _entityName = entityName;
         }
 
+        private int _drawOrder;
         /// <summary>Draw Order for the entity. Defaults to 0</summary>
-        public int DrawOrder;
+        public int DrawOrder { get { return _drawOrder; } set { _drawOrder = value; } }
         #endregion
 
         #region Tag Management
@@ -102,6 +103,15 @@ namespace RobotShootans.Engine
         /// Unload any non-managed content
         /// </summary>
         public virtual void Unload()
+        {
+
+        }
+
+        /// <summary>
+        /// Handles the event handed in
+        /// </summary>
+        /// <param name="eventIn"></param>
+        public virtual void HandleEvent(GameEvent eventIn)
         {
 
         }

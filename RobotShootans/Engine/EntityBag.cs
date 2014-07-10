@@ -113,6 +113,15 @@ namespace RobotShootans.Engine
             return list;
         }
 
+        public void HandleEvent(GameEvent eventIn)
+        {
+            foreach (GameEntity ge in _entities)
+            {
+                if (ge.Loaded)
+                    ge.HandleEvent(eventIn);
+            }
+        }
+
         /// <summary>
         /// Updates all entities in the entity bag
         /// </summary>

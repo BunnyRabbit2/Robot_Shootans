@@ -12,7 +12,7 @@ namespace RobotShootans.Entities.Weapons
             _weaponType = "MACHINE GUN";
             _fireRate = 100;
 
-            _speed = 5f;
+            _speed = 10f;
 
             _ammo = 100;
         }

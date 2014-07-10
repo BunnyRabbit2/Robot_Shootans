@@ -81,6 +81,11 @@ namespace RobotShootans.Engine
         private List<GameScreen> _gameScreensToAdd;
         private List<GameScreen> _screensToRemove;
 
+        private Queue<GameEvent> _gameEvents;
+        /// <summary>Registers the Event to the queue</summary>
+        /// <param name="eventIn">The event to be registered</param>
+        public void registerEvent(GameEvent eventIn) { _gameEvents.Enqueue(eventIn); }
+
         private ResolutionIndependentRenderer _resolutionIndependence;
         private Game _game;
 
@@ -139,6 +144,8 @@ namespace RobotShootans.Engine
             _bg = _game.Content.Load<Texture2D>("images/background");
 
             _spriteBatch = new SpriteBatch(_graphics);
+
+            _gameEvents = new Queue<GameEvent>();
 
             _loaded = true;
             LogFile.LogStringLine("Done loading content", LogType.INFO);
@@ -286,6 +293,24 @@ namespace RobotShootans.Engine
 
             if (_loaded)
             {
+                GameEvent e;
+
+                while(_gameEvents.Count != 0)
+                {
+                    e = _gameEvents.Dequeue();
+                    if(e == null)
+                        break;
+
+                    for (int i = _gameScreens.Count - 1; i >= 0; i--)
+                    {
+                        if (_gameScreens[i].Loaded)
+                            _gameScreens[i].HandleEvent(e);
+
+                        if (_gameScreens[i].BlockUpdating)
+                            break;
+                    }
+                }
+
                 // Iterate back to front. When hitting a blocking screen, break the loop
                 for (int i = _gameScreens.Count - 1; i >= 0; i-- )
                 {

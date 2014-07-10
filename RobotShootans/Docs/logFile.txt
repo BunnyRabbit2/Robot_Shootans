@@ -1,8 +1,8 @@
-[05/07/2014][19:41:34]: INFO - Started Engine for game: Robot Shootans
-[05/07/2014][19:41:34]: INFO - Version number: 0.6.5299.33646
-[05/07/2014][19:41:34]: INFO - Loading Engine Content
-[05/07/2014][19:41:34]: INFO - Done loading content
-[05/07/2014][19:41:50]: INFO - PLAYER collides with ROBOT
-[05/07/2014][19:41:53]: INFO - Unloading all screens
-[05/07/2014][19:41:53]: INFO - Finished unloading all screens
-[05/07/2014][19:41:53]: INFO - Closing GameEngine down
+[10/07/2014][13:22:53]: INFO - Started Engine for game: Robot Shootans
+[10/07/2014][13:22:53]: INFO - Version number: 0.6.5304.22284
+[10/07/2014][13:22:53]: INFO - Loading Engine Content
+[10/07/2014][13:22:53]: INFO - Done loading content
+[10/07/2014][13:23:03]: INFO - PLAYER collides with ROBOT
+[10/07/2014][13:23:09]: INFO - Unloading all screens
+[10/07/2014][13:23:09]: INFO - Finished unloading all screens
+[10/07/2014][13:23:09]: INFO - Closing GameEngine down

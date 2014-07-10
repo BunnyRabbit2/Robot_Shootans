@@ -93,9 +93,8 @@ namespace RobotShootans.Entities
 
             _angleSpeed = (float)Math.Sqrt(((double)_speed * (double)_speed) / 2.0);
 
-            DrawOrder = 2;
-
             _displayRect = new ColouredRectangle(new Rectangle((int)_position.X, (int)_position.Y, _size, _size), _bulletColour, OriginPosition.CENTER);
+            _displayRect.DrawOrder = 2;
             Screen.addEntity(_displayRect);
 
             _loaded = true;

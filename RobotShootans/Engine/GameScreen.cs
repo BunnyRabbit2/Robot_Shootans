@@ -79,6 +79,15 @@ namespace RobotShootans.Engine
         }
 
         /// <summary>
+        /// Handles the event handed down to it
+        /// </summary>
+        /// <param name="eventIn"></param>
+        public virtual void HandleEvent(GameEvent eventIn)
+        {
+            _entityBag.HandleEvent(eventIn);
+        }
+
+        /// <summary>
         /// Updates all Entities
         /// </summary>
         /// <param name="gameTime">The GameTime object from the Engine</param>
