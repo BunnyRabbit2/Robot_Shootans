@@ -100,6 +100,10 @@ namespace RobotShootans.Engine
             return _entities.Where(s => s.EntityName == nameIn).ToList<GameEntity>();
         }
 
+        /// <summary>
+        /// Retrieves all physics enabled entities
+        /// </summary>
+        /// <returns></returns>
         public List<PhysicsGameEntity> getPhysicsEntities()
         {
             List<PhysicsGameEntity> list = new List<PhysicsGameEntity>();
@@ -113,15 +117,23 @@ namespace RobotShootans.Engine
             return list;
         }
 
+        /// <summary>
+        /// Handles the event handed down
+        /// </summary>
+        /// <param name="eventIn"></param>
+        /// <returns>if the event was used</returns>
         public bool HandleEvent(GameEvent eventIn)
         {
+            bool eventActioned = false;
+
             foreach (GameEntity ge in _entities)
             {
                 if (ge.Loaded)
-                    return ge.HandleEvent(eventIn);
+                    if(ge.HandleEvent(eventIn))
+                        eventActioned = true;
             }
 
-            return false;
+            return eventActioned;
         }
 
         /// <summary>

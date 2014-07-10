@@ -95,8 +95,6 @@ namespace RobotShootans.Entities
 
             _physicsBody.OnCollision += onCollision;
 
-            changeWeapon(new MachineGun());
-
             _loaded = true;
         }
 
@@ -118,10 +116,30 @@ namespace RobotShootans.Entities
             if (fixtureB.Body.UserData.ToString() == "ROBOT")
             {
                 Screen.Engine.removeGameScreen(Screen);
-                Screen.Engine.pushGameScreen(new GameOverScreen());
+                GUI_HUD h = (GUI_HUD)Screen.getEntityByName("HUD")[0];
+                Screen.Engine.pushGameScreen(new GameOverScreen(true, h.Score));
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Handles an event
+        /// </summary>
+        /// <param name="eventIn"></param>
+        /// <returns></returns>
+        public override bool HandleEvent(GameEvent eventIn)
+        {
+            if(eventIn.EventType == EventType.WEAPON_CHANGED)
+            {
+                if (eventIn.UserData is Weapon)
+                {
+                    changeWeapon((Weapon)eventIn.UserData);
+                }
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -215,11 +233,18 @@ namespace RobotShootans.Entities
 
             if (InputHelper.isKeyDown(Keys.Space))
             {
-                  _currentWeapon.shoot(_playerSprite.Position, bearing);
-                  if (_currentWeapon.Ammo == 0)
-                  {
-                      changeWeapon(new Pistol());
-                  }
+                if (_currentWeapon != null)
+                {
+                    _currentWeapon.shoot(_playerSprite.Position, bearing);
+                    if (_currentWeapon.Ammo == 0)
+                    {
+                        changeWeapon(new Pistol());
+                    }
+                }
+                else
+                {
+                    changeWeapon(new Pistol());
+                }
             }
 
 #if DEBUG
@@ -247,7 +272,7 @@ namespace RobotShootans.Entities
             return _playerSprite.Position;
         }
 
-        public void changeWeapon(Weapon weaponIn)
+        private void changeWeapon(Weapon weaponIn)
         {
             if(_currentWeapon != null)
                 Screen.removeEntity(_currentWeapon);

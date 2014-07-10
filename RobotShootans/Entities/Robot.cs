@@ -70,8 +70,8 @@ namespace RobotShootans.Entities
             if (fixtureB.Body.UserData.ToString() == "BULLET")
             {
                 Screen.removeEntity(this);
-                //fixtureB.Body.BodyId
                 Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
+                Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
             }
 
             return true;

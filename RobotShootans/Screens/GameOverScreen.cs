@@ -14,13 +14,16 @@ namespace RobotShootans.Screens
     {
         GUI_TextItem[] _gameOverText;
 
+        int _endScore;
+
         /// <summary>Constructor for the game over screen</summary>
         /// <param name="blockUpdatingIn"></param>
-        public GameOverScreen(bool blockUpdatingIn = true)
+        public GameOverScreen(bool blockUpdatingIn = true, int scoreIn = 0)
             : base (blockUpdatingIn)
         {
             // You done fucked up son
             // Game. Over.
+            _endScore = scoreIn;
         }
 
         /// <summary>Sets up the screen text</summary>
@@ -51,13 +54,17 @@ namespace RobotShootans.Screens
             }
 
             _gameOverText[0].setText("GAME OVER");
-            _gameOverText[1].setText("YOU SCORED <SCORE>");
+            _gameOverText[1].setText("YOU SCORED " + _endScore + " POINTS");
             _gameOverText[2].setText("CARE TO TRY AGAIN?");
             _gameOverText[3].setText("PRESS SPACE TO RESTART");
 
             _loaded = true;
         }
 
+        /// <summary>
+        /// Updates the Game Over screen. Will restart the game
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             if(InputHelper.isKeyPressNew(Keys.Space))

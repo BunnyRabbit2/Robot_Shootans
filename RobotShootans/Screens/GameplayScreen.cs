@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities;
+using RobotShootans.Entities.Weapons;
 
 namespace RobotShootans.Screens
 {
@@ -13,8 +14,6 @@ namespace RobotShootans.Screens
     {
         Player _player;
         RobotSpawner _robotSpawner;
-
-        GUI_TextItem _lives;
 
         /// <summary>
         /// Creates the GameplayScreen
@@ -71,6 +70,11 @@ namespace RobotShootans.Screens
             if(InputHelper.isKeyPressNew(Keys.Escape))
             {
                 Engine.Exit();
+            }
+
+            if(InputHelper.isKeyPressNew(Keys.M))
+            {
+                Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new MachineGun()));
             }
 
             _robotSpawner.playerPosition = _player.getPosition();
