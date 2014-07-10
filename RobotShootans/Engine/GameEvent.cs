@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RobotShootans.Engine
 {
-    public enum EventType { USERDATA, SCORE_CHANGED, AMMO_CHANGED, WEAPON_CHANGED }
+    public enum EventType { USERDATA, SCORE_CHANGED, AMMO_CHANGED, SET_AMMO }
 
     public class GameEvent
     {
@@ -30,7 +30,7 @@ namespace RobotShootans.Engine
         public GameEvent(EventType eventTypeIn, int intChangeIn, object userDataIn = null)
         {
             _eventType = eventTypeIn;
-            _changeInt = ChangeInt;
+            _changeInt = intChangeIn;
             _userData = userDataIn;
         }
     }

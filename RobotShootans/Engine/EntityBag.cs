@@ -113,13 +113,15 @@ namespace RobotShootans.Engine
             return list;
         }
 
-        public void HandleEvent(GameEvent eventIn)
+        public bool HandleEvent(GameEvent eventIn)
         {
             foreach (GameEntity ge in _entities)
             {
                 if (ge.Loaded)
-                    ge.HandleEvent(eventIn);
+                    return ge.HandleEvent(eventIn);
             }
+
+            return false;
         }
 
         /// <summary>

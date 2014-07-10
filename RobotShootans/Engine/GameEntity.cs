@@ -111,9 +111,9 @@ namespace RobotShootans.Engine
         /// Handles the event handed in
         /// </summary>
         /// <param name="eventIn"></param>
-        public virtual void HandleEvent(GameEvent eventIn)
+        public virtual bool HandleEvent(GameEvent eventIn)
         {
-
+            return false;
         }
 
         /// <summary>

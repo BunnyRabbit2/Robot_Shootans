@@ -23,8 +23,6 @@ namespace RobotShootans.Entities
 
         Weapon _currentWeapon;
 
-        GUI_TextItem _ammoCounter;
-
 #if DEBUG
         ColouredRectangle _debugRect;
 #endif
@@ -38,7 +36,6 @@ namespace RobotShootans.Entities
         {
             _playerSprite = new Sprite();
             _playerSprite.Position = startPos;
-            _ammoCounter = new GUI_TextItem();
         }
 
         /// <summary>
@@ -98,14 +95,7 @@ namespace RobotShootans.Entities
 
             _physicsBody.OnCollision += onCollision;
 
-            _currentWeapon = new MachineGun();
-            Screen.addEntity(_currentWeapon);
-
-            _ammoCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
-            _ammoCounter.setText(_currentWeapon.Ammo.ToString());
-            _ammoCounter.Position = new Vector2(100, 100);
-            _ammoCounter.setColor(Color.Red);
-            Screen.addEntity(_ammoCounter);
+            changeWeapon(new MachineGun());
 
             _loaded = true;
         }
@@ -117,7 +107,6 @@ namespace RobotShootans.Entities
             Screen.removeEntity(_debugRect);
             Screen.removeEntity(_playerSprite);
             Screen.removeEntity(_currentWeapon);
-            Screen.removeEntity(_ammoCounter);
         }
 
         private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -229,16 +218,9 @@ namespace RobotShootans.Entities
                   _currentWeapon.shoot(_playerSprite.Position, bearing);
                   if (_currentWeapon.Ammo == 0)
                   {
-                      Screen.removeEntity(_currentWeapon);
-                      _currentWeapon = new Pistol();
-                      Screen.addEntity(_currentWeapon);
+                      changeWeapon(new Pistol());
                   }
             }
-
-            if (_currentWeapon.Ammo == -1)
-                _ammoCounter.setText("\u221E"); // Infinity symbol
-            else
-                _ammoCounter.setText(_currentWeapon.Ammo.ToString());
 
 #if DEBUG
             _debugRect.X = (int)_playerSprite.Position.X;
@@ -263,6 +245,15 @@ namespace RobotShootans.Entities
         public Vector2 getPosition()
         {
             return _playerSprite.Position;
+        }
+
+        public void changeWeapon(Weapon weaponIn)
+        {
+            if(_currentWeapon != null)
+                Screen.removeEntity(_currentWeapon);
+            _currentWeapon = new Pistol();
+            Screen.Engine.registerEvent(new GameEvent(EventType.SET_AMMO, _currentWeapon.Ammo));
+            Screen.addEntity(_currentWeapon);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace RobotShootans.Engine
             _gameScreens = new List<GameScreen>();
             _gameScreensToAdd = new List<GameScreen>();
             _screensToRemove = new List<GameScreen>();
+            _gameEvents = new List<GameEvent>();
             _loaded = false;
         }
 
@@ -81,10 +82,10 @@ namespace RobotShootans.Engine
         private List<GameScreen> _gameScreensToAdd;
         private List<GameScreen> _screensToRemove;
 
-        private Queue<GameEvent> _gameEvents;
+        private List<GameEvent> _gameEvents;
         /// <summary>Registers the Event to the queue</summary>
         /// <param name="eventIn">The event to be registered</param>
-        public void registerEvent(GameEvent eventIn) { _gameEvents.Enqueue(eventIn); }
+        public void registerEvent(GameEvent eventIn) { _gameEvents.Add(eventIn); }
 
         private ResolutionIndependentRenderer _resolutionIndependence;
         private Game _game;
@@ -144,8 +145,6 @@ namespace RobotShootans.Engine
             _bg = _game.Content.Load<Texture2D>("images/background");
 
             _spriteBatch = new SpriteBatch(_graphics);
-
-            _gameEvents = new Queue<GameEvent>();
 
             _loaded = true;
             LogFile.LogStringLine("Done loading content", LogType.INFO);
@@ -293,20 +292,20 @@ namespace RobotShootans.Engine
 
             if (_loaded)
             {
-                GameEvent e;
-
-                while(_gameEvents.Count != 0)
+                for (int i = 0; i < _gameEvents.Count; i++ )
                 {
-                    e = _gameEvents.Dequeue();
-                    if(e == null)
-                        break;
+                    GameEvent e = _gameEvents[i];
 
-                    for (int i = _gameScreens.Count - 1; i >= 0; i--)
+                    for (int i2 = _gameScreens.Count - 1; i2 >= 0; i2--)
                     {
-                        if (_gameScreens[i].Loaded)
-                            _gameScreens[i].HandleEvent(e);
+                        if (_gameScreens[i2].Loaded)
+                            if (_gameScreens[i2].HandleEvent(e))
+                            {
+                                _gameEvents.Remove(e);
+                                i--;
+                            }
 
-                        if (_gameScreens[i].BlockUpdating)
+                        if (_gameScreens[i2].BlockUpdating)
                             break;
                     }
                 }

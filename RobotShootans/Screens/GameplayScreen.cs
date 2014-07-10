@@ -35,6 +35,8 @@ namespace RobotShootans.Screens
 
             _physicsWorld = new World(Vector2.Zero);
 
+            addEntity(new GUI_HUD());
+
             TiledBackground bg = new TiledBackground("images/game/metal-bg", new Rectangle(0, 0, 1920, 1080));
             bg.DrawOrder = 0;
             addEntity(bg);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using RobotShootans.Engine;
 
 namespace RobotShootans.Entities.Weapons
 {
@@ -24,7 +25,7 @@ namespace RobotShootans.Entities.Weapons
                 Screen.addEntity(new Bullet(positionIn, 5, _speed, bearingIn, Color.Yellow));
                 _fireRateCounter = 0;
 
-                // Find way to have ammo display infinite
+                Screen.Engine.registerEvent(new GameEvent(EventType.SET_AMMO, -1));
             }
         }
     }

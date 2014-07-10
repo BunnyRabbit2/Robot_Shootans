@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using RobotShootans.Engine;
 
 namespace RobotShootans.Entities.Weapons
 {
@@ -26,6 +27,8 @@ namespace RobotShootans.Entities.Weapons
                 _fireRateCounter = 0;
 
                 _ammo--;
+
+                Screen.Engine.registerEvent(new GameEvent(EventType.AMMO_CHANGED, -1));
             }
         }
     }
