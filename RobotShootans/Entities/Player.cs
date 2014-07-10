@@ -276,7 +276,7 @@ namespace RobotShootans.Entities
         {
             if(_currentWeapon != null)
                 Screen.removeEntity(_currentWeapon);
-            _currentWeapon = new Pistol();
+            _currentWeapon = weaponIn;
             Screen.Engine.registerEvent(new GameEvent(EventType.SET_AMMO, _currentWeapon.Ammo));
             Screen.addEntity(_currentWeapon);
         }
