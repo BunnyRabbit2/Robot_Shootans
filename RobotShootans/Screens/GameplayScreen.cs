@@ -15,6 +15,11 @@ namespace RobotShootans.Screens
         Player _player;
         RobotSpawner _robotSpawner;
 
+        int _startTimer; // Used to start the game after a few seconds have passed
+        bool _firstUpdate; // Used for stuff
+
+        bool _gameStarted;
+
         /// <summary>
         /// Creates the GameplayScreen
         /// </summary>
@@ -42,13 +47,8 @@ namespace RobotShootans.Screens
 
             _physicsEnabled = true;
 
-            _player = new Player(Engine.RenderOrigin);
-            addEntity(_player);
-
-            _robotSpawner = new RobotSpawner();
-            addEntity(_robotSpawner);
-
-            addEntity(new Crosshair());
+            _firstUpdate = false;
+            _gameStarted = false;
 
             _loaded = true;
         }
@@ -62,6 +62,37 @@ namespace RobotShootans.Screens
         }
 
         /// <summary>
+        /// Handles the events. Sorts out restarting the game and game over
+        /// </summary>
+        /// <param name="eventIn"></param>
+        /// <returns></returns>
+        public override bool HandleEvent(GameEvent eventIn)
+        {
+            bool returnV = false;
+
+            if(eventIn.EventType == EventType.LIFE_LOST)
+            {
+                removeEntity(_player);
+                removeEntity(_robotSpawner);
+                removeEntity("CROSSHAIR");
+                _startTimer = 0;
+                _gameStarted = false;
+                returnV = true;
+            }
+            else if(eventIn.EventType == EventType.GAME_OVER)
+            {
+                Engine.removeGameScreen(this);
+                Engine.pushGameScreen(new GameOverScreen(true, eventIn.ChangeInt));
+                returnV = true;
+            }
+
+            if (base.HandleEvent(eventIn))
+                returnV = true;
+
+            return returnV;
+        }
+
+        /// <summary>
         /// Updates the gameplay screen
         /// </summary>
         /// <param name="gameTime"></param>
@@ -72,16 +103,32 @@ namespace RobotShootans.Screens
                 Engine.Exit();
             }
 
-            if(InputHelper.isKeyPressNew(Keys.M))
+            if (_firstUpdate)
             {
-                Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new MachineGun()));
+                _startTimer = 0;
+                _firstUpdate = false;
             }
 
-            _robotSpawner.playerPosition = _player.getPosition();
+            if(_startTimer > 2000 && !_gameStarted)
+            {
+                startGame();
+            }
+            
+            if(_gameStarted)
+            {
+                if (InputHelper.isKeyPressNew(Keys.M))
+                {
+                    Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new MachineGun()));
+                }
+
+                _robotSpawner.playerPosition = _player.getPosition();
+            }
 
             base.Update(gameTime);
 
             _physicsWorld.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            _startTimer += gameTime.ElapsedGameTime.Milliseconds;
         }
 
         /// <summary>
@@ -92,6 +139,19 @@ namespace RobotShootans.Screens
         public override void Draw(GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch sBatch)
         {
             base.Draw(gameTime, sBatch);
+        }
+
+        private void startGame()
+        {
+            _player = new Player(Engine.RenderOrigin);
+            addEntity(_player);
+
+            _robotSpawner = new RobotSpawner();
+            addEntity(_robotSpawner);
+
+            addEntity(new Crosshair());
+
+            _gameStarted = true;
         }
     }
 }

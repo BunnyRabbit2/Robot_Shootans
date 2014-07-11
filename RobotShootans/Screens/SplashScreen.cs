@@ -41,9 +41,9 @@ namespace RobotShootans.Screens
             _addedSecondScreen = false;
             _addedThirdScreen = false;
 
-            _displayTime = 5000;
-            _fadeTime = 1000;
-            _waitTime = 2000;
+            _displayTime = 5000; // 5 Seconds
+            _fadeTime = 1000; // 1 Second
+            _waitTime = 2000; // 2 Seconds
 
             _loaded = true;
         }

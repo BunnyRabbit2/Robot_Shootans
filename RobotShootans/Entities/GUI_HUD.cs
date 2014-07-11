@@ -13,7 +13,7 @@ namespace RobotShootans.Entities
     public class GUI_HUD : GameEntity
     {
         GUI_TextItem _ammoCounter, _scoreCounter, _lives;
-        int _currentAmmo, _currentScore;
+        int _currentAmmo, _currentScore, _currentLives;
 
         /// <summary>Gets the current score</summary>
         public int Score { get { return _currentScore; } }
@@ -27,6 +27,7 @@ namespace RobotShootans.Entities
         {
             _ammoCounter = new GUI_TextItem();
             _scoreCounter = new GUI_TextItem();
+            _lives = new GUI_TextItem();
         }
 
         /// <summary>
@@ -50,6 +51,15 @@ namespace RobotShootans.Entities
             _scoreCounter.DrawOrder = 10;
             _scoreCounter.setOrigin(OriginPosition.TOPRIGHT);
             Screen.addEntity(_scoreCounter);
+
+            _lives.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
+            _currentLives = 3;
+            _lives.setText(getLivesAsString());
+            _lives.Position = new Vector2(Screen.Engine.RenderOrigin.X, Screen.Engine.RenderHeight * 0.1f);
+            _lives.setColor(Color.Red);
+            _lives.DrawOrder = 10;
+            _lives.setOrigin(OriginPosition.CENTER);
+            Screen.addEntity(_lives);
 
             _loaded = true;
         }
@@ -85,6 +95,13 @@ namespace RobotShootans.Entities
                 _currentScore += eventIn.ChangeInt;
                 return true;
             }
+            else if(eventIn.EventType == EventType.LIFE_LOST)
+            {
+                _currentLives--;
+                if (_currentLives == 0)
+                    Screen.Engine.registerEvent(new GameEvent(EventType.GAME_OVER, _currentScore));
+                return true;
+            }
 
             return false;
         }
@@ -101,6 +118,20 @@ namespace RobotShootans.Entities
                 _ammoCounter.setText(_currentAmmo.ToString());
 
             _scoreCounter.setText(_currentScore.ToString());
+
+            _lives.setText(getLivesAsString());
+        }
+
+        private string getLivesAsString()
+        {
+            String s = "LIVES: ";
+
+            for (int i = 0; i < _currentLives; i++)
+            {
+                s += "X";
+            }
+
+            return s;
         }
     }
 }

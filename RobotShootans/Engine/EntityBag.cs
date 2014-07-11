@@ -48,7 +48,8 @@ namespace RobotShootans.Engine
         /// <param name="entityIn">The entity to remove</param>
         public void removeEntity(GameEntity entityIn)
         {
-            _entitiesToRemove.Add(entityIn);
+            if(entityIn != null)
+                _entitiesToRemove.Add(entityIn);
         }
 
         /// <summary>

@@ -19,7 +19,13 @@ namespace RobotShootans.Engine
         /// <summary>An event used to set an ammo amount</summary>
         SET_AMMO,
         /// <summary>An event used to change the weapon</summary>
-        WEAPON_CHANGED
+        WEAPON_CHANGED,
+        /// <summary>An event used when the player loses a life</summary>
+        LIFE_LOST,
+        /// <summary>An event used to start the game</summary>
+        START_GAME,
+        /// <summary>An event to signify game over</summary>
+        GAME_OVER
     }
 
     /// <summary>

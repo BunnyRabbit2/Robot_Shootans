@@ -36,6 +36,16 @@ namespace RobotShootans.Entities
             _loaded = true;
         }
 
+        /// <summary></summary>
+        public override void Unload()
+        {
+            List<GameEntity> robots = Screen.getEntityByName("ROBOT");
+            foreach(GameEntity r in robots)
+            {
+                Screen.removeEntity(r);
+            }
+        }
+
         /// <summary>Updates the spawner and places robots</summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
@@ -57,6 +67,16 @@ namespace RobotShootans.Entities
                 _robots.Add(newRobot);
 
                 _spawnTimer = 0;
+            }
+
+            // Checks if any robots are destroyed and cleans the list of nulls
+            for (int i = 0; i < _robots.Count; i++)
+            {
+                if (_robots[i] == null)
+                {
+                    _robots.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }

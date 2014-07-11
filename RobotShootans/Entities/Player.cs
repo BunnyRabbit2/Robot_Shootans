@@ -115,9 +115,7 @@ namespace RobotShootans.Entities
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "ROBOT")
             {
-                Screen.Engine.removeGameScreen(Screen);
-                GUI_HUD h = (GUI_HUD)Screen.getEntityByName("HUD")[0];
-                Screen.Engine.pushGameScreen(new GameOverScreen(true, h.Score));
+                Screen.Engine.registerEvent(new GameEvent(EventType.LIFE_LOST));
             }
 
             return true;
