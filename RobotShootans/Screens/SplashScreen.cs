@@ -95,6 +95,7 @@ namespace RobotShootans.Screens
             {
                 Engine.removeGameScreen(this);
                 Engine.pushGameScreen(new GameplayScreen());
+                Engine.pushGameScreen(new PreGameScreen());
             }
 
             base.Update(gameTime);

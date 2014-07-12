@@ -72,6 +72,7 @@
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\PhysicsTestScreen.cs" />
     <Compile Include="Screens\PhysicsTestScreenTwo.cs" />
+    <Compile Include="Screens\PreGameScreen.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
   </ItemGroup>
   <ItemGroup>

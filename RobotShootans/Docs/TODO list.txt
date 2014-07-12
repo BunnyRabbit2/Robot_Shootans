@@ -4,9 +4,10 @@
 - Physics
 	0.7
 - Scoring
-	0.8
 - Pre-game screen
 - Game Over screen
+	0.8
+- Sound, Music and Power Ups
 	0.9
 - Clean up and polish
 	1.0

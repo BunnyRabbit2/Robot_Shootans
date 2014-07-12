@@ -39,15 +39,13 @@ namespace RobotShootans.Screens
 
             _physicsWorld = new World(Vector2.Zero);
 
-            addEntity(new GUI_HUD());
-
             TiledBackground bg = new TiledBackground("images/game/metal-bg", new Rectangle(0, 0, 1920, 1080));
             bg.DrawOrder = 0;
             addEntity(bg);
 
             _physicsEnabled = true;
 
-            _firstUpdate = false;
+            _firstUpdate = true;
             _gameStarted = false;
 
             _loaded = true;
@@ -105,6 +103,8 @@ namespace RobotShootans.Screens
 
             if (_firstUpdate)
             {
+                addEntity(new GUI_HUD());
+
                 _startTimer = 0;
                 _firstUpdate = false;
             }

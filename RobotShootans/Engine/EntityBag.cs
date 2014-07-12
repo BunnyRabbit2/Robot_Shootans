@@ -160,6 +160,9 @@ namespace RobotShootans.Engine
         /// <param name="sBatch"></param>
         public void Draw(GameTime gameTimeIn, SpriteBatch sBatch)
         {
+            if (_entitiesToAdd.Count != 0)
+                addEntities();
+
             foreach (GameEntity ge in _entities)
             {
                 if (ge.Loaded)
