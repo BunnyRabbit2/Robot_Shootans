@@ -13,9 +13,11 @@ namespace RobotShootans.Entities.Weapons
             _weaponType = "MACHINE GUN";
             _fireRate = 100;
 
-            _speed = 10f;
+            _speed = 40f;
 
             _ammo = 100;
+
+            _bulletSize = 10;
         }
 
         /// <summary>If the fire rate has reset, shoots the weapon</summary>
@@ -23,7 +25,7 @@ namespace RobotShootans.Entities.Weapons
         {
             if (_fireRateCounter >= _fireRate)
             {
-                Screen.addEntity(new Bullet(positionIn, 5, _speed, bearingIn, Color.Red));
+                Screen.addEntity(new Bullet(positionIn, _bulletSize, _speed, bearingIn, Color.Red));
                 _fireRateCounter = 0;
 
                 _ammo--;

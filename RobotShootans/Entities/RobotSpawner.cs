@@ -15,6 +15,8 @@ namespace RobotShootans.Entities
         int _spawnTimer;
         float _minSpawnDistance;
 
+        int _normalRobotSize = 25;
+
         Random rand = new Random();
 
         List<Robot> _robots;
@@ -62,7 +64,7 @@ namespace RobotShootans.Entities
                     position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
                 }
 
-                Robot newRobot = new Robot(position, this, 20);
+                Robot newRobot = new Robot(position, this, _normalRobotSize);
                 Screen.addEntity(newRobot);
                 _robots.Add(newRobot);
 

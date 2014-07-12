@@ -12,9 +12,11 @@ namespace RobotShootans.Entities.Weapons
             _weaponType = "PISTOL";
             _fireRate = 1000;
 
-            _speed = 10f;
+            _speed = 40f;
 
             _ammo = -1;
+
+            _bulletSize = 10;
         }
 
         /// <summary>If the fire rate has reset, shoots the weapon</summary>
@@ -22,7 +24,7 @@ namespace RobotShootans.Entities.Weapons
         {
             if (_fireRateCounter >= _fireRate)
             {
-                Screen.addEntity(new Bullet(positionIn, 5, _speed, bearingIn, Color.Yellow));
+                Screen.addEntity(new Bullet(positionIn, _bulletSize, _speed, bearingIn, Color.Yellow));
                 _fireRateCounter = 0;
 
                 Screen.Engine.registerEvent(new GameEvent(EventType.SET_AMMO, -1));

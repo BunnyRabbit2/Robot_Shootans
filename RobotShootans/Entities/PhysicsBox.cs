@@ -29,12 +29,10 @@ namespace RobotShootans.Entities
             _physicsBody.Rotation = rotationIn;
         }
 
-#if DEBUG
         // Surrounding this until I figure out a better way of doing this
         // Hopefully this will force me to check it before compiling as Release
         /// <summary>Public access to the physics body</summary>
         public Body Body { get { return _physicsBody; } }
-#endif
 
         /// <summary>
         /// Creates the physics box

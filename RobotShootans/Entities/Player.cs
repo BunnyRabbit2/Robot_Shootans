@@ -102,7 +102,9 @@ namespace RobotShootans.Entities
         public override void Unload()
         {
             _physicsBody.Dispose();
+#if DEBUG
             Screen.removeEntity(_debugRect);
+#endif
             Screen.removeEntity(_playerSprite);
             Screen.removeEntity(_currentWeapon);
         }

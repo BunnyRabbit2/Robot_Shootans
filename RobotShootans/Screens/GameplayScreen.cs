@@ -116,10 +116,20 @@ namespace RobotShootans.Screens
             
             if(_gameStarted)
             {
+#if DEBUG
                 if (InputHelper.isKeyPressNew(Keys.M))
                 {
                     Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new MachineGun()));
                 }
+                else if (InputHelper.isKeyPressNew(Keys.N))
+                {
+                    Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new Shotgun()));
+                }
+                else if (InputHelper.isKeyPressNew(Keys.B))
+                {
+                    Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new Pistol()));
+                }
+#endif
 
                 _robotSpawner.playerPosition = _player.getPosition();
             }
