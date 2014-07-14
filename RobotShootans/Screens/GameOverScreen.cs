@@ -24,14 +24,14 @@ namespace RobotShootans.Screens
             // You done fucked up son
             // Game. Over.
             _endScore = scoreIn;
+
+            _screenName = "GAME OVER SCREEN";
         }
 
         /// <summary>Sets up the screen text</summary>
         public override void loadGameScreen()
         {
             _physicsEnabled = false;
-
-            _screenName = "GAME OVER SCREEN";
 
             ColouredRectangle bg = new ColouredRectangle(new Rectangle(0, 0, Engine.RenderWidth, Engine.RenderHeight), Color.LightBlue);
             bg.DrawOrder = 0;

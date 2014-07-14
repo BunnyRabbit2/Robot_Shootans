@@ -27,7 +27,7 @@ namespace RobotShootans.Screens
         public GameplayScreen(bool blockUpdating = false)
             : base(blockUpdating)
         {
-
+            _screenName = "GAMEPLAY SCREEN";
         }
 
         /// <summary>
@@ -35,8 +35,6 @@ namespace RobotShootans.Screens
         /// </summary>
         public override void loadGameScreen()
         {
-            _screenName = "GAMEPLAY SCREEN";
-
             _physicsWorld = new World(Vector2.Zero);
 
             TiledBackground bg = new TiledBackground("images/game/metal-bg", new Rectangle(0, 0, 1920, 1080));

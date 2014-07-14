@@ -21,14 +21,13 @@ namespace RobotShootans.Screens
         public PreGameScreen(bool blockUpdatingIn = true)
             : base (blockUpdatingIn)
         {
+            _screenName = "PRE GAME SCREEN";
         }
 
         /// <summary>Sets up the screen text</summary>
         public override void loadGameScreen()
         {
             _physicsEnabled = false;
-
-            _screenName = "GAME OVER SCREEN";
 
             //ColouredRectangle bg = new ColouredRectangle(new Rectangle(0, 0, Engine.RenderWidth, Engine.RenderHeight), Color.LightBlue);
             //bg.DrawOrder = 0;

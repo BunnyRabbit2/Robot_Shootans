@@ -23,7 +23,7 @@ namespace RobotShootans.Screens
         public SplashScreen(bool blockUpdating = false)
             : base(blockUpdating)
         {
-
+            _screenName = "SPLASH SCREEN";
         }
 
         /// <summary>
@@ -31,8 +31,6 @@ namespace RobotShootans.Screens
         /// </summary>
         public override void loadGameScreen()
         {
-            _screenName = "SPLASH SCREEN";
-
             addEntity(new ColouredRectangle(new Rectangle(0, 0, 1920, 1080), Color.DarkGray));
             
             _firstUpdate = true;
@@ -95,6 +93,7 @@ namespace RobotShootans.Screens
             {
                 Engine.removeGameScreen(this);
                 Engine.pushGameScreen(new GameplayScreen());
+                Engine.pushGameScreen(new PreGameScreen());
                 Engine.pushGameScreen(new PreGameScreen());
             }
 

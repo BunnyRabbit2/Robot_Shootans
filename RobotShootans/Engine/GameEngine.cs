@@ -202,15 +202,22 @@ namespace RobotShootans.Engine
         /// <param name="paused">Whether the GameScreen is initially paused</param>
         public void pushGameScreen(GameScreen gameScreenIn, bool paused = false)
         {
+            if(string.IsNullOrEmpty(gameScreenIn.ScreenName))
+            {
+                LogFile.LogStringLine("Failed to add screen of type " + gameScreenIn.GetType().ToString() + " to the engine. It's screen name was not set in the constructor", LogType.ERROR);
+                return;
+            }
+
             if(gameScreenIn.Engine != null)
             {
                 LogFile.LogStringLine("Failed to add screen " + gameScreenIn.ScreenName + " to the engine. It already belongs to a parent engine", LogType.ERROR);
                 return;
             }
 
-            if(_gameScreens.FirstOrDefault(gs => gs.ScreenName == gameScreenIn.ScreenName) != null)
+            if(_gameScreens.FirstOrDefault(gs => gs.ScreenName == gameScreenIn.ScreenName) != null
+                || _gameScreensToAdd.FirstOrDefault(gs => gs.ScreenName == gameScreenIn.ScreenName) != null)
             {
-                LogFile.LogStringLine("Failed to add screen" + gameScreenIn.ScreenName + " to the engine. There's already a screen with that name there", LogType.ERROR);
+                LogFile.LogStringLine("Failed to add screen " + gameScreenIn.ScreenName + " to the engine. There's already a screen with that name there", LogType.ERROR);
                 return;
             }
 
