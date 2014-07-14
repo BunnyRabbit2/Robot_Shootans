@@ -71,6 +71,7 @@ namespace RobotShootans.Entities
         {
             Screen.removeEntity(_ammoCounter);
             Screen.removeEntity(_scoreCounter);
+            Screen.removeEntity(_lives);
         }
 
         /// <summary>
@@ -100,6 +101,11 @@ namespace RobotShootans.Entities
                 _currentLives--;
                 if (_currentLives == 0)
                     Screen.Engine.registerEvent(new GameEvent(EventType.GAME_OVER, _currentScore));
+                return true;
+            }
+            else if(eventIn.EventType == EventType.LIFE_GAINED)
+            {
+                _currentLives++;
                 return true;
             }
 
