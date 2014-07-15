@@ -43,7 +43,7 @@ namespace RobotShootans.Screens
             for (int i = 0; i < 4; i++)
             {
                 _gameOverText[i] = new GUI_TextItem();
-                _gameOverText[i].setFont(Engine.loadFont("SourceSansPro-Regular"));
+                _gameOverText[i].setFont(Engine.loadFont("FiraSans"));
                 _gameOverText[i].setColor(Color.Red);
                 _gameOverText[i].setOutlineColor(Color.Black);
                 _gameOverText[i].DrawOutline = true;

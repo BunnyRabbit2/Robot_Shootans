@@ -1,9 +1,8 @@
-[15/07/2014][14:24:07]: INFO - Started Engine for game: Robot Shootans
-[15/07/2014][14:24:07]: INFO - Version number: 0.8.5309.24123
-[15/07/2014][14:24:07]: INFO - Loading Engine Content
-[15/07/2014][14:24:07]: INFO - Done loading content
-[15/07/2014][14:24:08]: INFO - Failed to add screen PRE GAME SCREEN to the engine. There's already a screen with that name there
-[15/07/2014][14:24:18]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][14:24:50]: INFO - Unloading all screens
-[15/07/2014][14:24:50]: INFO - Finished unloading all screens
-[15/07/2014][14:24:50]: INFO - Closing GameEngine down
+[15/07/2014][14:46:35]: INFO - Started Engine for game: Robot Shootans
+[15/07/2014][14:46:35]: INFO - Version number: 0.8.5309.24797
+[15/07/2014][14:46:35]: INFO - Loading Engine Content
+[15/07/2014][14:46:35]: INFO - Done loading content
+[15/07/2014][14:46:36]: INFO - Failed to add screen PRE GAME SCREEN to the engine. There's already a screen with that name there
+[15/07/2014][14:46:44]: INFO - Unloading all screens
+[15/07/2014][14:46:44]: INFO - Finished unloading all screens
+[15/07/2014][14:46:44]: INFO - Closing GameEngine down

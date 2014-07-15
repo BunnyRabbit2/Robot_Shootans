@@ -103,6 +103,7 @@
     </Content>
     <Content Include="Docs\logFile.txt" />
     <Content Include="Docs\TODO list.txt" />
+    <Content Include="Fira-Sans\SIL Open Font License.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Content\images\farseer-logo-512px.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -143,24 +144,45 @@
     <Content Include="Content\sound\SG_shoot.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="source-sans-pro\SIL Open Font License.txt" />
-    <None Include="source-sans-pro\SourceSansPro-Black.otf" />
-    <None Include="source-sans-pro\SourceSansPro-BlackIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-Bold.otf" />
-    <None Include="source-sans-pro\SourceSansPro-BoldIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-ExtraLight.otf" />
-    <None Include="source-sans-pro\SourceSansPro-ExtraLightIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-It.otf" />
-    <None Include="source-sans-pro\SourceSansPro-Light.otf" />
-    <None Include="source-sans-pro\SourceSansPro-LightIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-Semibold.otf" />
-    <None Include="source-sans-pro\SourceSansPro-SemiboldIt.otf" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="Content\fonts\SourceSansPro-Regular.xnb">
+    <Content Include="Content\fonts\FiraSans.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fira-Sans\FiraSans-Bold.otf" />
+    <None Include="Fira-Sans\FiraSans-BoldItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Book.otf" />
+    <None Include="Fira-Sans\FiraSans-BookItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Eight.otf" />
+    <None Include="Fira-Sans\FiraSans-EightItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-ExtraBold.otf" />
+    <None Include="Fira-Sans\FiraSans-ExtraBoldItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-ExtraLight.otf" />
+    <None Include="Fira-Sans\FiraSans-ExtraLightItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Four.otf" />
+    <None Include="Fira-Sans\FiraSans-FourItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Hair.otf" />
+    <None Include="Fira-Sans\FiraSans-HairItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Heavy.otf" />
+    <None Include="Fira-Sans\FiraSans-HeavyItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Italic.otf" />
+    <None Include="Fira-Sans\FiraSans-Light.otf" />
+    <None Include="Fira-Sans\FiraSans-LightItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Medium.otf" />
+    <None Include="Fira-Sans\FiraSans-MediumItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Regular.otf" />
+    <None Include="Fira-Sans\FiraSans-SemiBold.otf" />
+    <None Include="Fira-Sans\FiraSans-SemiBoldItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Thin.otf" />
+    <None Include="Fira-Sans\FiraSans-ThinItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Two.otf" />
+    <None Include="Fira-Sans\FiraSans-TwoItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-Ultra.otf" />
+    <None Include="Fira-Sans\FiraSans-UltraItalic.otf" />
+    <None Include="Fira-Sans\FiraSans-UltraLight.otf" />
+    <None Include="Fira-Sans\FiraSans-UltraLightItalic.otf" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Content\images\background.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

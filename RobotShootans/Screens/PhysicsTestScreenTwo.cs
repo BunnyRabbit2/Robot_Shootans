@@ -65,19 +65,19 @@ namespace RobotShootans.Screens
             _loaded = true;
 
             _dirDisplay = new GUI_TextItem();
-            _dirDisplay.setFont(Engine.loadFont("SourceSansPro-Regular"));
+            _dirDisplay.setFont(Engine.loadFont("FiraSans"));
             _dirDisplay.Position = new Vector2(100, 100);
             _dirDisplay.setColor(Color.Red);
             addEntity(_dirDisplay);
 
             _impulseDisplay = new GUI_TextItem();
-            _impulseDisplay.setFont(Engine.loadFont("SourceSansPro-Regular"));
+            _impulseDisplay.setFont(Engine.loadFont("FiraSans"));
             _impulseDisplay.Position = new Vector2(100, 200);
             _impulseDisplay.setColor(Color.Red);
             addEntity(_impulseDisplay);
 
             _maxVelDisplay = new GUI_TextItem();
-            _maxVelDisplay.setFont(Engine.loadFont("SourceSansPro-Regular"));
+            _maxVelDisplay.setFont(Engine.loadFont("FiraSans"));
             _maxVelDisplay.Position = new Vector2(100, 300);
             _maxVelDisplay.setColor(Color.Red);
             addEntity(_maxVelDisplay);

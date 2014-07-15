@@ -52,22 +52,6 @@
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="source-sans-pro\SIL Open Font License.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="source-sans-pro\SourceSansPro-Black.otf" />
-    <None Include="source-sans-pro\SourceSansPro-BlackIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-Bold.otf" />
-    <None Include="source-sans-pro\SourceSansPro-BoldIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-ExtraLight.otf" />
-    <None Include="source-sans-pro\SourceSansPro-ExtraLightIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-It.otf" />
-    <None Include="source-sans-pro\SourceSansPro-Light.otf" />
-    <None Include="source-sans-pro\SourceSansPro-LightIt.otf" />
-    <None Include="source-sans-pro\SourceSansPro-Semibold.otf" />
-    <None Include="source-sans-pro\SourceSansPro-SemiboldIt.otf" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

@@ -35,7 +35,7 @@ namespace RobotShootans.Entities
         /// </summary>
         public override void Load()
         {
-            _ammoCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
+            _ammoCounter.setFont(Screen.Engine.loadFont("FiraSans"));
             _currentAmmo = 0;
             _ammoCounter.setText(_currentAmmo.ToString());
             _ammoCounter.Position = new Vector2(Screen.Engine.RenderWidth * 0.1f, Screen.Engine.RenderHeight * 0.1f);
@@ -43,7 +43,7 @@ namespace RobotShootans.Entities
             _ammoCounter.DrawOrder = 10;
             Screen.addEntity(_ammoCounter);
 
-            _scoreCounter.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
+            _scoreCounter.setFont(Screen.Engine.loadFont("FiraSans"));
             _currentScore = 0;
             _scoreCounter.setText(_currentScore.ToString());
             _scoreCounter.Position = new Vector2(Screen.Engine.RenderWidth * 0.9f, Screen.Engine.RenderHeight * 0.1f);
@@ -52,7 +52,7 @@ namespace RobotShootans.Entities
             _scoreCounter.setOrigin(OriginPosition.TOPRIGHT);
             Screen.addEntity(_scoreCounter);
 
-            _lives.setFont(Screen.Engine.loadFont("SourceSansPro-Regular"));
+            _lives.setFont(Screen.Engine.loadFont("FiraSans"));
             _currentLives = 3;
             _lives.setText(getLivesAsString());
             _lives.Position = new Vector2(Screen.Engine.RenderOrigin.X, Screen.Engine.RenderHeight * 0.1f);
