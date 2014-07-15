@@ -59,6 +59,9 @@ namespace RobotShootans.Screens
             _gameOverText[2].setText("CARE TO TRY AGAIN?");
             _gameOverText[3].setText("PRESS SPACE TO RESTART");
 
+            Engine.StopSong();
+            Engine.StartSong("ObservingTheStar");
+
             _loaded = true;
         }
 

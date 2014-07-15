@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace RobotShootans.Engine
             _gameScreensToAdd = new List<GameScreen>();
             _screensToRemove = new List<GameScreen>();
             _gameEvents = new List<GameEvent>();
+            _songs = new Dictionary<string, Song>();
             _loaded = false;
         }
 
@@ -99,6 +101,9 @@ namespace RobotShootans.Engine
         private ContentManager _content;
         /// <summary>The Content Manager owned by the Engine</summary>
         public ContentManager Content { get { return _content; } }
+
+        private Dictionary<string, Song> _songs;
+        private bool _musicPlaying = false;
 
         private GraphicsDevice _graphics;
         /// <summary>The GraphicsDevice used by the Engine</summary>
@@ -424,6 +429,37 @@ namespace RobotShootans.Engine
                 LogFile.LogStringLine("Failed to load sound: " + soundToLoad + ". Nothing loaded", LogType.ERROR);
                 return null;
             }
+        }
+
+        public void StartSong(string songToStart)
+        {
+#if !WINDOWS
+            if (!_songs.ContainsKey(songToStart))
+            {
+                if (File.Exists("Content/music/" + songToStart + ".xnb"))
+                {
+                    _songs.Add(songToStart, Content.Load<Song>("music/" + songToStart));
+                    MediaPlayer.Play(_songs[songToStart]);
+                    _musicPlaying = true;
+                }
+                else
+                {
+                    LogFile.LogStringLine("Failed to load music: " + songToStart + ". Nothing loaded", LogType.ERROR);
+                    
+                }
+            }
+            else
+            {
+                MediaPlayer.Play(_songs[songToStart]);
+                _musicPlaying = true;
+            }
+#endif
+        }
+
+        public void StopSong(string songToStop = "")
+        {
+            if (_musicPlaying)
+                MediaPlayer.Stop();
         }
 
         #endregion

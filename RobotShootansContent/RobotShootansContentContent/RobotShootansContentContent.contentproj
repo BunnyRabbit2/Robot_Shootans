@@ -55,9 +55,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="music\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="images\funkyrabbit logo.png">
       <Name>funkyrabbit logo</Name>
       <Importer>TextureImporter</Importer>
@@ -183,6 +180,18 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <SubType>Designer</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="music\DST-TowerDefenseTheme_1.mp3">
+      <Name>DST-TowerDefenseTheme_1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="music\ObservingTheStar.mp3">
+      <Name>ObservingTheStar</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

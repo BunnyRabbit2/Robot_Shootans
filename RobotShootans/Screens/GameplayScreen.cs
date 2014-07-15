@@ -103,6 +103,9 @@ namespace RobotShootans.Screens
 
             if (_firstUpdate)
             {
+                Engine.StopSong();
+                Engine.StartSong("DST-TowerDefenseTheme_1");
+
                 addEntity(new GUI_HUD());
 
                 _startTimer = 0;

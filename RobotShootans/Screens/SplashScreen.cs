@@ -43,6 +43,8 @@ namespace RobotShootans.Screens
             _fadeTime = 1000; // 1 Second
             _waitTime = 2000; // 2 Seconds
 
+            Engine.StartSong("ObservingTheStar");
+
             _loaded = true;
         }
 

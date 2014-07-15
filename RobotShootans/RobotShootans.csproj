@@ -101,6 +101,12 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\music\DST-TowerDefenseTheme_1.wma">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\music\ObservingTheStar.wma">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Docs\logFile.txt" />
     <Content Include="Docs\TODO list.txt" />
     <Content Include="Fira-Sans\SIL Open Font License.txt" />
@@ -149,6 +155,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\music\DST-TowerDefenseTheme_1.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\music\ObservingTheStar.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Fira-Sans\FiraSans-Bold.otf" />
     <None Include="Fira-Sans\FiraSans-BoldItalic.otf" />
     <None Include="Fira-Sans\FiraSans-Book.otf" />
