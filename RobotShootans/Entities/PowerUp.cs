@@ -17,15 +17,15 @@ namespace RobotShootans.Entities
     /// </summary>
     public enum PowerUpType
     {
-        /// <summary></summary>
+        /// <summary>A shield that will absorb the next robot strike</summary>
         SHIELD,
-        /// <summary></summary>
+        /// <summary>A fast firing weapon</summary>
         MACHINEGUN,
-        /// <summary></summary>
+        /// <summary>A slow firing weapon that shoots a spread of bullets</summary>
         SHOTGUN,
-        /// <summary></summary>
+        /// <summary>Fires a large round that explodes on impact</summary>
         ROCKET_LAUNCHER,
-        /// <summary></summary>
+        /// <summary>Gains the player a life</summary>
         LIFE
     }
 
@@ -49,7 +49,7 @@ namespace RobotShootans.Entities
         /// <param name="typeIn"></param>
         /// <param name="sizeIn"></param>
         public PowerUp(Vector2 positionIn, PowerUpType typeIn, int sizeIn = 20)
-            : base ("POWER UP")
+            : base ("POWER_UP")
         {
             _type = typeIn;
             _position = positionIn;
@@ -61,19 +61,29 @@ namespace RobotShootans.Entities
         /// </summary>
         public override void Load()
         {
-            _physicsBody = BodyFactory.CreateCircle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(_size), 10f, "POWER UP");
+            _physicsBody = BodyFactory.CreateCircle(Screen.PhysicsWorld, ConvertUnits.ToSimUnits(_size), 10f, "POWER_UP");
+            _physicsBody.UserData = "POWER_UP";
             _physicsBody.Position = ConvertUnits.ToSimUnits(_position);
             _physicsBody.Restitution = 0.0f;
             _physicsBody.Friction = 0.2f;
             _physicsBody.IsStatic = false;
             _physicsBody.OnCollision += onCollision;
 
+            _displayImage = new Sprite();
+            Screen.addEntity(_displayImage);
             _displayImage.setImage(getPowerUpTexture(), OriginPosition.CENTER);
             _displayImage.Position = _position;
 
             _loaded = true;
         }
 
+        /// <summary>
+        /// Registers the collision between the power up and the player
+        /// </summary>
+        /// <param name="fixtureA"></param>
+        /// <param name="fixtureB"></param>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         public bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
             if(fixtureB.Body.UserData.ToString() != "PLAYER")

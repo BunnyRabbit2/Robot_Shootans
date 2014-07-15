@@ -25,7 +25,7 @@ namespace RobotShootans.Entities
 
         /// <summary>Speed of the bullet</summary>
         protected float _speed;
-
+        /// <summary>the size of the bullet</summary>
         protected int _bulletSize;
 
         /// <summary>The constructor for the weapon</summary>

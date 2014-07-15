@@ -94,6 +94,8 @@ namespace RobotShootans.Entities
             else if(eventIn.EventType == EventType.SCORE_CHANGED)
             {
                 _currentScore += eventIn.ChangeInt;
+                if (_currentScore % 5000 == 0)
+                    Screen.Engine.registerEvent(new GameEvent(EventType.CREATE_LIFE_PU));
                 return true;
             }
             else if(eventIn.EventType == EventType.LIFE_LOST)

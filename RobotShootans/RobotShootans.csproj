@@ -50,6 +50,7 @@
     <Compile Include="Entities\GUI_HUD.cs" />
     <Compile Include="Entities\PhysicsBox.cs" />
     <Compile Include="Entities\PowerUp.cs" />
+    <Compile Include="Entities\PowerUpSpawner.cs" />
     <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\RobotSpawner.cs" />
     <Compile Include="Entities\Sprite.cs" />
@@ -104,6 +105,21 @@
     <Content Include="Docs\TODO list.txt" />
     <Content Include="Icon.ico" />
     <None Include="Content\images\farseer-logo-512px.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\PU_life.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\PU_MachineGun.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\PU_RocketLauncher.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\PU_Shield.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\images\game\PU_Shotgun.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="source-sans-pro\SIL Open Font License.txt" />

@@ -14,6 +14,7 @@ namespace RobotShootans.Screens
     {
         Player _player;
         RobotSpawner _robotSpawner;
+        PowerUpSpawner _powerUpSpawner;
 
         int _startTimer; // Used to start the game after a few seconds have passed
         bool _firstUpdate; // Used for stuff
@@ -70,6 +71,7 @@ namespace RobotShootans.Screens
             {
                 removeEntity(_player);
                 removeEntity(_robotSpawner);
+                removeEntity(_powerUpSpawner);
                 removeEntity("CROSSHAIR");
                 _startTimer = 0;
                 _gameStarted = false;
@@ -130,6 +132,7 @@ namespace RobotShootans.Screens
 #endif
 
                 _robotSpawner.playerPosition = _player.getPosition();
+                _powerUpSpawner.PlayerPosition = _player.getPosition();
             }
 
             base.Update(gameTime);
@@ -156,6 +159,9 @@ namespace RobotShootans.Screens
 
             _robotSpawner = new RobotSpawner();
             addEntity(_robotSpawner);
+
+            _powerUpSpawner = new PowerUpSpawner();
+            addEntity(_powerUpSpawner);
 
             addEntity(new Crosshair());
 

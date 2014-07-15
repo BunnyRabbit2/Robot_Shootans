@@ -24,6 +24,8 @@ namespace RobotShootans.Engine
         LIFE_LOST,
         /// <summary>An event used when the player gains a life</summary>
         LIFE_GAINED,
+        /// <summary>An event used to create a life power up</summary>
+        CREATE_LIFE_PU,
         /// <summary>An event used to start the game</summary>
         START_GAME,
         /// <summary>An event to signify game over</summary>

@@ -16,8 +16,9 @@ namespace RobotShootans.Screens
 
         int _endScore;
 
-        /// <summary>Constructor for the game over screen</summary>
+        /// <summary>constructor for the game over screen</summary>
         /// <param name="blockUpdatingIn"></param>
+        /// <param name="scoreIn"></param>
         public GameOverScreen(bool blockUpdatingIn = true, int scoreIn = 0)
             : base (blockUpdatingIn)
         {
