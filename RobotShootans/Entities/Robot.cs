@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using RobotShootans.Engine;
 using System;
 
@@ -19,6 +20,8 @@ namespace RobotShootans.Entities
         int _robotSize;
 
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
+
+        SoundEffect _robotKilled;
 
         /// <summary>Creates the robot and sets the start position</summary>
         /// <param name="positionIn"></param>
@@ -61,6 +64,8 @@ namespace RobotShootans.Entities
             _moveImpulse = 10f;
             _angleMoveImpulse = (float)Math.Sqrt(((double)_moveImpulse * (double)_moveImpulse) / 2.0);
 
+            _robotKilled = Screen.Engine.loadSound("Robot_killed");
+
             _loaded = true;
         }
 
@@ -72,6 +77,7 @@ namespace RobotShootans.Entities
                 Screen.removeEntity(this);
                 Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
                 Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
+                _robotKilled.Play();
             }
 
             return true;

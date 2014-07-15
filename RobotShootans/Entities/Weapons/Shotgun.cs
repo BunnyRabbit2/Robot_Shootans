@@ -18,6 +18,8 @@ namespace RobotShootans.Entities.Weapons
             _ammo = 10;
 
             _bulletSize = 10;
+
+            _shootSoundToLoad = "SG_shoot";
         }
 
         /// <summary>If the fire rate has reset, shoots the weapon</summary>
@@ -37,6 +39,8 @@ namespace RobotShootans.Entities.Weapons
 
                 _ammo--;
                 Screen.Engine.registerEvent(new GameEvent(EventType.AMMO_CHANGED, -1));
+
+                _shootSound.Play();
             }
         }
     }

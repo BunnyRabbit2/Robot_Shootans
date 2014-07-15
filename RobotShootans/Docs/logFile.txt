@@ -1,18 +1,9 @@
-[15/07/2014][12:17:58]: INFO - Started Engine for game: Robot Shootans
-[15/07/2014][12:17:58]: INFO - Version number: 0.8.5309.20338
-[15/07/2014][12:17:58]: INFO - Loading Engine Content
-[15/07/2014][12:17:58]: INFO - Done loading content
-[15/07/2014][12:17:59]: INFO - Failed to add screen PRE GAME SCREEN to the engine. There's already a screen with that name there
-[15/07/2014][12:18:14]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:18:29]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:18:37]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:18:40]: INFO - PLAYER collides with ROBOT
-[15/07/2014][12:18:55]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:19:06]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:19:19]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:19:27]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:19:46]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:19:52]: INFO - PLAYER collides with POWER_UP
-[15/07/2014][12:19:59]: INFO - Unloading all screens
-[15/07/2014][12:19:59]: INFO - Finished unloading all screens
-[15/07/2014][12:19:59]: INFO - Closing GameEngine down
+[15/07/2014][14:24:07]: INFO - Started Engine for game: Robot Shootans
+[15/07/2014][14:24:07]: INFO - Version number: 0.8.5309.24123
+[15/07/2014][14:24:07]: INFO - Loading Engine Content
+[15/07/2014][14:24:07]: INFO - Done loading content
+[15/07/2014][14:24:08]: INFO - Failed to add screen PRE GAME SCREEN to the engine. There's already a screen with that name there
+[15/07/2014][14:24:18]: INFO - PLAYER collides with POWER_UP
+[15/07/2014][14:24:50]: INFO - Unloading all screens
+[15/07/2014][14:24:50]: INFO - Finished unloading all screens
+[15/07/2014][14:24:50]: INFO - Closing GameEngine down

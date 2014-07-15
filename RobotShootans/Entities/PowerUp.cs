@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using RobotShootans.Engine;
 using RobotShootans.Entities.Weapons;
 using System;
@@ -26,7 +27,9 @@ namespace RobotShootans.Entities
         /// <summary>Fires a large round that explodes on impact</summary>
         ROCKET_LAUNCHER,
         /// <summary>Gains the player a life</summary>
-        LIFE
+        LIFE,
+        /// <summary>Used for the event when wanting a random power up</summary>
+        RANDOM
     }
 
     /// <summary>
@@ -41,6 +44,8 @@ namespace RobotShootans.Entities
         int _size;
 
         PowerUpType _type;
+
+        SoundEffect _collectSound;
 
         /// <summary>
         /// Constructor for the Power Up
@@ -73,6 +78,8 @@ namespace RobotShootans.Entities
             Screen.addEntity(_displayImage);
             _displayImage.setImage(getPowerUpTexture(), OriginPosition.CENTER);
             _displayImage.Position = _position;
+
+            _collectSound = Screen.Engine.loadSound("Powerup_GET");
 
             _loaded = true;
         }

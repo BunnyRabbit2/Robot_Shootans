@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using RobotShootans.Engine;
 
 namespace RobotShootans.Entities
@@ -28,6 +29,11 @@ namespace RobotShootans.Entities
         /// <summary>the size of the bullet</summary>
         protected int _bulletSize;
 
+        /// <summary>Set so that the correct sound is loaded by the default load function</summary>
+        protected string _shootSoundToLoad;
+        /// <summary>The sound to play when the weapon shoots</summary>
+        protected SoundEffect _shootSound;
+
         /// <summary>The constructor for the weapon</summary>
         public Weapon()
             : base("WEAPON")
@@ -40,6 +46,9 @@ namespace RobotShootans.Entities
         /// </summary>
         public override void Load()
         {
+            if (!string.IsNullOrEmpty(_shootSoundToLoad))
+                _shootSound = Screen.Engine.loadSound(_shootSoundToLoad);
+
             _fireRateCounter = _fireRate;
             _loaded = true;
         }

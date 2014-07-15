@@ -13,6 +13,8 @@ namespace RobotShootans.Entities.Weapons
             _fireRate = 1000;
 
             _ammo = 10;
+
+            _shootSoundToLoad = "RL_shoot";
         }
 
         /// <summary>If the fire rate has reset, shoots the weapon</summary>
@@ -24,6 +26,8 @@ namespace RobotShootans.Entities.Weapons
                 _fireRateCounter = 0;
 
                 _ammo--;
+
+                _shootSound.Play();
             }
         }
     }

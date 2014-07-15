@@ -15,8 +15,6 @@ namespace RobotShootans.Entities
         /// </summary>
         public Vector2 PlayerPosition;
 
-        int _spawnRate;
-        int _spawnTimer;
         float _minSpawnDistance;
 
         Random rand = new Random();
@@ -28,9 +26,6 @@ namespace RobotShootans.Entities
         /// </summary>
         public PowerUpSpawner() : base ("POWER_UP_SPAWNER")
         {
-            _spawnRate = 10000; // Ten seconds
-            _spawnTimer = 0;
-
             _powerUps = new List<PowerUp>();
         }
 
@@ -59,9 +54,10 @@ namespace RobotShootans.Entities
         /// <returns></returns>
         public override bool HandleEvent(GameEvent eventIn)
         {
-            if(eventIn.EventType == EventType.CREATE_LIFE_PU)
+            if (eventIn.EventType == EventType.CREATE_POWER_UP)
             {
-                createPowerUp(PowerUpType.LIFE);
+                createPowerUp((PowerUpType)eventIn.UserData);
+                return true;
             }
 
             return false;
@@ -71,24 +67,6 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            _spawnTimer += gameTime.ElapsedGameTime.Milliseconds;
-
-            if (_spawnTimer > _spawnRate)
-            {
-                int pu = rand.Next(1, 4);
-                
-                if (pu == 1)
-                    createPowerUp(PowerUpType.SHIELD);
-                else if (pu == 2)
-                    createPowerUp(PowerUpType.MACHINEGUN);
-                else if (pu == 3)
-                    createPowerUp(PowerUpType.SHOTGUN);
-                else if (pu == 4)
-                    createPowerUp(PowerUpType.ROCKET_LAUNCHER);
-
-                _spawnTimer = 0;
-            }
-
             // Checks if any robots are destroyed and cleans the list of nulls
             for (int i = 0; i < _powerUps.Count; i++)
             {
@@ -102,6 +80,20 @@ namespace RobotShootans.Entities
 
         private void createPowerUp(PowerUpType typeIn)
         {
+            if(typeIn == PowerUpType.RANDOM)
+            {
+                int pu = rand.Next(1, 4);
+
+                if (pu == 1)
+                    typeIn = PowerUpType.SHIELD;
+                else if (pu == 2)
+                    typeIn = PowerUpType.MACHINEGUN;
+                else if (pu == 3)
+                    typeIn = PowerUpType.SHOTGUN;
+                else if (pu == 4)
+                    typeIn = PowerUpType.ROCKET_LAUNCHER;
+            }
+
             // bit of a funky way to do it but should work
             Vector2 position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
 
@@ -109,6 +101,10 @@ namespace RobotShootans.Entities
             {
                 position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
             }
+
+            HelperFunctions.KeepVectorInBounds(position,
+                (int)(Screen.Engine.RenderWidth * 0.05), (int)(Screen.Engine.RenderWidth * 0.95),
+                (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95));
 
             PowerUp p = new PowerUp(position, typeIn);
             Screen.addEntity(p);

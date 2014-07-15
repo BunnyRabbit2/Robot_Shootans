@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
@@ -22,6 +23,8 @@ namespace RobotShootans.Entities
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
 
         Weapon _currentWeapon;
+
+        SoundEffect _playerHit;
 
 #if DEBUG
         ColouredRectangle _debugRect;
@@ -73,6 +76,8 @@ namespace RobotShootans.Entities
             _playerSprite.setOrigin(new Vector2(frameWidth / 2, frameHeight / 2));
             _playerSprite.DrawOrder = 3;
 
+            _playerHit = Screen.Engine.loadSound("Player_hit");
+
 #if DEBUG
             _debugRect = new ColouredRectangle(
                 new Rectangle((int)_playerSprite.X, (int)_playerSprite.Y, collisionBoxSize, collisionBoxSize),
@@ -118,6 +123,7 @@ namespace RobotShootans.Entities
             if (fixtureB.Body.UserData.ToString() == "ROBOT")
             {
                 Screen.Engine.registerEvent(new GameEvent(EventType.LIFE_LOST));
+                _playerHit.Play();
             }
 
             return true;

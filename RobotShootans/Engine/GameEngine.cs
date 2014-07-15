@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -406,6 +407,25 @@ namespace RobotShootans.Engine
                 return null;
             }
         }
+
+        /// <summary>
+        /// Loads a sound effect is able. Returns null is not
+        /// </summary>
+        /// <param name="soundToLoad"></param>
+        /// <returns></returns>
+        public SoundEffect loadSound(string soundToLoad)
+        {
+            if (File.Exists("Content/sound/" + soundToLoad + ".xnb"))
+            {
+                return Content.Load<SoundEffect>("sound/" + soundToLoad);
+            }
+            else
+            {
+                LogFile.LogStringLine("Failed to load sound: " + soundToLoad + ". Nothing loaded", LogType.ERROR);
+                return null;
+            }
+        }
+
         #endregion
     }
 }
