@@ -41,6 +41,7 @@
     <Compile Include="Engine\GameEvent.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
+    <Compile Include="Engine\OggStream.cs" />
     <Compile Include="Engine\OriginPosition.cs" />
     <Compile Include="Engine\PhysicsGameEntity.cs" />
     <Compile Include="Entities\Bullet.cs" />
@@ -81,6 +82,9 @@
     <Reference Include="FarseerPhysics MonoGame">
       <HintPath>..\..\..\..\Libraries\Farseer Physics Engine 3.5\bin\WindowsGL\Debug\FarseerPhysics MonoGame.dll</HintPath>
     </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\packages\NVorbis.0.8.3.0\lib\NVorbis.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
     </Reference>
@@ -99,12 +103,6 @@
   <ItemGroup>
     <Content Include="C:\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
       <Link>SDL.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\music\DST-TowerDefenseTheme_1.wma">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\music\ObservingTheStar.wma">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Docs\logFile.txt" />
@@ -155,12 +153,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\music\DST-TowerDefenseTheme_1.xnb">
+    <None Include="Content\music\DST-TowerDefenseTheme_1.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\music\ObservingTheStar.xnb">
+    </None>
+    <None Include="Content\music\ObservingTheStar.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <None Include="Fira-Sans\FiraSans-Bold.otf" />
     <None Include="Fira-Sans\FiraSans-BoldItalic.otf" />
     <None Include="Fira-Sans\FiraSans-Book.otf" />
@@ -193,6 +191,7 @@
     <None Include="Fira-Sans\FiraSans-UltraItalic.otf" />
     <None Include="Fira-Sans\FiraSans-UltraLight.otf" />
     <None Include="Fira-Sans\FiraSans-UltraLightItalic.otf" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\images\background.xnb">

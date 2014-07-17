@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using NVorbis;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,7 +46,9 @@ namespace RobotShootans.Engine
             _gameScreensToAdd = new List<GameScreen>();
             _screensToRemove = new List<GameScreen>();
             _gameEvents = new List<GameEvent>();
+#if !WINDOWS
             _songs = new Dictionary<string, Song>();
+#endif
             _loaded = false;
         }
 
@@ -102,8 +104,12 @@ namespace RobotShootans.Engine
         /// <summary>The Content Manager owned by the Engine</summary>
         public ContentManager Content { get { return _content; } }
 
+#if !WINDOWS
         private Dictionary<string, Song> _songs;
-        private bool _musicPlaying = false;
+#elif WINDOWS
+        string _currentSong = "";
+        OggStream _song;
+#endif
 
         private GraphicsDevice _graphics;
         /// <summary>The GraphicsDevice used by the Engine</summary>
@@ -169,6 +175,7 @@ namespace RobotShootans.Engine
         /// </summary>
         public void UnloadContent()
         {
+            StopSong();
             unloadScreens();
         }
 
@@ -305,6 +312,8 @@ namespace RobotShootans.Engine
 
             if (_loaded)
             {
+                // Handle all the events in the list.
+                //  Possibly make the event list a queue at some point
                 for (int i = 0; i < _gameEvents.Count; i++ )
                 {
                     GameEvent e = _gameEvents[i];
@@ -431,6 +440,10 @@ namespace RobotShootans.Engine
             }
         }
 
+        /// <summary>
+        /// Starts the song given and stops any other song playing
+        /// </summary>
+        /// <param name="songToStart"></param>
         public void StartSong(string songToStart)
         {
 #if !WINDOWS
@@ -453,13 +466,40 @@ namespace RobotShootans.Engine
                 MediaPlayer.Play(_songs[songToStart]);
                 _musicPlaying = true;
             }
+#elif WINDOWS
+            if (_song != null)
+            {
+                StopSong();
+            }
+
+            if(File.Exists("Content/music/" + songToStart + ".ogg"))
+            {
+                LogFile.LogStringLine("Starting Song file named " + songToStart);
+                _currentSong = songToStart;
+
+                _song = new OggStream("Content/music/" + songToStart + ".ogg");
+                _song.Play();
+            }
 #endif
         }
 
-        public void StopSong(string songToStop = "")
+        /// <summary>
+        /// Stops whatever song is currently playing
+        /// </summary>
+        public void StopSong()
         {
+#if !WINDOWS
             if (_musicPlaying)
                 MediaPlayer.Stop();
+#elif WINDOWS
+            if (_song != null)
+            {
+                _song.Stop();
+                _song.Dispose();
+                _song = null;
+            }
+
+#endif
         }
 
         #endregion

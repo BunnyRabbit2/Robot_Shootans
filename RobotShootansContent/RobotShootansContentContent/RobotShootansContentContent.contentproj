@@ -183,16 +183,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="music\DST-TowerDefenseTheme_1.mp3">
+    <None Include="music\DST-TowerDefenseTheme_1.ogg">
       <Name>DST-TowerDefenseTheme_1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="music\ObservingTheStar.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="music\ObservingTheStar.ogg">
       <Name>ObservingTheStar</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--
