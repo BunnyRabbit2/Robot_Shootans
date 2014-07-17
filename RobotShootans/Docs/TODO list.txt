@@ -9,7 +9,19 @@
 	0.8
 - Sound, Music and Power Ups
 	0.9
-- Clean up and polish
+- Final run to release version
+	- Implement exlposions for when robots die and when rockets hit something
+	- Implement Rocket Launcher
+	- Implement high score with some sort of security on it
+	- Replace all Content with new stuff made specifically for Robot Shootans
+		- Player
+		- Robot images (normal, giant, explodey, fast)
+		- Bullets (Pistol, Machine Gun, Shotgun, Rocket Launcher)
+		- Game background
+		- Possibly make the HUD a bit better
+		- New power up art?
+		- Shield
+		- New music
 	1.0
 
 TODO:
