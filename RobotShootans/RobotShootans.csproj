@@ -47,6 +47,7 @@
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\ColouredRectangle.cs" />
     <Compile Include="Entities\Crosshair.cs" />
+    <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\GUI_TextItem.cs" />
     <Compile Include="Entities\GUI_HUD.cs" />
     <Compile Include="Entities\PhysicsBox.cs" />
@@ -153,6 +154,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\game\explosion3.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\music\DST-TowerDefenseTheme_1.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -122,6 +122,7 @@ namespace RobotShootans.Entities
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "ROBOT")
             {
+                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1));
                 Screen.Engine.registerEvent(new GameEvent(EventType.LIFE_LOST));
                 _playerHit.Play();
             }

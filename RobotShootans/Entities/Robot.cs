@@ -74,6 +74,7 @@ namespace RobotShootans.Entities
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "BULLET")
             {
+                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
                 Screen.removeEntity(this);
                 Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
                 Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
