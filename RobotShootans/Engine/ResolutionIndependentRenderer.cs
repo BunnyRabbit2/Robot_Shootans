@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace RobotShootans.Engine
 {
@@ -13,6 +14,7 @@ namespace RobotShootans.Engine
         private float _ratioX;
         private float _ratioY;
         private Vector2 _virtualMousePosition = new Vector2();
+        private double _scale;
 
         /// <summary>
         /// The background colour of the viewport
@@ -66,23 +68,21 @@ namespace RobotShootans.Engine
         /// </summary>
         public void SetupVirtualScreenViewport()
         {
-            var targetAspectRatio = VirtualWidth / (float)VirtualHeight;
-            // figure out the largest area that fits in this resolution at the desired aspect ratio
-            var width = ScreenWidth;
-            var height = (int)(width / targetAspectRatio);
+            int height, width;
+            double widthScale = 0, heightScale = 0;
+            widthScale = (double)ScreenWidth / (double)VirtualWidth;
+            heightScale = (double)ScreenHeight / (double)VirtualHeight;
 
-            if (height > ScreenHeight)
-            {
-                height = ScreenHeight;
-                // PillarBox
-                width = (int)(height * targetAspectRatio);
-            }
+            _scale = Math.Min(widthScale, heightScale);
+
+            width = (int)(VirtualWidth * _scale);
+            height = (int)(VirtualHeight * _scale);
 
             // set up the new viewport centered in the backbuffer
             _viewport = new Viewport
             {
-                X = (ScreenWidth / 2) - (width / 2),
-                Y = (ScreenHeight / 2) - (height / 2),
+                X = (ScreenWidth - width) / 2,
+                Y = (ScreenHeight - height) / 2,
                 Width = width,
                 Height = height
             };
@@ -141,7 +141,7 @@ namespace RobotShootans.Engine
 
         private void RecreateScaleMatrix()
         {
-            Matrix.CreateScale((float)ScreenWidth / VirtualWidth, (float)ScreenWidth / VirtualWidth, 1f, out _scaleMatrix);
+            Matrix.CreateScale((float)_scale, (float)_scale, 1f, out _scaleMatrix);
             _dirtyMatrix = false;
         }
 
