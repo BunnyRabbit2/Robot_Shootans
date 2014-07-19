@@ -39,6 +39,7 @@
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\EntityBag.cs" />
     <Compile Include="Engine\GameEvent.cs" />
+    <Compile Include="Engine\GameOptions.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
     <Compile Include="Engine\OggStream.cs" />
@@ -95,6 +96,7 @@
     <Reference Include="Lidgren.Network">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Lidgren.Network.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Tao.Sdl">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Tao.Sdl.dll</HintPath>
     </Reference>
@@ -106,8 +108,9 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Docs\logFile.txt" />
-    <Content Include="Docs\TODO list.txt" />
+    <None Include="Docs\logFile.txt" />
+    <None Include="Docs\options.xml" />
+    <None Include="Docs\TODO list.txt" />
     <Content Include="Fira-Sans\SIL Open Font License.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Content\images\farseer-logo-512px.xnb">

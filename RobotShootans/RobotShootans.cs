@@ -12,9 +12,6 @@ namespace RobotShootans
     /// </summary>
     public class RobotShootans : Game
     {
-        private const int WINDOWWIDTH = 960;
-        private const int WINDOWHEIGHT = 600;
-
         GraphicsDeviceManager _graphics;
         GameEngine _engine;
 
@@ -27,12 +24,10 @@ namespace RobotShootans
             : base()
         {
             _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-
-            _graphics.PreferredBackBufferWidth = WINDOWWIDTH;
-            _graphics.PreferredBackBufferHeight = WINDOWHEIGHT;
 
             _engine = GameEngine.Instance;
+
+            Content.RootDirectory = "Content";
 
             _firstUpdate = true;
         }
@@ -45,7 +40,7 @@ namespace RobotShootans
         /// </summary>
         protected override void Initialize()
         {
-            _engine.Initialise("Robot Shootans", this);
+            _engine.Initialise("Robot Shootans", this, _graphics);
             
             base.Initialize();
         }

@@ -45,11 +45,11 @@ namespace RobotShootans.Entities
         {
             Screen.addEntity(_displaySprite);
             _displaySprite.setImage("game/explosion3");
-            _displaySprite.setOrigin(OriginPosition.CENTER);
             _displaySprite.Position = _position;
             _displaySprite.DrawOrder = 5;
             setAnimation();
             _displaySprite.Animation = "EXPLODE";
+            
             
             // haven't set physics body yet. Just want to see if things explode right first
             _loaded = true;
@@ -97,6 +97,8 @@ namespace RobotShootans.Entities
                         new Rectangle(expSize*3,expSize,expSize,expSize),
                         new Rectangle(expSize*4,expSize,expSize,expSize),
                     });
+
+                _displaySprite.setOrigin(new Vector2(expSize/2));
             }
             else if(_explosionType == 2)
             {
@@ -120,6 +122,8 @@ namespace RobotShootans.Entities
                         new Rectangle(expSize*3,vOffset+expSize,expSize,expSize),
                         new Rectangle(expSize*4,vOffset+expSize,expSize,expSize),
                     });
+
+                _displaySprite.setOrigin(new Vector2(expSize / 2));
             }
             else if(_explosionType == 3)
             {
@@ -138,6 +142,8 @@ namespace RobotShootans.Entities
                         new Rectangle(expSize*3,vOffset,expSize,expSize),
                         new Rectangle(expSize*4,vOffset,expSize,expSize)
                     });
+
+                _displaySprite.setOrigin(new Vector2(expSize / 2));
             }
         }
     }

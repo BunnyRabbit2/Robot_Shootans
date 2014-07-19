@@ -41,11 +41,13 @@ namespace RobotShootans.Engine
         /// </summary>
         private GameEngine()
         {
-            _gameName = "Robot Shootans";
+            _gameName = "Game Engine";
             _gameScreens = new List<GameScreen>();
             _gameScreensToAdd = new List<GameScreen>();
             _screensToRemove = new List<GameScreen>();
             _gameEvents = new List<GameEvent>();
+            _gameOptions = new GameOptions();
+            _gameOptions.LoadOptions();
 #if !WINDOWS
             _songs = new Dictionary<string, Song>();
 #endif
@@ -94,11 +96,14 @@ namespace RobotShootans.Engine
 
         private ResolutionIndependentRenderer _resolutionIndependence;
         private Game _game;
+        private GraphicsDeviceManager _graphicsDeviceManager;
 
         private SpriteBatch _spriteBatch;
         private Texture2D _bg;
 
         private bool _loaded;
+
+        GameOptions _gameOptions;
 
         private ContentManager _content;
         /// <summary>The Content Manager owned by the Engine</summary>
@@ -128,13 +133,15 @@ namespace RobotShootans.Engine
         /// </summary>
         /// <param name="gameName">The name of the game being run</param>
         /// <param name="game">The Game class that will contain the GameEngine</param>
-        public void Initialise(string gameName, Game game)
+        /// <param name="gdmIn">The graphics device manager of the game class</param>
+        public void Initialise(string gameName, Game game, GraphicsDeviceManager gdmIn)
         {
             _gameName = gameName;
             _game = game;
             _content = game.Content;
             _graphics = game.GraphicsDevice;
             _exitGame = false;
+            _graphicsDeviceManager = gdmIn;
 
             _resolutionIndependence = new ResolutionIndependentRenderer(_graphics);
 
@@ -152,7 +159,22 @@ namespace RobotShootans.Engine
         {
             LogFile.LogStringLine("Loading Engine Content", LogType.INFO);
 
-            InitializeResolutionIndependence(_game.GraphicsDevice.Viewport.Width, _game.GraphicsDevice.Viewport.Height);
+            _gameOptions.MusicOn = false;
+
+            if (_gameOptions.FullScreen)
+            {
+                _graphicsDeviceManager.IsFullScreen = true;
+                _graphicsDeviceManager.PreferredBackBufferWidth = _graphics.DisplayMode.Width;
+                _graphicsDeviceManager.PreferredBackBufferHeight = _graphics.DisplayMode.Height;
+                InitializeResolutionIndependence(_graphics.DisplayMode.Width, _graphics.DisplayMode.Height);
+            }
+            else
+            {
+                _graphicsDeviceManager.PreferredBackBufferWidth = _gameOptions.WindowWidth;
+                _graphicsDeviceManager.PreferredBackBufferHeight = _gameOptions.WindowHeight;
+                InitializeResolutionIndependence(_gameOptions.WindowWidth, _gameOptions.WindowHeight);
+            }
+            _graphicsDeviceManager.ApplyChanges();
             
             _bg = _game.Content.Load<Texture2D>("images/background");
 
@@ -175,6 +197,7 @@ namespace RobotShootans.Engine
         /// </summary>
         public void UnloadContent()
         {
+            _gameOptions.WriteOptions();
             StopSong();
             unloadScreens();
         }
@@ -446,6 +469,8 @@ namespace RobotShootans.Engine
         /// <param name="songToStart"></param>
         public void StartSong(string songToStart)
         {
+            if (_gameOptions.MusicOn)
+            {
 #if !WINDOWS
             if (!_songs.ContainsKey(songToStart))
             {
@@ -467,20 +492,22 @@ namespace RobotShootans.Engine
                 _musicPlaying = true;
             }
 #elif WINDOWS
-            if (_song != null)
-            {
-                StopSong();
-            }
+                if (_song != null)
+                {
+                    StopSong();
+                }
 
-            if(File.Exists("Content/music/" + songToStart + ".ogg"))
-            {
-                LogFile.LogStringLine("Starting Song file named " + songToStart);
-                _currentSong = songToStart;
+                if (File.Exists("Content/music/" + songToStart + ".ogg"))
+                {
+                    LogFile.LogStringLine("Starting Song file named " + songToStart);
+                    _currentSong = songToStart;
 
-                _song = new OggStream("Content/music/" + songToStart + ".ogg");
-                _song.Play();
-            }
+                    _song = new OggStream("Content/music/" + songToStart + ".ogg");
+                    _song.Volume = _gameOptions.MusicVolume / 10f;
+                    _song.Play();
+                }
 #endif
+            }
         }
 
         /// <summary>
