@@ -2,9 +2,9 @@
 <options>
   <music-vol>10</music-vol>
   <sfx-vol>10</sfx-vol>
-  <music-on>False</music-on>
+  <music-on>True</music-on>
   <sfx-on>True</sfx-on>
   <window-width>960</window-width>
   <window-height>600</window-height>
-  <full-screen>True</full-screen>
+  <full-screen>False</full-screen>
 </options>

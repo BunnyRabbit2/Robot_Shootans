@@ -159,7 +159,9 @@ namespace RobotShootans.Engine
         {
             LogFile.LogStringLine("Loading Engine Content", LogType.INFO);
 
-            _gameOptions.MusicOn = false;
+            SoundEffect.MasterVolume = _gameOptions.SfxVolume / 10f;
+            if (!_gameOptions.SfxOn)
+                SoundEffect.MasterVolume = 0.0f;
 
             if (_gameOptions.FullScreen)
             {
