@@ -11,6 +11,16 @@ using System.Reflection;
 
 namespace RobotShootans.Engine
 {
+    public enum ControlType
+    {
+        /// <summary>Controlled by mouse and keyboard</summary>
+        MOUSE_AND_KEYBOARD,
+        /// <summary>Controlled by touchscreen</summary>
+        TOUCHSCREEN,
+        /// <summary>Controlled by Xbox type game pad</summary>
+        XINPUT_GAMEPAD
+    }
+
     /// <summary>
     /// A singleton class used for handling all the game screens, input and other such things
     /// </summary>
