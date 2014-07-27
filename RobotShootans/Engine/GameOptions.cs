@@ -9,7 +9,10 @@ using System.Xml.Linq;
 
 namespace RobotShootans.Engine
 {
-    class GameOptions
+    /// <summary>
+    /// The game options
+    /// </summary>
+    public class GameOptions
     {
         int _musicVolume = 10;
         int _sfxVolume = 10;
@@ -31,9 +34,9 @@ namespace RobotShootans.Engine
         bool _sfxOn = true;
 
         /// <summary>If the music is on or not</summary>
-        public bool MusicOn { get { return _musicOn; } set { _musicOn = value; } }
+        public bool MusicOn { get { return _musicOn; } }
         /// <summary>If the sound effects will play or not</summary>
-        public bool SfxOn { get { return _sfxOn; } set { _sfxOn = value; } }
+        public bool SfxOn { get { return _sfxOn; } }
 
         int _windowWidth = 960;
         int _windowHeight = 600;
@@ -46,6 +49,8 @@ namespace RobotShootans.Engine
         bool _fullScreen = false;
         /// <summary>Returns if to display full screen or not</summary>
         public bool FullScreen { get { return _fullScreen; } }
+
+        public bool OptionsChanged = false;
 
         /// <summary>Loads the options file or sets default values if not found</summary>
         public void LoadOptions()
@@ -117,5 +122,20 @@ namespace RobotShootans.Engine
                 optionsOut.Close();
             }
         }
+
+        /// <summary>Switchs music off or on</summary>
+        public void SwitchMusic() { _musicOn = !_musicOn; OptionsChanged = true; }
+        /// <summary>Switch SFX off or on</summary>
+        public void SwitchSFX() { _sfxOn = !_sfxOn; OptionsChanged = true; }
+        /// <summary>Increase music volume</summary>
+        public void increaseMusicVolume() { if (_musicVolume < 10) _musicVolume++; OptionsChanged = true; }
+        /// <summary>Decrease music volume</summary>
+        public void decreaseMusicVolume() { if (_musicVolume > 0) _musicVolume--; OptionsChanged = true; }
+        /// <summary>Increase sound effects volume</summary>
+        public void increaseSfxVolume() { if (_sfxVolume < 10) _sfxVolume++; OptionsChanged = true; }
+        /// <summary>Decrease sound effects volume</summary>
+        public void decreaseSfxVolume() { if (_sfxVolume > 0) _sfxVolume--; OptionsChanged = true; }
+        /// <summary>Switch whether the game is displayed full screen or not</summary>
+        public void switchFullScreen() { _fullScreen = !_fullScreen; OptionsChanged = true; }
     }
 }

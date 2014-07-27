@@ -11,6 +11,9 @@ using System.Reflection;
 
 namespace RobotShootans.Engine
 {
+    /// <summary>
+    /// The way the game is controlled
+    /// </summary>
     public enum ControlType
     {
         /// <summary>Controlled by mouse and keyboard</summary>
@@ -58,6 +61,7 @@ namespace RobotShootans.Engine
             _gameEvents = new List<GameEvent>();
             _gameOptions = new GameOptions();
             _gameOptions.LoadOptions();
+            _oldOptions = _gameOptions;
 #if !WINDOWS
             _songs = new Dictionary<string, Song>();
 #endif
@@ -113,7 +117,9 @@ namespace RobotShootans.Engine
 
         private bool _loaded;
 
-        GameOptions _gameOptions;
+        GameOptions _gameOptions, _oldOptions;
+        /// <summary>Public access to seeing what the options are</summary>
+        public GameOptions Options { get { return _gameOptions; } }
 
         private ContentManager _content;
         /// <summary>The Content Manager owned by the Engine</summary>
@@ -380,6 +386,8 @@ namespace RobotShootans.Engine
                 removeScreens();
                 addGameScreens();
 
+                checkOptions();
+
                 if (_exitGame)
                     _game.Exit();
             }
@@ -410,6 +418,7 @@ namespace RobotShootans.Engine
         }
         #endregion
 
+        #region other stuff
         /// <summary>
         /// Gets render position of the mouse
         /// </summary>
@@ -418,6 +427,46 @@ namespace RobotShootans.Engine
         {
             return _resolutionIndependence.ScaleMouseToScreenCoordinates(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
         }
+
+        private void checkOptions()
+        {
+            if(_gameOptions.OptionsChanged)
+            {
+                if(_song != null)
+                {
+                    _song.Volume = _gameOptions.MusicVolume / 10f;
+                }
+                if (!_gameOptions.MusicOn)
+                    _song.Volume = 0.0f;
+
+                SoundEffect.MasterVolume = _gameOptions.SfxVolume / 10f;
+                if (!_gameOptions.SfxOn)
+                    SoundEffect.MasterVolume = 0.0f;
+
+                bool applyChanges = false;
+                if (_gameOptions.FullScreen && !_oldOptions.FullScreen)
+                {
+                    _graphicsDeviceManager.IsFullScreen = true;
+                    _graphicsDeviceManager.PreferredBackBufferWidth = _graphics.DisplayMode.Width;
+                    _graphicsDeviceManager.PreferredBackBufferHeight = _graphics.DisplayMode.Height;
+                    InitializeResolutionIndependence(_graphics.DisplayMode.Width, _graphics.DisplayMode.Height);
+                    applyChanges = true;
+                }
+                else if (!_gameOptions.FullScreen && _oldOptions.FullScreen)
+                {
+                    _graphicsDeviceManager.PreferredBackBufferWidth = _gameOptions.WindowWidth;
+                    _graphicsDeviceManager.PreferredBackBufferHeight = _gameOptions.WindowHeight;
+                    InitializeResolutionIndependence(_gameOptions.WindowWidth, _gameOptions.WindowHeight);
+                    applyChanges = true;
+                }
+                if (applyChanges)
+                    _graphicsDeviceManager.ApplyChanges();
+
+                _gameOptions.OptionsChanged = false;
+                _oldOptions = _gameOptions;
+            }
+        }
+        #endregion
 
         #region Content loading
         /// <summary>
@@ -481,8 +530,6 @@ namespace RobotShootans.Engine
         /// <param name="songToStart"></param>
         public void StartSong(string songToStart)
         {
-            if (_gameOptions.MusicOn)
-            {
 #if !WINDOWS
             if (!_songs.ContainsKey(songToStart))
             {
@@ -504,22 +551,23 @@ namespace RobotShootans.Engine
                 _musicPlaying = true;
             }
 #elif WINDOWS
-                if (_song != null)
-                {
-                    StopSong();
-                }
-
-                if (File.Exists("Content/music/" + songToStart + ".ogg"))
-                {
-                    LogFile.LogStringLine("Starting Song file named " + songToStart);
-                    _currentSong = songToStart;
-
-                    _song = new OggStream("Content/music/" + songToStart + ".ogg");
-                    _song.Volume = _gameOptions.MusicVolume / 10f;
-                    _song.Play();
-                }
-#endif
+            if (_song != null)
+            {
+                StopSong();
             }
+
+            if (File.Exists("Content/music/" + songToStart + ".ogg"))
+            {
+                LogFile.LogStringLine("Starting Song file named " + songToStart);
+                _currentSong = songToStart;
+
+                _song = new OggStream("Content/music/" + songToStart + ".ogg");
+                _song.Volume = _gameOptions.MusicVolume / 10f;
+                if (!_gameOptions.MusicOn)
+                    _song.Volume = 0.0f;
+                _song.Play();
+            }
+#endif
         }
 
         /// <summary>

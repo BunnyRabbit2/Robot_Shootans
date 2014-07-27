@@ -9,12 +9,19 @@ using System.Text;
 
 namespace RobotShootans.Screens
 {
+    /// <summary>
+    /// Menu screen
+    /// </summary>
     public class MenuScreen : GameScreen
     {
         GUI_TextItem[] _menuText;
         int _currentSelection;
         int _numberOfOptions;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="blockUpdatingIn"></param>
         public MenuScreen(bool blockUpdatingIn = true)
             : base(blockUpdatingIn)
         {
@@ -88,8 +95,8 @@ namespace RobotShootans.Screens
                 }
                 else if (_currentSelection == 1)
                 {
-                    //Engine.removeGameScreen(this);
-                    //Engine.pushGameScreen(new OptionsScreen());
+                    Engine.removeGameScreen(this);
+                    Engine.pushGameScreen(new OptionsScreen());
                 }
                 else if (_currentSelection == 2)
                 {
