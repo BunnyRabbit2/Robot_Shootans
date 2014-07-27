@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,7 +51,14 @@ namespace RobotShootans.Engine
         /// <summary>Returns if to display full screen or not</summary>
         public bool FullScreen { get { return _fullScreen; } }
 
+        /// <summary>
+        /// If the options have been changed
+        /// </summary>
         public bool OptionsChanged = false;
+
+        private List<Vector2> _supportedResolutions = new List<Vector2>();
+
+        public List<Vector2> SupportedResolutions { get { return _supportedResolutions; } }
 
         /// <summary>Loads the options file or sets default values if not found</summary>
         public void LoadOptions()
@@ -64,6 +72,7 @@ namespace RobotShootans.Engine
             {
                 XDocument doc = XDocument.Load("options.xml");
 #endif
+                setSupportedResolutions();
 
                 var o = doc.Descendants("options");
 
@@ -120,6 +129,17 @@ namespace RobotShootans.Engine
                 optionsOut.WriteEndDocument();
 
                 optionsOut.Close();
+            }
+        }
+
+        private void setSupportedResolutions()
+        {
+            foreach (var dm in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+            {
+                Vector2 newRes = new Vector2(dm.Width, dm.Height);
+
+                if (!_supportedResolutions.Exists(r => r.X == newRes.X && r.Y == newRes.Y))
+                    _supportedResolutions.Add(newRes);
             }
         }
 

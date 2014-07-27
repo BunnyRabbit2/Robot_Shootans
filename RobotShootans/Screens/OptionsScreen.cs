@@ -18,6 +18,8 @@ namespace RobotShootans.Screens
         int _currentSelection;
         int _numberOfOptions;
 
+        int _selectedResolution = 0;
+
         /// <summary>
         /// 
         /// </summary>
@@ -73,6 +75,16 @@ namespace RobotShootans.Screens
                 _currentOptionsText[i].setOrigin(OriginPosition.TOPRIGHT);
                 _currentOptionsText[i].DrawOrder = 2;
                 addEntity(_currentOptionsText[i]);
+            }
+
+            GameOptions ops = Engine.Options;
+            Vector2 currentRes = new Vector2(ops.WindowWidth, ops.WindowHeight);
+            for (int i = 0; i < ops.SupportedResolutions.Count; i++)
+            {
+                if (ops.SupportedResolutions[i] == currentRes)
+                {
+                    _selectedResolution = i;
+                }
             }
 
             setCurrentOptionsText();
@@ -148,7 +160,8 @@ namespace RobotShootans.Screens
                 }
                 else if (_currentSelection == 5)
                 {
-
+                    if (_selectedResolution < Engine.Options.SupportedResolutions.Count - 1)
+                        _selectedResolution++;
                 }
             }
 
@@ -176,7 +189,8 @@ namespace RobotShootans.Screens
                 }
                 else if (_currentSelection == 5)
                 {
-
+                    if(_selectedResolution > 0)
+                        _selectedResolution--;
                 }
             }
 
@@ -187,12 +201,14 @@ namespace RobotShootans.Screens
 
         private void setCurrentOptionsText()
         {
-            _currentOptionsText[0].setText(Engine.Options.MusicOn.ToString());
-            _currentOptionsText[1].setText(Engine.Options.MusicVolume.ToString());
-            _currentOptionsText[2].setText(Engine.Options.SfxOn.ToString());
-            _currentOptionsText[3].setText(Engine.Options.SfxVolume.ToString());
-            _currentOptionsText[4].setText(Engine.Options.FullScreen.ToString());
-            _currentOptionsText[5].setText("???? x ????");
+            GameOptions ops = Engine.Options;
+
+            _currentOptionsText[0].setText(ops.MusicOn.ToString());
+            _currentOptionsText[1].setText(ops.MusicVolume.ToString());
+            _currentOptionsText[2].setText(ops.SfxOn.ToString());
+            _currentOptionsText[3].setText(ops.SfxVolume.ToString());
+            _currentOptionsText[4].setText(ops.FullScreen.ToString());
+            _currentOptionsText[5].setText(ops.SupportedResolutions[_selectedResolution].X + " x " + ops.SupportedResolutions[_selectedResolution].Y);
         }
     }
 }
