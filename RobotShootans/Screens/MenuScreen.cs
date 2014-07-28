@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities;
@@ -17,6 +18,7 @@ namespace RobotShootans.Screens
         GUI_TextItem[] _menuText;
         int _currentSelection;
         int _numberOfOptions;
+        SoundEffect _selectNoise;
 
         /// <summary>
         /// 
@@ -60,6 +62,8 @@ namespace RobotShootans.Screens
             _menuText[1].setText("OPTIONS");
             _menuText[2].setText("QUIT GAME");
 
+            _selectNoise = Engine.loadSound("menu_select");
+
             Engine.StopSong();
             Engine.StartSong("ObservingTheStar");
 
@@ -75,10 +79,16 @@ namespace RobotShootans.Screens
             int oldSel = _currentSelection;
 
             if (InputHelper.isKeyPressNew(Keys.Up) && _currentSelection > 0)
+            {
                 _currentSelection--;
+                _selectNoise.Play();
+            }
 
             if (InputHelper.isKeyPressNew(Keys.Down) && _currentSelection < _numberOfOptions - 1)
+            {
                 _currentSelection++;
+                _selectNoise.Play();
+            }
 
             if(oldSel != _currentSelection)
             {

@@ -4,7 +4,7 @@
   <sfx-vol>10</sfx-vol>
   <music-on>False</music-on>
   <sfx-on>True</sfx-on>
-  <window-width>960</window-width>
+  <window-width>800</window-width>
   <window-height>600</window-height>
   <full-screen>False</full-screen>
 </options>

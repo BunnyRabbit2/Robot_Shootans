@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using RobotShootans.Engine;
 using RobotShootans.Entities;
@@ -17,6 +18,7 @@ namespace RobotShootans.Screens
         GUI_TextItem[] _optionsText, _currentOptionsText;
         int _currentSelection;
         int _numberOfOptions;
+        SoundEffect _selectNoise;
 
         int _selectedResolution = 0;
 
@@ -81,13 +83,15 @@ namespace RobotShootans.Screens
             Vector2 currentRes = new Vector2(ops.WindowWidth, ops.WindowHeight);
             for (int i = 0; i < ops.SupportedResolutions.Count; i++)
             {
-                if (ops.SupportedResolutions[i] == currentRes)
+                if (ops.SupportedResolutions[i].X == currentRes.X && ops.SupportedResolutions[i].Y == currentRes.Y)
                 {
                     _selectedResolution = i;
                 }
             }
 
             setCurrentOptionsText();
+
+            _selectNoise = Engine.loadSound("menu_select");
 
             Engine.StopSong();
             Engine.StartSong("ObservingTheStar");
@@ -104,10 +108,16 @@ namespace RobotShootans.Screens
             int oldSel = _currentSelection;
 
             if (InputHelper.isKeyPressNew(Keys.Up) && _currentSelection > 0)
+            {
                 _currentSelection--;
+                _selectNoise.Play();
+            }
 
             if (InputHelper.isKeyPressNew(Keys.Down) && _currentSelection < _numberOfOptions - 1)
+            {
                 _currentSelection++;
+                _selectNoise.Play();
+            }
 
             if(oldSel != _currentSelection)
             {
@@ -138,6 +148,7 @@ namespace RobotShootans.Screens
 
             if (InputHelper.isKeyPressNew(Keys.Right))
             {
+                _selectNoise.Play();
                 if (_currentSelection == 0)
                 {
                     Engine.Options.SwitchMusic();
@@ -162,11 +173,13 @@ namespace RobotShootans.Screens
                 {
                     if (_selectedResolution < Engine.Options.SupportedResolutions.Count - 1)
                         _selectedResolution++;
+                    Engine.Options.changeResolution((int)Engine.Options.SupportedResolutions[_selectedResolution].X, (int)Engine.Options.SupportedResolutions[_selectedResolution].Y);
                 }
             }
 
             if (InputHelper.isKeyPressNew(Keys.Left))
             {
+                _selectNoise.Play();
                 if (_currentSelection == 0)
                 {
                     Engine.Options.SwitchMusic();
@@ -191,6 +204,7 @@ namespace RobotShootans.Screens
                 {
                     if(_selectedResolution > 0)
                         _selectedResolution--;
+                    Engine.Options.changeResolution((int)Engine.Options.SupportedResolutions[_selectedResolution].X, (int)Engine.Options.SupportedResolutions[_selectedResolution].Y);
                 }
             }
 

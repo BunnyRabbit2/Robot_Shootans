@@ -111,6 +111,9 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\sound\menu_select.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Docs\logFile.txt" />
     <None Include="Docs\options.xml" />
     <None Include="Docs\TODO list.txt" />

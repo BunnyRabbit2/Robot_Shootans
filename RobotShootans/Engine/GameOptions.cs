@@ -57,7 +57,9 @@ namespace RobotShootans.Engine
         public bool OptionsChanged = false;
 
         private List<Vector2> _supportedResolutions = new List<Vector2>();
-
+        /// <summary>
+        /// The resolutions supported by the current graphics device
+        /// </summary>
         public List<Vector2> SupportedResolutions { get { return _supportedResolutions; } }
 
         /// <summary>Loads the options file or sets default values if not found</summary>
@@ -157,5 +159,19 @@ namespace RobotShootans.Engine
         public void decreaseSfxVolume() { if (_sfxVolume > 0) _sfxVolume--; OptionsChanged = true; }
         /// <summary>Switch whether the game is displayed full screen or not</summary>
         public void switchFullScreen() { _fullScreen = !_fullScreen; OptionsChanged = true; }
+        /// <summary>Sets the resolution</summary>
+        /// <param name="heightIn">The new width to use</param>
+        /// <param name="widthIn">The new height to use</param>
+        public void changeResolution(int widthIn, int heightIn)
+        {
+            Vector2 res = _supportedResolutions.Find(r => r.X == widthIn && r.Y == heightIn);
+
+            if(res != null)
+            {
+                _windowWidth = (int)res.X;
+                _windowHeight = (int)res.Y;
+                OptionsChanged = true;
+            }
+        }
     }
 }
