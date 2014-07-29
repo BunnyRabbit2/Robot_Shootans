@@ -1,11 +1,8 @@
-[28/07/2014][21:26:01]: INFO - Started Engine for game: Robot Shootans
-[28/07/2014][21:26:01]: INFO - Version number: 0.9.5322.36780
-[28/07/2014][21:26:01]: INFO - Loading Engine Content
-[28/07/2014][21:26:02]: INFO - Done loading content
-[28/07/2014][21:26:02]: INFO - Starting Song file named ObservingTheStar
-[28/07/2014][21:26:03]: INFO - Starting Song file named ObservingTheStar
-[28/07/2014][21:26:06]: INFO - Starting Song file named ObservingTheStar
-[28/07/2014][21:26:13]: INFO - Starting Song file named ObservingTheStar
-[28/07/2014][21:26:15]: INFO - Unloading all screens
-[28/07/2014][21:26:15]: INFO - Finished unloading all screens
-[28/07/2014][21:26:15]: INFO - Closing GameEngine down
+[29/07/2014][14:14:48]: INFO - Started Engine for game: Robot Shootans
+[29/07/2014][14:14:48]: INFO - Version number: 0.9.5323.23843
+[29/07/2014][14:14:48]: INFO - Loading Engine Content
+[29/07/2014][14:14:48]: INFO - Done loading content
+[29/07/2014][14:14:48]: INFO - Starting Song file named ObservingTheStar
+[29/07/2014][14:15:05]: INFO - Unloading all screens
+[29/07/2014][14:15:05]: INFO - Finished unloading all screens
+[29/07/2014][14:15:05]: INFO - Closing GameEngine down

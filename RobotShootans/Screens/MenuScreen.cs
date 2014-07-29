@@ -64,7 +64,6 @@ namespace RobotShootans.Screens
 
             _selectNoise = Engine.loadSound("menu_select");
 
-            Engine.StopSong();
             Engine.StartSong("ObservingTheStar");
 
             _loaded = true;

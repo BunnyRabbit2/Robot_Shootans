@@ -528,7 +528,7 @@ namespace RobotShootans.Engine
         /// Starts the song given and stops any other song playing
         /// </summary>
         /// <param name="songToStart"></param>
-        public void StartSong(string songToStart)
+        public void StartSong(string songToStart, bool restartSong = false)
         {
 #if !WINDOWS
             if (!_songs.ContainsKey(songToStart))
@@ -551,9 +551,17 @@ namespace RobotShootans.Engine
                 _musicPlaying = true;
             }
 #elif WINDOWS
+
             if (_song != null)
             {
-                StopSong();
+                if (songToStart != _song.SongName || restartSong)
+                {
+                    StopSong();
+                }
+                else
+                {
+                    return;
+                }
             }
 
             if (File.Exists("Content/music/" + songToStart + ".ogg"))

@@ -54,6 +54,9 @@ namespace RobotShootans.Engine
         VorbisReader reader;
         bool ready;
 
+        string _songName;
+        public string SongName { get { return _songName; } }
+
         public bool IsLooped { get; set; }
 
         static OggStream()
@@ -85,6 +88,8 @@ namespace RobotShootans.Engine
             //    fxe.Filter(alFilterId, EfxFilterf.LowpassGain, 1);
             //    LowPassHFGain = 1;
             //}
+
+            _songName = Path.GetFileNameWithoutExtension(((FileStream)stream).Name);
 
             underlyingStream = stream;
             Open(precache: true);
