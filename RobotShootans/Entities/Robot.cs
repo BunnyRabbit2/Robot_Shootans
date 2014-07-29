@@ -72,16 +72,29 @@ namespace RobotShootans.Entities
         private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
-            if (fixtureB.Body.UserData.ToString() == "BULLET")
+            if (fixtureB.Body.UserData.ToString() == "BULLET" || fixtureB.Body.UserData.ToString() == "ROCKET")
             {
-                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
-                Screen.removeEntity(this);
+                kill();
+
+                if (fixtureB.Body.UserData.ToString() == "ROCKET")
+                {
+                    Rocket r = (Rocket)Screen.getEntityWithBodyID(fixtureB.Body.BodyId);
+                    r.explode();
+                }
+
                 Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
                 Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
-                _robotKilled.Play();
+                
             }
 
             return true;
+        }
+
+        public void kill()
+        {
+            Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
+            Screen.removeEntity(this);
+            _robotKilled.Play();
         }
 
         /// <summary></summary>

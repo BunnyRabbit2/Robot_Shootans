@@ -13,12 +13,17 @@ namespace RobotShootans.Entities
     /// </summary>
     public class Bullet : PhysicsGameEntity
     {
-        float _speed, _angleSpeed, _travelDirection;
-        int _size;
-        Vector2 _vector, _position;
-        Color _bulletColour;
+        /// <summary></summary>
+        protected float _speed, _angleSpeed, _travelDirection;
+        /// <summary></summary>
+        protected int _size;
+        /// <summary></summary>
+        protected Vector2 _vector, _position;
+        /// <summary></summary>
+        protected Color _bulletColour;
 
-        ColouredRectangle _displayRect;
+        /// <summary></summary>
+        protected ColouredRectangle _displayRect;
 
         /// <summary>
         /// Creates the bullet and sets the vector
@@ -112,8 +117,6 @@ namespace RobotShootans.Entities
         public override void Update(GameTime gameTime)
         {
             _displayRect.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
-
-            // LogFile.LogStringLine("PIECE OF SHIT BULLET IS AT: " + _displayRect.Position.ToString());
 
             _physicsBody.LinearVelocity = new Vector2(
                 MathHelper.Clamp(_physicsBody.LinearVelocity.X, -_angleSpeed, _angleSpeed),

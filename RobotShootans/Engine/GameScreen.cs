@@ -160,7 +160,7 @@ namespace RobotShootans.Engine
         /// <returns></returns>
         public GameEntity getEntityWithBodyID(int idIn)
         {
-            var list = _entityBag.getPhysicsEntities();
+            List<PhysicsGameEntity> list = _entityBag.getPhysicsEntities();
 
             return list.First(e => e.PhysicsBody.BodyId == idIn);
         }

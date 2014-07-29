@@ -120,7 +120,11 @@ namespace RobotShootans.Screens
             if(_gameStarted)
             {
 #if DEBUG
-                if (InputHelper.isKeyPressNew(Keys.M))
+                if (InputHelper.isKeyPressNew(Keys.V))
+                {
+                    Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new RocketLauncher()));
+                }
+                else if (InputHelper.isKeyPressNew(Keys.M))
                 {
                     Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new MachineGun()));
                 }

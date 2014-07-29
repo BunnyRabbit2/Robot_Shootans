@@ -62,9 +62,7 @@ namespace RobotShootans.Engine
             _gameOptions = new GameOptions();
             _gameOptions.LoadOptions();
             _oldOptions = _gameOptions;
-#if !WINDOWS
-            _songs = new Dictionary<string, Song>();
-#endif
+
             _loaded = false;
         }
 
@@ -125,12 +123,8 @@ namespace RobotShootans.Engine
         /// <summary>The Content Manager owned by the Engine</summary>
         public ContentManager Content { get { return _content; } }
 
-#if !WINDOWS
-        private Dictionary<string, Song> _songs;
-#elif WINDOWS
         string _currentSong = "";
         OggStream _song;
-#endif
 
         private GraphicsDevice _graphics;
         /// <summary>The GraphicsDevice used by the Engine</summary>
@@ -528,30 +522,9 @@ namespace RobotShootans.Engine
         /// Starts the song given and stops any other song playing
         /// </summary>
         /// <param name="songToStart"></param>
+        /// /// <param name="restartSong"></param>
         public void StartSong(string songToStart, bool restartSong = false)
         {
-#if !WINDOWS
-            if (!_songs.ContainsKey(songToStart))
-            {
-                if (File.Exists("Content/music/" + songToStart + ".xnb"))
-                {
-                    _songs.Add(songToStart, Content.Load<Song>("music/" + songToStart));
-                    MediaPlayer.Play(_songs[songToStart]);
-                    _musicPlaying = true;
-                }
-                else
-                {
-                    LogFile.LogStringLine("Failed to load music: " + songToStart + ". Nothing loaded", LogType.ERROR);
-                    
-                }
-            }
-            else
-            {
-                MediaPlayer.Play(_songs[songToStart]);
-                _musicPlaying = true;
-            }
-#elif WINDOWS
-
             if (_song != null)
             {
                 if (songToStart != _song.SongName || restartSong)
@@ -575,7 +548,6 @@ namespace RobotShootans.Engine
                     _song.Volume = 0.0f;
                 _song.Play();
             }
-#endif
         }
 
         /// <summary>
@@ -583,18 +555,12 @@ namespace RobotShootans.Engine
         /// </summary>
         public void StopSong()
         {
-#if !WINDOWS
-            if (_musicPlaying)
-                MediaPlayer.Stop();
-#elif WINDOWS
             if (_song != null)
             {
                 _song.Stop();
                 _song.Dispose();
                 _song = null;
             }
-
-#endif
         }
 
         #endregion

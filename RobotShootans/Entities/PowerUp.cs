@@ -125,6 +125,7 @@ namespace RobotShootans.Entities
                     Screen.Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new MachineGun()));
                     break;
                 case PowerUpType.ROCKET_LAUNCHER:
+                    Screen.Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new RocketLauncher()));
                     break;
                 case PowerUpType.SHIELD:
                     break;

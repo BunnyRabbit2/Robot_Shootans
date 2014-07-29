@@ -57,6 +57,7 @@
     <Compile Include="Entities\PowerUpSpawner.cs" />
     <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\RobotSpawner.cs" />
+    <Compile Include="Entities\Rocket.cs" />
     <Compile Include="Entities\Sprite.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\SplashLogo.cs" />
@@ -112,6 +113,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\sound\menu_select.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\game\rocket.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\sound\rocket_explode.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Docs\logFile.txt" />

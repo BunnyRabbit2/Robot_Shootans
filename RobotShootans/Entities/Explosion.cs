@@ -10,7 +10,7 @@ namespace RobotShootans.Entities
     /// <summary>
     /// An explosion. It explodes. Fire and stuff.
     /// </summary>
-    public class Explosion : PhysicsGameEntity
+    public class Explosion : GameEntity
     {
         Vector2 _position;
         Sprite _displaySprite;
@@ -107,6 +107,8 @@ namespace RobotShootans.Entities
 
                 _frames = 10;
                 _frameTimer = 100;
+
+                _displaySprite.setScale(2f);
 
                 _displaySprite.addAnimation("EXPLODE", _frameTimer,
                     new Rectangle[]
