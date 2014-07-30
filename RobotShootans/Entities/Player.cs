@@ -20,6 +20,9 @@ namespace RobotShootans.Entities
     {
         Sprite _playerSprite;
 
+        ColouredCircle _shieldTex;
+        bool _haveShield = false;
+
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
 
         Weapon _currentWeapon;
@@ -98,6 +101,10 @@ namespace RobotShootans.Entities
             _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);
             _physicsBody.IsStatic = false;
 
+            _shieldTex = new ColouredCircle(_playerSprite.Position, frameHeight/2, Color.Blue);
+            _shieldTex.Alpha = 0;
+            Screen.addEntity(_shieldTex);
+
             _physicsBody.OnCollision += onCollision;
 
             _loaded = true;
@@ -112,6 +119,7 @@ namespace RobotShootans.Entities
 #endif
             Screen.removeEntity(_playerSprite);
             Screen.removeEntity(_currentWeapon);
+            Screen.removeEntity(_shieldTex);
         }
 
         private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -122,9 +130,18 @@ namespace RobotShootans.Entities
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "ROBOT")
             {
-                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 5.0f));
-                Screen.Engine.registerEvent(new GameEvent(EventType.LIFE_LOST));
-                _playerHit.Play();
+                if (_haveShield)
+                {
+                    Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
+                    _haveShield = false;
+                    _shieldTex.Alpha = 0;
+                }
+                else
+                {
+                    Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 5.0f));
+                    Screen.Engine.registerEvent(new GameEvent(EventType.LIFE_LOST));
+                    _playerHit.Play();
+                }
             }
 
             return true;
@@ -143,6 +160,12 @@ namespace RobotShootans.Entities
                 {
                     changeWeapon((Weapon)eventIn.UserData);
                 }
+                return true;
+            }
+            else if(eventIn.EventType == EventType.SHIELD_GAINED)
+            {
+                _shieldTex.Alpha = 128;
+                _haveShield = true;
                 return true;
             }
 
@@ -232,6 +255,7 @@ namespace RobotShootans.Entities
                 (int)(Screen.Engine.RenderHeight * 0.05), (int)(Screen.Engine.RenderHeight * 0.95)));
 
             _playerSprite.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
+            _shieldTex.Position = _playerSprite.Position;
 
 #if DEBUG
             _debugRect.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);

@@ -20,6 +20,8 @@ namespace RobotShootans.Engine
         SET_AMMO,
         /// <summary>An event used to change the weapon</summary>
         WEAPON_CHANGED,
+        /// <summary>An event used when the player picks up a shield</summary>
+        SHIELD_GAINED,
         /// <summary>An event used when the player loses a life</summary>
         LIFE_LOST,
         /// <summary>An event used when the player gains a life</summary>

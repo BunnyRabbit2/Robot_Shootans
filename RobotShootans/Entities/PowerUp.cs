@@ -128,6 +128,7 @@ namespace RobotShootans.Entities
                     Screen.Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new RocketLauncher()));
                     break;
                 case PowerUpType.SHIELD:
+                    Screen.Engine.registerEvent(new GameEvent(EventType.SHIELD_GAINED));
                     break;
                 case PowerUpType.SHOTGUN:
                     Screen.Engine.registerEvent(new GameEvent(EventType.WEAPON_CHANGED, new Shotgun()));
