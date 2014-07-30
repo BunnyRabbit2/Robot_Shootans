@@ -206,7 +206,7 @@ namespace RobotShootans.Entities
             if(_animations.Count != 0)
                 sBatch.Draw(_image, position: _position, sourceRectangle: _animations[_currentAnimation].getCurrentframe(), rotation: _rotation, color: _color, origin: _origin, scale: _scale);
             else
-                sBatch.Draw(_image, position: _position, color: _color, origin: _origin, scale: _scale);
+                sBatch.Draw(_image, position: _position, color: _color, origin: _origin, scale: _scale, rotation: _rotation);
         }
         #endregion
     }

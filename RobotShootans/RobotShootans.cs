@@ -82,7 +82,7 @@ namespace RobotShootans
             else if (GamePad.GetState(PlayerIndex.Four).IsConnected)
                 currentPlayer = PlayerIndex.Four;
 
-            if (InputHelper.isKeyPressNew(Keys.Escape) || InputHelper.isButtonPressNew(Buttons.Back, currentPlayer) )
+            if (InputHelper.isButtonPressNew(Buttons.Back, currentPlayer))
                 Exit();
 
 #if DEBUG

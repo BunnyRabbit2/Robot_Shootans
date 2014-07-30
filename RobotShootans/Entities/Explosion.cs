@@ -20,18 +20,22 @@ namespace RobotShootans.Entities
         int _frames = 0;
         int _frameTimer = 0;
 
+        float _scale;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="positionIn"></param>
         /// <param name="typeIn">The type of explosion to make. 1 = large, 2 = medium, 3 = small</param>
-        public Explosion(Vector2 positionIn, int typeIn)
+        /// <param name="scaleIn"></param>
+        public Explosion(Vector2 positionIn, int typeIn, float scaleIn = 1.0f)
             : base("EXPLOSION")
         {
             if (typeIn < 1 || typeIn > 3)
                 typeIn = 1;
 
             _explosionType = typeIn;
+            _scale = scaleIn;
 
             _position = positionIn;
 
@@ -48,10 +52,9 @@ namespace RobotShootans.Entities
             _displaySprite.Position = _position;
             _displaySprite.DrawOrder = 5;
             setAnimation();
+            _displaySprite.setScale(_scale);
             _displaySprite.Animation = "EXPLODE";
             
-            
-            // haven't set physics body yet. Just want to see if things explode right first
             _loaded = true;
         }
 
@@ -107,8 +110,6 @@ namespace RobotShootans.Entities
 
                 _frames = 10;
                 _frameTimer = 100;
-
-                _displaySprite.setScale(2f);
 
                 _displaySprite.addAnimation("EXPLODE", _frameTimer,
                     new Rectangle[]

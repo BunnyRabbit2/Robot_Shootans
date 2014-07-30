@@ -90,6 +90,9 @@ namespace RobotShootans.Entities
             return true;
         }
 
+        /// <summary>
+        /// Kill the robot
+        /// </summary>
         public void kill()
         {
             Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));

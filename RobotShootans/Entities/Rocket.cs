@@ -41,6 +41,7 @@ namespace RobotShootans.Entities
             _physicsBody.Restitution = 0.0f;
             _physicsBody.Friction = 0.2f;
             _physicsBody.IsStatic = false;
+            _physicsBody.Rotation = _travelDirection;
 
             _vector = HelperFunctions.GetVectorFromBearingAndSpeed(_travelDirection, _speed * 3);
 
@@ -56,6 +57,7 @@ namespace RobotShootans.Entities
             _displaySprite.DrawOrder = 4;
             _displaySprite.setImage("game/rocket", OriginPosition.CENTER);
             _displaySprite.Position = _position;
+            _displaySprite.setRotation(_travelDirection);
 
             _rocketExplode = Screen.Engine.loadSound("rocket_explode");
 
@@ -80,7 +82,7 @@ namespace RobotShootans.Entities
                 // also kill player if they are in range
             }
 
-            Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 2));
+            Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 2, 2.0f));
             _rocketExplode.Play();
         }
 
@@ -96,7 +98,7 @@ namespace RobotShootans.Entities
         public override void Update(GameTime gameTime)
         {
             _displaySprite.Position = ConvertUnits.ToDisplayUnits(_physicsBody.Position);
-
+            
             _physicsBody.LinearVelocity = new Vector2(
                 MathHelper.Clamp(_physicsBody.LinearVelocity.X, -_angleSpeed, _angleSpeed),
                 MathHelper.Clamp(_physicsBody.LinearVelocity.Y, -_angleSpeed, _angleSpeed));
