@@ -18,6 +18,8 @@ namespace RobotShootans.Entities
         Vector2 _startPos;
 
         int _robotSize;
+        int _health = 1;
+        int _robotType;
 
         float _maxVelocity, _maxAngleVelocity, _moveImpulse, _angleMoveImpulse;
 
@@ -27,11 +29,13 @@ namespace RobotShootans.Entities
         /// <param name="positionIn"></param>
         /// <param name="spawnerIn"></param>
         /// <param name="sizeIn"></param>
-        public Robot(Vector2 positionIn, RobotSpawner spawnerIn, int sizeIn) : base ("ROBOT")
+        /// /// <param name="robotType">0 = normal, 1 = BIGnSLOW, 2 = fast, 3 = explodey</param>
+        public Robot(Vector2 positionIn, RobotSpawner spawnerIn, int sizeIn, int robotType = 0) : base ("ROBOT")
         {
             _spawner = spawnerIn;
             _robotSize = sizeIn;
-
+            _robotType = robotType;
+            
             _startPos = positionIn;
         }
 
@@ -66,6 +70,26 @@ namespace RobotShootans.Entities
 
             _robotKilled = Screen.Engine.loadSound("Robot_killed");
 
+            if(_robotType == 1)
+            {
+                _displayRect.Colour = Color.Green;
+                _maxVelocity = 1.5f;
+                _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
+                _health = 3;
+            }
+            else if (_robotType == 2)
+            {
+                _displayRect.Colour = Color.Blue;
+                _maxVelocity = 6f;
+                _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
+            }
+            else if (_robotType == 1)
+            {
+                _displayRect.Colour = Color.Yellow;
+                _maxVelocity = 3f;
+                _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
+            }
+
             _loaded = true;
         }
 
@@ -74,7 +98,14 @@ namespace RobotShootans.Entities
             // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
             if (fixtureB.Body.UserData.ToString() == "BULLET" || fixtureB.Body.UserData.ToString() == "ROCKET")
             {
-                kill();
+                _health--;
+
+                if (_health < 1)
+                {
+                    kill();
+
+                    Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
+                }
 
                 if (fixtureB.Body.UserData.ToString() == "ROCKET")
                 {
@@ -83,8 +114,6 @@ namespace RobotShootans.Entities
                 }
 
                 Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
-                Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
-                
             }
 
             return true;
@@ -95,7 +124,29 @@ namespace RobotShootans.Entities
         /// </summary>
         public void kill()
         {
-            Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
+            if (_robotType == 3)
+            {
+                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1));
+                var rbts = Screen.getEntityByName("ROBOT");
+                for (int i = 0; i < rbts.Count; i++)
+                {
+                    Robot r = (Robot)rbts[i];
+
+                    Vector2 rPos = ConvertUnits.ToDisplayUnits(r.SimPos);
+
+                    if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < 46)
+                        r.kill();
+                    // find which robots are in range of the explosion and kill them
+                    // also kill player if they are in range
+                }
+                var player = (Player)Screen.getEntityByName("PLAYER")[0];
+                if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), ConvertUnits.ToDisplayUnits(player.SimPos)) < 46)
+                    player.damage();
+            }
+            else
+            {
+                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
+            }
             Screen.removeEntity(this);
             _robotKilled.Play();
         }

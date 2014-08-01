@@ -148,6 +148,24 @@ namespace RobotShootans.Entities
         }
 
         /// <summary>
+        /// Deal damage to player
+        /// </summary>
+        public void damage()
+        {
+            if (_haveShield)
+            {
+                _haveShield = false;
+                _shieldTex.Alpha = 0;
+            }
+            else
+            {
+                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 5.0f));
+                Screen.Engine.registerEvent(new GameEvent(EventType.LIFE_LOST));
+                _playerHit.Play();
+            }
+        }
+
+        /// <summary>
         /// Handles an event
         /// </summary>
         /// <param name="eventIn"></param>

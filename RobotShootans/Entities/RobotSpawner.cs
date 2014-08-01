@@ -64,7 +64,8 @@ namespace RobotShootans.Entities
                     position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
                 }
 
-                Robot newRobot = new Robot(position, this, _normalRobotSize);
+                //Robot newRobot = new Robot(position, this, _normalRobotSize);
+                Robot newRobot = new Robot(position, this, 50, 1);
                 Screen.addEntity(newRobot);
                 _robots.Add(newRobot);
 
