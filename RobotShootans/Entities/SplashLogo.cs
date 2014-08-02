@@ -127,7 +127,8 @@ namespace RobotShootans.Entities
         /// <param name="sbatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sbatch)
         {
-            sbatch.Draw(_image, position: _position, origin: _origin, color: _colour * _fadeAlpha);
+            Color c = new Color(_colour, _fadeAlpha);
+            sbatch.Draw(_image, position: _position, origin: _origin, color: c);
         }
     }
 }

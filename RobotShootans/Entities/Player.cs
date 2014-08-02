@@ -84,7 +84,7 @@ namespace RobotShootans.Entities
 #if DEBUG
             _debugRect = new ColouredRectangle(
                 new Rectangle((int)_playerSprite.X, (int)_playerSprite.Y, collisionBoxSize, collisionBoxSize),
-                new Color(Color.Red, 48), OriginPosition.CENTER);
+                new Color(Color.Red, 128), OriginPosition.CENTER);
             _debugRect.DrawOrder = 4;
             Screen.addEntity(_debugRect);
 #endif
@@ -101,8 +101,7 @@ namespace RobotShootans.Entities
             _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);
             _physicsBody.IsStatic = false;
 
-            _shieldTex = new ColouredCircle(_playerSprite.Position, frameHeight/2, Color.Blue);
-            _shieldTex.Alpha = 0;
+            _shieldTex = new ColouredCircle(_playerSprite.Position, frameHeight / 2, new Color(0, 0, 255, 0));
             Screen.addEntity(_shieldTex);
 
             _physicsBody.OnCollision += onCollision;

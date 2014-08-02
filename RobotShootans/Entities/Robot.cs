@@ -17,6 +17,8 @@ namespace RobotShootans.Entities
 
         Vector2 _startPos;
 
+        bool _isDead = false;
+
         int _robotSize;
         int _health = 1;
         int _robotType;
@@ -95,25 +97,32 @@ namespace RobotShootans.Entities
 
         private bool onCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
-            if (fixtureB.Body.UserData.ToString() == "BULLET" || fixtureB.Body.UserData.ToString() == "ROCKET")
+            if (!_isDead)
             {
-                _health--;
-
-                if (_health < 1)
+                // If the thing that collides with the player is a robot, GAME OVER MAN, GAME OVER!
+                if (fixtureB.Body.UserData.ToString() == "BULLET" || fixtureB.Body.UserData.ToString() == "ROCKET")
                 {
-                    kill();
+                    _health--;
 
-                    Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
+                    if (_health < 1)
+                    {
+                        kill();
+
+                        Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
+                    }
+
+                    if (fixtureB.Body.UserData.ToString() == "ROCKET")
+                    {
+                        Rocket r = (Rocket)Screen.getEntityWithBodyID(fixtureB.Body.BodyId);
+                        r.explode();
+                    }
+
+                    Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
                 }
-
-                if (fixtureB.Body.UserData.ToString() == "ROCKET")
-                {
-                    Rocket r = (Rocket)Screen.getEntityWithBodyID(fixtureB.Body.BodyId);
-                    r.explode();
-                }
-
-                Screen.removeEntity(Screen.getEntityWithBodyID(fixtureB.Body.BodyId));
+            }
+            else
+            {
+                return false;
             }
 
             return true;
@@ -148,6 +157,7 @@ namespace RobotShootans.Entities
                 Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
             }
             Screen.removeEntity(this);
+            _isDead = true;
             _robotKilled.Play();
         }
 

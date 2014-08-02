@@ -8,6 +8,9 @@ using System.Text;
 
 namespace RobotShootans.Entities
 {
+    /// <summary>
+    /// A coloured circle
+    /// </summary>
     public class ColouredCircle : GameEntity
     {
         Texture2D _texture;
@@ -37,6 +40,9 @@ namespace RobotShootans.Entities
         }
 
         int _size;
+        /// <summary>
+        /// The radius of the circle
+        /// </summary>
         public int Size { get { return _size; } }
 
         /// <summary>The origin of the image</summary>
@@ -94,6 +100,9 @@ namespace RobotShootans.Entities
             _color = colourIn;
         }
 
+        /// <summary>
+        /// Sets the texture for the circle
+        /// </summary>
         public override void Load()
         {
             int outerRadius = _size * 2 + 2; // So circle doesn't go out of bounds
@@ -117,6 +126,50 @@ namespace RobotShootans.Entities
                 data[y * outerRadius + x + 1] = Color.White;
             }
 
+            //width
+            for (int i = 0; i < outerRadius; i++)
+            {
+                int yStart = -1;
+                int yEnd = -1;
+
+
+                //loop through height to find start and end to fill
+                for (int j = 0; j < outerRadius; j++)
+                {
+
+                    if (yStart == -1)
+                    {
+                        if (j == outerRadius - 1)
+                        {
+                            //last row so there is no row below to compare to
+                            break;
+                        }
+
+                        //start is indicated by Color followed by Transparent
+                        if (data[i + (j * outerRadius)] == Color.White && data[i + ((j + 1) * outerRadius)] == Color.Transparent)
+                        {
+                            yStart = j + 1;
+                            continue;
+                        }
+                    }
+                    else if (data[i + (j * outerRadius)] == Color.White)
+                    {
+                        yEnd = j;
+                        break;
+                    }
+                }
+
+                //if we found a valid start and end position
+                if (yStart != -1 && yEnd != -1)
+                {
+                    //height
+                    for (int j = yStart; j < yEnd; j++)
+                    {
+                        data[i + (j * outerRadius)] = Color.White;
+                    }
+                }
+            }
+
             _origin = new Vector2(_size, _size);
 
             _texture.SetData(data);
@@ -124,6 +177,11 @@ namespace RobotShootans.Entities
             _loaded = true;
         }
 
+        /// <summary>
+        /// Draws the circle
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
             sBatch.Draw(texture: _texture, position: _position, color: _color, origin: _origin);

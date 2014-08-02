@@ -147,15 +147,11 @@ namespace RobotShootans.Entities
         /// <param name="sBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch sBatch)
         {
-            // sBatch.Draw(_texture, origin: _origin, color: _color, drawRectangle: _rectangle);
-
             Rectangle newRect = _rectangle;
             newRect.X -= (int)_origin.X;
             newRect.Y -= (int)_origin.Y;
 
-            //sBatch.Draw(_texture, newRect, _color);
             sBatch.Draw(_texture, new Vector2(_rectangle.X, _rectangle.Y), newRect, _color, _rotation, _origin, 1f, SpriteEffects.None, 0f);
-            //sBatch.Draw(_texture, color: _color, origin: _origin, rotation: _rotation, drawRectangle: newRect, sourceRectangle: newRect);
         }
     }
 }

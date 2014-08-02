@@ -399,7 +399,7 @@ namespace RobotShootans.Engine
         public void Draw(GameTime gameTime)
         {
             _resolutionIndependence.BeginDraw();
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, _resolutionIndependence.GetTransformationMatrix());
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, _resolutionIndependence.GetTransformationMatrix());
             _spriteBatch.Draw(_bg, new Vector2(), Color.White);
 
             foreach(GameScreen gs in _gameScreens)
