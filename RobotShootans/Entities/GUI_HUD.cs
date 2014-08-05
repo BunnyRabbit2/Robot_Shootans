@@ -97,7 +97,7 @@ namespace RobotShootans.Entities
                 if (_currentScore % 5000 == 0)
                     Screen.Engine.registerEvent(new GameEvent(EventType.CREATE_POWER_UP, PowerUpType.LIFE));
 
-                if (_currentScore % 20 == 0)
+                if (_currentScore % 150 == 0)
                     Screen.Engine.registerEvent(new GameEvent(EventType.CREATE_POWER_UP, PowerUpType.RANDOM));
 
                 return true;

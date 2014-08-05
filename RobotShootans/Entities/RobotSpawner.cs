@@ -11,11 +11,12 @@ namespace RobotShootans.Entities
         /// <summary>The position of the player</summary>
         public Vector2 playerPosition;
 
-        int _spawnRate;
-        int _spawnTimer;
-        float _minSpawnDistance;
+        int[] _spawnTimers;
+        int[] _spawnRates;
+        int[] _minimumSpawnRates;
+        int[] _robotSizes;
 
-        int _normalRobotSize = 25;
+        float _minSpawnDistance;
 
         Random rand = new Random();
 
@@ -24,8 +25,13 @@ namespace RobotShootans.Entities
         /// <summary>Creates the robot spawner and sets a few things</summary>
         public RobotSpawner() : base ("ROBOT_SPAWNER")
         {
-            _spawnRate = 2000;
-            _spawnTimer = 0;
+            // 0 = normal, 1 = bit, 2 = fast, 3 = explodey
+            _spawnRates = new int[] { 6000, 18000, 30000, 24000 };
+            _minimumSpawnRates = new int[] { 2000, 6000, 10000, 8000 };
+
+            _spawnTimers = new int[] { 0, 0, 0, 0 };
+
+            _robotSizes = new int[] { 25, 50, 20, 25 };
             
             _robots = new List<Robot>();
         }
@@ -52,24 +58,26 @@ namespace RobotShootans.Entities
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            _spawnTimer += gameTime.ElapsedGameTime.Milliseconds;
-
-            if(_spawnTimer > _spawnRate)
+            for (int i = 0; i < 4; i++)
             {
-                // bit of a funky way to do it but should work
-                Vector2 position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
+                _spawnTimers[i] += gameTime.ElapsedGameTime.Milliseconds;
 
-                while(HelperFunctions.GetDistanceBetweenTwoPoints(position, playerPosition) < _minSpawnDistance)
+                if(_spawnTimers[i] > _spawnRates[i])
                 {
-                    position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
+                    Vector2 position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
+
+                    while (HelperFunctions.GetDistanceBetweenTwoPoints(position, playerPosition) < _minSpawnDistance)
+                    {
+                        position = new Vector2(rand.Next(0, Screen.Engine.RenderWidth), rand.Next(0, Screen.Engine.RenderHeight));
+                    }
+
+                    Robot newRobot = new Robot(position, this, _robotSizes[i], i);
+                    Screen.addEntity(newRobot);
+                    _robots.Add(newRobot);
+
+                    _spawnRates[i] = (int)(_spawnRates[i] * 0.95);
+                    _spawnTimers[i] = 0;
                 }
-
-                //Robot newRobot = new Robot(position, this, _normalRobotSize);
-                Robot newRobot = new Robot(position, this, 50, 1);
-                Screen.addEntity(newRobot);
-                _robots.Add(newRobot);
-
-                _spawnTimer = 0;
             }
 
             // Checks if any robots are destroyed and cleans the list of nulls

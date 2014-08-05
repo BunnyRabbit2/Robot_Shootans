@@ -82,10 +82,10 @@ namespace RobotShootans.Entities
             else if (_robotType == 2)
             {
                 _displayRect.Colour = Color.Blue;
-                _maxVelocity = 6f;
+                _maxVelocity = 4.5f;
                 _maxAngleVelocity = (float)Math.Sqrt(((double)_maxVelocity * (double)_maxVelocity) / 2.0);
             }
-            else if (_robotType == 1)
+            else if (_robotType == 3)
             {
                 _displayRect.Colour = Color.Yellow;
                 _maxVelocity = 3f;
@@ -108,7 +108,23 @@ namespace RobotShootans.Entities
                     {
                         kill();
 
-                        Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, 10));
+                        int _scored = 0;
+                        switch(_robotType)
+                        {
+                            case 0:
+                                _scored = 10;
+                                break;
+                            case 1:
+                                _scored = 25;
+                                break;
+                            case 2:
+                                _scored = 25;
+                                break;
+                            case 3:
+                                _scored = 15;
+                                break;
+                        }
+                        Screen.Engine.registerEvent(new GameEvent(EventType.SCORE_CHANGED, _scored));
                     }
 
                     if (fixtureB.Body.UserData.ToString() == "ROCKET")
@@ -135,7 +151,7 @@ namespace RobotShootans.Entities
         {
             if (_robotType == 3)
             {
-                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1));
+                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 2.0f));
                 var rbts = Screen.getEntityByName("ROBOT");
                 for (int i = 0; i < rbts.Count; i++)
                 {
@@ -143,12 +159,12 @@ namespace RobotShootans.Entities
 
                     Vector2 rPos = ConvertUnits.ToDisplayUnits(r.SimPos);
 
-                    if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < 46)
-                        r.kill();
+                    //if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < 46)
+                    //    r.kill();
                     // find which robots are in range of the explosion and kill them
                     // also kill player if they are in range
                 }
-                var player = (Player)Screen.getEntityByName("PLAYER")[0];
+                var player = (Player)Screen.getEntityByName("Player")[0];
                 if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), ConvertUnits.ToDisplayUnits(player.SimPos)) < 46)
                     player.damage();
             }

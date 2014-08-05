@@ -1,10 +1,10 @@
-[02/08/2014][19:22:34]: INFO - Started Engine for game: Robot Shootans
-[02/08/2014][19:22:34]: INFO - Version number: 0.9.5327.33076
-[02/08/2014][19:22:34]: INFO - Loading Engine Content
-[02/08/2014][19:22:34]: INFO - Done loading content
-[02/08/2014][19:22:35]: INFO - Starting Song file named ObservingTheStar
-[02/08/2014][19:22:37]: INFO - Starting Song file named DST-TowerDefenseTheme_1
-[02/08/2014][19:22:48]: INFO - PLAYER collides with ROBOT
-[02/08/2014][19:22:51]: INFO - Unloading all screens
-[02/08/2014][19:22:51]: INFO - Finished unloading all screens
-[02/08/2014][19:22:51]: INFO - Closing GameEngine down
+[05/08/2014][16:34:54]: INFO - Started Engine for game: Robot Shootans
+[05/08/2014][16:34:54]: INFO - Version number: 0.9.5330.28046
+[05/08/2014][16:34:54]: INFO - Loading Engine Content
+[05/08/2014][16:34:54]: INFO - Done loading content
+[05/08/2014][16:34:54]: INFO - Starting Song file named ObservingTheStar
+[05/08/2014][16:34:57]: INFO - Starting Song file named DST-TowerDefenseTheme_1
+[05/08/2014][16:35:15]: INFO - Starting Song file named ObservingTheStar
+[05/08/2014][16:35:17]: INFO - Unloading all screens
+[05/08/2014][16:35:17]: INFO - Finished unloading all screens
+[05/08/2014][16:35:17]: INFO - Closing GameEngine down
