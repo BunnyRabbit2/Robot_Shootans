@@ -14,6 +14,9 @@ namespace RobotShootans.Entities
         private Rectangle _rectangle;
         private Color _color;
 
+        /// <summary>
+        /// The colour of the rectangle
+        /// </summary>
         public Color Colour { get { return _color; } set { _color = value; } }
 
         /// <summary>

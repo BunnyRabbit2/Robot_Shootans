@@ -98,7 +98,7 @@ namespace RobotShootans.Engine
         /// <returns></returns>
         public List<GameEntity> getEntitiesByName(string nameIn)
         {
-            return _entities.Where(s => s.EntityName == nameIn).ToList<GameEntity>();
+            return _entities.Where(s => s.EntityName.ToUpper() == nameIn.ToUpper()).ToList<GameEntity>();
         }
 
         /// <summary>

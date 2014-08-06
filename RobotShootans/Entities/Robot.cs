@@ -149,32 +149,38 @@ namespace RobotShootans.Entities
         /// </summary>
         public void kill()
         {
-            if (_robotType == 3)
+            if (!_isDead)
             {
-                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 2.0f));
-                var rbts = Screen.getEntityByName("ROBOT");
-                for (int i = 0; i < rbts.Count; i++)
+                if (_robotType == 3)
                 {
-                    Robot r = (Robot)rbts[i];
+                    Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 2.0f));
+                    var rbts = Screen.getEntityByName("ROBOT");
+                    for (int i = 0; i < rbts.Count; i++)
+                    {
+                        Robot r = (Robot)rbts[i];
 
-                    Vector2 rPos = ConvertUnits.ToDisplayUnits(r.SimPos);
+                        if (r.ID == ID)
+                            continue;
 
-                    //if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < 46)
-                    //    r.kill();
-                    // find which robots are in range of the explosion and kill them
-                    // also kill player if they are in range
+                        Vector2 rPos = ConvertUnits.ToDisplayUnits(r.SimPos);
+
+                        if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < 46)
+                            r.kill();
+                        // find which robots are in range of the explosion and kill them
+                        // also kill player if they are in range
+                    }
+                    var player = (Player)Screen.getEntityByName("Player")[0];
+                    if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), ConvertUnits.ToDisplayUnits(player.SimPos)) < 46)
+                        player.damage();
                 }
-                var player = (Player)Screen.getEntityByName("Player")[0];
-                if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), ConvertUnits.ToDisplayUnits(player.SimPos)) < 46)
-                    player.damage();
+                else
+                {
+                    Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
+                }
+                Screen.removeEntity(this);
+                _isDead = true;
+                _robotKilled.Play();
             }
-            else
-            {
-                Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
-            }
-            Screen.removeEntity(this);
-            _isDead = true;
-            _robotKilled.Play();
         }
 
         /// <summary></summary>

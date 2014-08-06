@@ -1,18 +1,20 @@
-﻿- Robots
-- Robot AI
+﻿- Robots /
+- Robot AI /
 	0.6
-- Physics
+- Physics /
 	0.7
-- Scoring
-- Pre-game screen
-- Game Over screen
+- Scoring /
+- Pre-game screen /
+- Game Over screen /
 	0.8
-- Sound, Music and Power Ups
+- Sound, Music and Power Ups /
 	0.9
 - Final run to release version
-	- Implement exlposions for when robots die and when rockets hit something
-	- Implement Rocket Launcher
+	- Implement exlposions for when robots die and when rockets hit something /
+	- Implement Rocket Launcher /
 	- Implement high score with some sort of security on it
+	- Complete any partial implementations of stuff
+	- Clean up anu bugs/problems
 	- Replace all Content with new stuff made specifically for Robot Shootans
 		- Player
 		- Robot images (normal, giant, explodey, fast)
@@ -24,5 +26,8 @@
 		- New music
 	1.0
 
-TODO: Change get entities by name method to push both to all caps and compare them like that
-	
+TODO: Check if exploding bot kills its mates
+TODO: Check if exploding bot kills the player
+TODO: Check if rocket has a proper kill range
+TODO: Add Pause screen to main game
+TODO: Add high score screen/table
