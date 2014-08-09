@@ -9,26 +9,17 @@ using System.Text;
 
 namespace RobotShootans.Screens
 {
-    public struct StScore
-    {
-        public string Name;
-        public int Score;
-        public int RobotsKilled;
-    }
-
     /// <summary>The screen that gets shown when the game is lost</summary>
     public class GameOverScreen : GameScreen
     {
         GUI_TextItem[] _gameOverText;
 
-
-
-        int _endScore;
+        Score _endScore;
 
         /// <summary>constructor for the game over screen</summary>
         /// <param name="blockUpdatingIn"></param>
         /// <param name="scoreIn"></param>
-        public GameOverScreen(bool blockUpdatingIn = true, int scoreIn = 0)
+        public GameOverScreen(bool blockUpdatingIn = true, Score scoreIn = new Score())
             : base (blockUpdatingIn)
         {
             // You done fucked up son
@@ -47,9 +38,9 @@ namespace RobotShootans.Screens
             bg.DrawOrder = 0;
             addEntity(bg);
 
-            _gameOverText = new GUI_TextItem[4];
+            _gameOverText = new GUI_TextItem[5];
             
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 _gameOverText[i] = new GUI_TextItem();
                 _gameOverText[i].setFont(Engine.loadFont("FiraSans"));
@@ -64,11 +55,11 @@ namespace RobotShootans.Screens
             }
 
             _gameOverText[0].setText("GAME OVER");
-            _gameOverText[1].setText("YOU SCORED " + _endScore + " POINTS");
+            _gameOverText[1].setText("YOU SCORED " + _endScore.TheScore + " POINTS");
             _gameOverText[2].setText("CARE TO TRY AGAIN?");
             _gameOverText[3].setText("PRESS SPACE TO RESTART");
-
-            Engine.StopSong();
+            _gameOverText[4].setText("PRESS ENTER TO INPUT HIGH SCORE");
+            
             Engine.StartSong("ObservingTheStar");
 
             _loaded = true;
@@ -84,6 +75,12 @@ namespace RobotShootans.Screens
             {
                 Engine.removeGameScreen(this);
                 Engine.pushGameScreen(new GameplayScreen());
+            }
+
+            if (InputHelper.isKeyPressNew(Keys.Enter))
+            {
+                Engine.removeGameScreen(this);
+                Engine.pushGameScreen(new HighScoreScreen(_endScore));
             }
 
             base.Update(gameTime);

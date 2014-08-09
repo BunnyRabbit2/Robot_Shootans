@@ -1,21 +1,25 @@
-[09/08/2014][13:21:54]: INFO - Started Engine for game: Robot Shootans
-[09/08/2014][13:21:54]: INFO - Version number: 0.9.5334.22256
-[09/08/2014][13:21:54]: INFO - Loading Engine Content
-[09/08/2014][13:21:54]: INFO - Done loading content
-[09/08/2014][13:21:54]: INFO - Starting Song file named ObservingTheStar
-[09/08/2014][13:21:54]: INFO - Added GameScreen: SPLASH SCREEN
-[09/08/2014][13:21:55]: INFO - Removed GameScreen: SPLASH SCREEN
-[09/08/2014][13:21:55]: INFO - Added GameScreen: MENU SCREEN
-[09/08/2014][13:21:55]: INFO - Removed GameScreen: MENU SCREEN
-[09/08/2014][13:21:55]: INFO - Added GameScreen: GAMEPLAY SCREEN
-[09/08/2014][13:21:55]: INFO - Added GameScreen: PRE GAME SCREEN
-[09/08/2014][13:21:56]: INFO - Removed GameScreen: PRE GAME SCREEN
-[09/08/2014][13:21:56]: INFO - Starting Song file named DST-TowerDefenseTheme_1
-[09/08/2014][13:21:56]: INFO - Starting Song file named ObservingTheStar
-[09/08/2014][13:21:56]: INFO - Added GameScreen: PAUSE SCREEN
-[09/08/2014][13:22:10]: INFO - Removed GameScreen: PAUSE SCREEN
-[09/08/2014][13:22:10]: INFO - Removed GameScreen: GAMEPLAY SCREEN
-[09/08/2014][13:22:10]: INFO - Added GameScreen: MENU SCREEN
-[09/08/2014][13:22:12]: INFO - Unloading all screens
-[09/08/2014][13:22:12]: INFO - Finished unloading all screens
-[09/08/2014][13:22:12]: INFO - Closing GameEngine down
+[09/08/2014][16:06:12]: INFO - Started Engine for game: Robot Shootans
+[09/08/2014][16:06:12]: INFO - Version number: 0.9.5334.27185
+[09/08/2014][16:06:12]: INFO - Loading Engine Content
+[09/08/2014][16:06:12]: INFO - Done loading content
+[09/08/2014][16:06:12]: INFO - Starting Song file named ObservingTheStar
+[09/08/2014][16:06:12]: INFO - Added GameScreen: SPLASH SCREEN
+[09/08/2014][16:06:12]: INFO - Removed GameScreen: SPLASH SCREEN
+[09/08/2014][16:06:12]: INFO - Added GameScreen: MENU SCREEN
+[09/08/2014][16:06:14]: INFO - Removed GameScreen: MENU SCREEN
+[09/08/2014][16:06:14]: INFO - Added GameScreen: GAMEPLAY SCREEN
+[09/08/2014][16:06:14]: INFO - Added GameScreen: PRE GAME SCREEN
+[09/08/2014][16:06:15]: INFO - Removed GameScreen: PRE GAME SCREEN
+[09/08/2014][16:06:15]: INFO - Starting Song file named DST-TowerDefenseTheme_1
+[09/08/2014][16:06:31]: INFO - PLAYER collides with ROBOT
+[09/08/2014][16:06:41]: INFO - PLAYER collides with ROBOT
+[09/08/2014][16:06:52]: INFO - PLAYER collides with ROBOT
+[09/08/2014][16:06:52]: INFO - Starting Song file named ObservingTheStar
+[09/08/2014][16:06:52]: INFO - Removed GameScreen: GAMEPLAY SCREEN
+[09/08/2014][16:06:52]: INFO - Added GameScreen: GAME OVER SCREEN
+[09/08/2014][16:06:53]: INFO - Removed GameScreen: GAME OVER SCREEN
+[09/08/2014][16:06:53]: INFO - Added GameScreen: HIGH SCORE SCREEN
+[09/08/2014][16:07:01]: INFO - Removed GameScreen: HIGH SCORE SCREEN
+[09/08/2014][16:07:07]: INFO - Unloading all screens
+[09/08/2014][16:07:07]: INFO - Finished unloading all screens
+[09/08/2014][16:07:07]: INFO - Closing GameEngine down

@@ -39,7 +39,7 @@ namespace RobotShootans.Screens
             bg.DrawOrder = 0;
             addEntity(bg);
 
-            _numberOfOptions = 3;
+            _numberOfOptions = 4;
             _menuText = new GUI_TextItem[_numberOfOptions];
 
             float screenDiff = 1f / (_numberOfOptions + 1);
@@ -61,7 +61,8 @@ namespace RobotShootans.Screens
             _menuText[0].DrawOutline = true;
             _menuText[0].setOutlineColor(Color.Black);
             _menuText[1].setText("OPTIONS");
-            _menuText[2].setText("QUIT GAME");
+            _menuText[2].setText("HIGH SCORES");
+            _menuText[3].setText("QUIT GAME");
 
             _selectNoise = Engine.loadSound("menu_select");
 
@@ -114,6 +115,10 @@ namespace RobotShootans.Screens
                     Engine.pushGameScreen(new OptionsScreen());
                 }
                 else if (_currentSelection == 2)
+                {
+                    Engine.pushGameScreen(new HighScoreScreen(new Score()));
+                }
+                else if (_currentSelection == 3)
                 {
                     Engine.Exit();
                 }

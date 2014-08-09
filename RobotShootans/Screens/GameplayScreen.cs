@@ -80,7 +80,7 @@ namespace RobotShootans.Screens
             else if(eventIn.EventType == EventType.GAME_OVER)
             {
                 Engine.removeGameScreen(this);
-                Engine.pushGameScreen(new GameOverScreen(true, eventIn.ChangeInt));
+                Engine.pushGameScreen(new GameOverScreen(true, (Score)eventIn.UserData));
                 returnV = true;
             }
 

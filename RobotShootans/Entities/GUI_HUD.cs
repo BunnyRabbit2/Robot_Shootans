@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using RobotShootans.Engine;
+using RobotShootans.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace RobotShootans.Entities
         int _currentAmmo, _currentScore, _currentLives;
 
         /// <summary>Gets the current score</summary>
-        public int Score { get { return _currentScore; } }
+        public int CurrentScore { get { return _currentScore; } }
 
         /// <summary>
         /// Constructor for the HUD
@@ -106,7 +107,13 @@ namespace RobotShootans.Entities
             {
                 _currentLives--;
                 if (_currentLives == 0)
-                    Screen.Engine.registerEvent(new GameEvent(EventType.GAME_OVER, _currentScore));
+                {
+                    Score s = new Score();
+                    s.TheScore = _currentScore;
+                    s.TheName = "RBT";
+                    s.TheRobotsKilled = 0;
+                    Screen.Engine.registerEvent(new GameEvent(EventType.GAME_OVER, s));
+                }
                 return true;
             }
             else if(eventIn.EventType == EventType.LIFE_GAINED)
