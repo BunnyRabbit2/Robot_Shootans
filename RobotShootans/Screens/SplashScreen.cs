@@ -94,7 +94,6 @@ namespace RobotShootans.Screens
             else if(_splashTimer > _waitTime + (_displayTime*3))
             {
                 Engine.removeGameScreen(this);
-                Engine.pushGameScreen(new GameplayScreen());
                 Engine.pushGameScreen(new MenuScreen());
             }
 

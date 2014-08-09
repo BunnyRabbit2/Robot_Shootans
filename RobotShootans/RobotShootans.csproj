@@ -80,6 +80,7 @@
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\OptionsScreen.cs" />
+    <Compile Include="Screens\PauseScreen.cs" />
     <Compile Include="Screens\PhysicsTestScreen.cs" />
     <Compile Include="Screens\PhysicsTestScreenTwo.cs" />
     <Compile Include="Screens\PreGameScreen.cs" />

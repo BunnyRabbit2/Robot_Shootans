@@ -98,8 +98,7 @@ namespace RobotShootans.Screens
         {
             if(InputHelper.isKeyPressNew(Keys.Escape))
             {
-                Engine.removeGameScreen(this);
-                Engine.pushGameScreen(new MenuScreen());
+                Engine.pushGameScreen(new PauseScreen());
             }
 
             if (_firstUpdate)

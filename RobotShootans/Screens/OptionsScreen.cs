@@ -124,6 +124,11 @@ namespace RobotShootans.Screens
                 _optionsText[_currentSelection].DrawOutline = true;
             }
 
+            if(InputHelper.isKeyPressNew(Keys.Escape))
+            {
+                Engine.removeGameScreen(this);
+            }
+
             if (InputHelper.isKeyPressNew(Keys.Enter))
             {
                 if (_currentSelection == 0)
@@ -141,7 +146,6 @@ namespace RobotShootans.Screens
                 else if (_currentSelection == 6)
                 {
                     Engine.removeGameScreen(this);
-                    Engine.pushGameScreen(new MenuScreen());
                 }
             }
 

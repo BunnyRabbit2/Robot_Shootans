@@ -283,6 +283,9 @@ namespace RobotShootans.Engine
         {
             foreach(GameScreen s in _gameScreensToAdd)
             {
+#if DEBUG
+                LogFile.LogStringLine("Added GameScreen: " + s.ScreenName, LogType.INFO);
+#endif
                 _gameScreens.Add(s);
             }
             _gameScreensToAdd.Clear();
@@ -319,6 +322,9 @@ namespace RobotShootans.Engine
             {
                 foreach(GameScreen gs in _screensToRemove)
                 {
+#if DEBUG
+                    LogFile.LogStringLine("Removed GameScreen: " + gs.ScreenName, LogType.INFO);
+#endif
                     _gameScreens.Remove(gs);
                 }
                 _screensToRemove.Clear();

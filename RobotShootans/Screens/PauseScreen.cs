@@ -11,11 +11,12 @@ using System.Text;
 namespace RobotShootans.Screens
 {
     /// <summary>
-    /// Menu screen
+    /// Pause Screen
     /// </summary>
-    public class MenuScreen : GameScreen
+    public class PauseScreen : GameScreen
     {
-        GUI_TextItem[] _menuText;
+        ColouredRectangle[] _pauseBoxes;
+        GUI_TextItem[] _pauseText;
         int _currentSelection;
         int _numberOfOptions;
         SoundEffect _selectNoise;
@@ -24,10 +25,10 @@ namespace RobotShootans.Screens
         /// 
         /// </summary>
         /// <param name="blockUpdatingIn"></param>
-        public MenuScreen(bool blockUpdatingIn = true)
+        public PauseScreen(bool blockUpdatingIn = true)
             : base(blockUpdatingIn)
         {
-            _screenName = "MENU SCREEN";
+            _screenName = "PAUSE SCREEN";
         }
 
         /// <summary>Sets up the screen text</summary>
@@ -35,33 +36,33 @@ namespace RobotShootans.Screens
         {
             _physicsEnabled = false;
 
-            ColouredRectangle bg = new ColouredRectangle(new Rectangle(0, 0, Engine.RenderWidth, Engine.RenderHeight), Color.DimGray);
+            ColouredRectangle bg = new ColouredRectangle(new Rectangle(0, 0, Engine.RenderWidth, Engine.RenderHeight), new Color(0,0,0,128));
             bg.DrawOrder = 0;
             addEntity(bg);
 
             _numberOfOptions = 3;
-            _menuText = new GUI_TextItem[_numberOfOptions];
+            _pauseText = new GUI_TextItem[_numberOfOptions];
 
             float screenDiff = 1f / (_numberOfOptions + 1);
 
             for (int i = 0; i < _numberOfOptions; i++)
             {
-                _menuText[i] = new GUI_TextItem();
-                _menuText[i].setFont(Engine.loadFont("FiraSans"));
-                _menuText[i].setColor(Color.Red);
-                _menuText[i].setOutlineColor(Color.Black);
-                _menuText[i].Scale = new Vector2(1.5f);
-                _menuText[i].Position = new Vector2(Engine.RenderWidth / 2f, Engine.RenderHeight * ((i + 1f) * screenDiff));
-                _menuText[i].setOrigin(OriginPosition.CENTER);
-                _menuText[i].DrawOrder = 2;
-                addEntity(_menuText[i]);
+                _pauseText[i] = new GUI_TextItem();
+                _pauseText[i].setFont(Engine.loadFont("FiraSans"));
+                _pauseText[i].setColor(Color.Red);
+                _pauseText[i].setOutlineColor(Color.Black);
+                _pauseText[i].Scale = new Vector2(1.5f);
+                _pauseText[i].Position = new Vector2(Engine.RenderWidth / 2f, Engine.RenderHeight * ((i + 1f) * screenDiff));
+                _pauseText[i].setOrigin(OriginPosition.CENTER);
+                _pauseText[i].DrawOrder = 2;
+                addEntity(_pauseText[i]);
             }
 
-            _menuText[0].setText("START GAME");
-            _menuText[0].DrawOutline = true;
-            _menuText[0].setOutlineColor(Color.Black);
-            _menuText[1].setText("OPTIONS");
-            _menuText[2].setText("QUIT GAME");
+            _pauseText[0].setText("RESUME GAME");
+            _pauseText[0].DrawOutline = true;
+            _pauseText[0].setOutlineColor(Color.Black);
+            _pauseText[1].setText("OPTIONS");
+            _pauseText[2].setText("QUIT");
 
             _selectNoise = Engine.loadSound("menu_select");
 
@@ -90,15 +91,10 @@ namespace RobotShootans.Screens
                 _selectNoise.Play();
             }
 
-            if(oldSel != _currentSelection)
+            if (oldSel != _currentSelection)
             {
-                _menuText[oldSel].DrawOutline = false;
-                _menuText[_currentSelection].DrawOutline = true;
-            }
-
-            if (InputHelper.isKeyPressNew(Keys.Escape))
-            {
-                Engine.Exit();
+                _pauseText[oldSel].DrawOutline = false;
+                _pauseText[_currentSelection].DrawOutline = true;
             }
 
             if (InputHelper.isKeyPressNew(Keys.Enter))
@@ -106,8 +102,6 @@ namespace RobotShootans.Screens
                 if (_currentSelection == 0)
                 {
                     Engine.removeGameScreen(this);
-                    Engine.pushGameScreen(new GameplayScreen());
-                    Engine.pushGameScreen(new PreGameScreen());
                 }
                 else if (_currentSelection == 1)
                 {
@@ -115,7 +109,9 @@ namespace RobotShootans.Screens
                 }
                 else if (_currentSelection == 2)
                 {
-                    Engine.Exit();
+                    Engine.removeGameScreen(this);
+                    Engine.removeGameScreen("GAMEPLAY SCREEN");
+                    Engine.pushGameScreen(new MenuScreen());
                 }
             }
 
