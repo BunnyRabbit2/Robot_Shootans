@@ -26,8 +26,4 @@
 		- New music
 	1.0
 
-TODO: Check if exploding bot kills its mates
-TODO: Check if exploding bot kills the player
-TODO: Check if rocket has a proper kill range
-TODO: Add Pause screen to main game
 TODO: Add high score screen/table

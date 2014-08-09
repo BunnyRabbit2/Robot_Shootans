@@ -76,6 +76,8 @@ namespace RobotShootans.Entities
                     _robots.Add(newRobot);
 
                     _spawnRates[i] = (int)(_spawnRates[i] * 0.95);
+                    if (_spawnRates[i] < _minimumSpawnRates[i])
+                        _spawnRates[i] = _minimumSpawnRates[i];
                     _spawnTimers[i] = 0;
                 }
             }

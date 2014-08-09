@@ -22,6 +22,9 @@ namespace RobotShootans.Entities
 
         float _scale;
 
+        int _expSize;
+        public int ExpSize { get { return _expSize * (int)_scale; } }
+
         /// <summary>
         /// 
         /// </summary>
@@ -82,30 +85,30 @@ namespace RobotShootans.Entities
         {
             if(_explosionType == 1)
             {
-                int expSize = 92;
+                _expSize = 92;
                 _frames = 10;
                 _frameTimer = 100;
 
                 _displaySprite.addAnimation("EXPLODE", _frameTimer,
                     new Rectangle[]
                     {
-                        new Rectangle(0,0,expSize,expSize),
-                        new Rectangle(expSize,0,expSize,expSize),
-                        new Rectangle(expSize*2,0,expSize,expSize),
-                        new Rectangle(expSize*3,0,expSize,expSize),
-                        new Rectangle(expSize*4,0,expSize,expSize),
-                        new Rectangle(0,expSize,expSize,expSize),
-                        new Rectangle(expSize,expSize,expSize,expSize),
-                        new Rectangle(expSize*2,expSize,expSize,expSize),
-                        new Rectangle(expSize*3,expSize,expSize,expSize),
-                        new Rectangle(expSize*4,expSize,expSize,expSize),
+                        new Rectangle(0,0,_expSize,_expSize),
+                        new Rectangle(_expSize,0,_expSize,_expSize),
+                        new Rectangle(_expSize*2,0,_expSize,_expSize),
+                        new Rectangle(_expSize*3,0,_expSize,_expSize),
+                        new Rectangle(_expSize*4,0,_expSize,_expSize),
+                        new Rectangle(0,_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize,_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize*2,_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize*3,_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize*4,_expSize,_expSize,_expSize),
                     });
 
-                _displaySprite.setOrigin(new Vector2(expSize/2));
+                _displaySprite.setOrigin(new Vector2(_expSize/2));
             }
             else if(_explosionType == 2)
             {
-                int expSize = 60;
+                _expSize = 60;
                 int vOffset = 92*2;
 
                 _frames = 10;
@@ -114,23 +117,23 @@ namespace RobotShootans.Entities
                 _displaySprite.addAnimation("EXPLODE", _frameTimer,
                     new Rectangle[]
                     {
-                        new Rectangle(0,vOffset,expSize,expSize),
-                        new Rectangle(expSize,vOffset,expSize,expSize),
-                        new Rectangle(expSize*2,vOffset,expSize,expSize),
-                        new Rectangle(expSize*3,vOffset,expSize,expSize),
-                        new Rectangle(expSize*4,vOffset,expSize,expSize),
-                        new Rectangle(0,vOffset+expSize,expSize,expSize),
-                        new Rectangle(expSize,vOffset+expSize,expSize,expSize),
-                        new Rectangle(expSize*2,vOffset+expSize,expSize,expSize),
-                        new Rectangle(expSize*3,vOffset+expSize,expSize,expSize),
-                        new Rectangle(expSize*4,vOffset+expSize,expSize,expSize),
+                        new Rectangle(0,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize*2,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize*3,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize*4,vOffset,_expSize,_expSize),
+                        new Rectangle(0,vOffset+_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize,vOffset+_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize*2,vOffset+_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize*3,vOffset+_expSize,_expSize,_expSize),
+                        new Rectangle(_expSize*4,vOffset+_expSize,_expSize,_expSize),
                     });
 
-                _displaySprite.setOrigin(new Vector2(expSize / 2));
+                _displaySprite.setOrigin(new Vector2(_expSize / 2));
             }
             else if(_explosionType == 3)
             {
-                int expSize = 50;
+                _expSize = 50;
                 int vOffset = 92 * 2 + 60 * 2;
 
                 _frames = 5;
@@ -139,14 +142,14 @@ namespace RobotShootans.Entities
                 _displaySprite.addAnimation("EXPLODE", _frameTimer,
                     new Rectangle[]
                     {
-                        new Rectangle(0,vOffset,expSize,expSize),
-                        new Rectangle(expSize,vOffset,expSize,expSize),
-                        new Rectangle(expSize*2,vOffset,expSize,expSize),
-                        new Rectangle(expSize*3,vOffset,expSize,expSize),
-                        new Rectangle(expSize*4,vOffset,expSize,expSize)
+                        new Rectangle(0,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize*2,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize*3,vOffset,_expSize,_expSize),
+                        new Rectangle(_expSize*4,vOffset,_expSize,_expSize)
                     });
 
-                _displaySprite.setOrigin(new Vector2(expSize / 2));
+                _displaySprite.setOrigin(new Vector2(_expSize / 2));
             }
         }
     }

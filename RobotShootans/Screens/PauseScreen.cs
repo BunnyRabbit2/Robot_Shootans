@@ -15,7 +15,7 @@ namespace RobotShootans.Screens
     /// </summary>
     public class PauseScreen : GameScreen
     {
-        ColouredRectangle[] _pauseBoxes;
+        // ColouredRectangle[] _pauseBoxes;
         GUI_TextItem[] _pauseText;
         int _currentSelection;
         int _numberOfOptions;
@@ -54,7 +54,7 @@ namespace RobotShootans.Screens
                 _pauseText[i].Scale = new Vector2(1.5f);
                 _pauseText[i].Position = new Vector2(Engine.RenderWidth / 2f, Engine.RenderHeight * ((i + 1f) * screenDiff));
                 _pauseText[i].setOrigin(OriginPosition.CENTER);
-                _pauseText[i].DrawOrder = 2;
+                _pauseText[i].DrawOrder = 5;
                 addEntity(_pauseText[i]);
             }
 
@@ -63,6 +63,18 @@ namespace RobotShootans.Screens
             _pauseText[0].setOutlineColor(Color.Black);
             _pauseText[1].setText("OPTIONS");
             _pauseText[2].setText("QUIT");
+
+            //_pauseBoxes = new ColouredRectangle[_numberOfOptions];
+            //for (int i = 0; i < _numberOfOptions; i++ )
+            //{
+            //    _pauseBoxes[i] = new ColouredRectangle(
+            //        new Rectangle((int)_pauseText[i].X, (int)_pauseText[i].Y, (int)(_pauseText[i].TextSize.X * 1.1), (int)(_pauseText[i].TextSize.Y * 1.1)),
+            //        new Color(0,0,0,128),
+            //        OriginPosition.CENTER
+            //        );
+            //    _pauseBoxes[i].DrawOrder = 3;
+            //    addEntity(_pauseBoxes[i]);
+            //}
 
             _selectNoise = Engine.loadSound("menu_select");
 

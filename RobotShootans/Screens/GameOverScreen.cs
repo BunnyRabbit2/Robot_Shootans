@@ -9,10 +9,19 @@ using System.Text;
 
 namespace RobotShootans.Screens
 {
+    public struct StScore
+    {
+        public string Name;
+        public int Score;
+        public int RobotsKilled;
+    }
+
     /// <summary>The screen that gets shown when the game is lost</summary>
     public class GameOverScreen : GameScreen
     {
         GUI_TextItem[] _gameOverText;
+
+
 
         int _endScore;
 

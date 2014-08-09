@@ -10,7 +10,7 @@ namespace RobotShootans.Entities.Weapons
         public Pistol() : base ()
         {
             _weaponType = "PISTOL";
-            _fireRate = 1000;
+            _fireRate = 500;
 
             _speed = 40f;
 

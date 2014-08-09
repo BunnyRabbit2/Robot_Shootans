@@ -69,6 +69,9 @@ namespace RobotShootans.Entities
         /// </summary>
         public void explode()
         {
+            Explosion exp = new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 2, 3.0f);
+            Screen.addEntity(exp);
+
             var rbts = Screen.getEntityByName("ROBOT");
             for (int i = 0; i < rbts.Count; i++ )
             {
@@ -76,13 +79,12 @@ namespace RobotShootans.Entities
 
                 Vector2 rPos = ConvertUnits.ToDisplayUnits(r.SimPos);
 
-                if (HelperFunctions.GetDistanceBetweenTwoPoints(_position, rPos) < 120)
+                if (HelperFunctions.GetDistanceBetweenTwoPoints(_position, rPos) < exp.ExpSize)
                     r.kill();
                 // find which robots are in range of the explosion and kill them
                 // also kill player if they are in range
             }
 
-            Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 2, 2.0f));
             _rocketExplode.Play();
         }
 

@@ -151,9 +151,11 @@ namespace RobotShootans.Entities
         {
             if (!_isDead)
             {
+                _isDead = true;
                 if (_robotType == 3)
                 {
-                    Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 2.0f));
+                    Explosion exp = new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 1, 2.0f);
+                    Screen.addEntity(exp);
                     var rbts = Screen.getEntityByName("ROBOT");
                     for (int i = 0; i < rbts.Count; i++)
                     {
@@ -164,13 +166,13 @@ namespace RobotShootans.Entities
 
                         Vector2 rPos = ConvertUnits.ToDisplayUnits(r.SimPos);
 
-                        if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < 46)
+                        if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), rPos) < exp.ExpSize)
                             r.kill();
                         // find which robots are in range of the explosion and kill them
                         // also kill player if they are in range
                     }
                     var player = (Player)Screen.getEntityByName("Player")[0];
-                    if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), ConvertUnits.ToDisplayUnits(player.SimPos)) < 46)
+                    if (HelperFunctions.GetDistanceBetweenTwoPoints(ConvertUnits.ToDisplayUnits(_physicsBody.Position), ConvertUnits.ToDisplayUnits(player.SimPos)) < exp.ExpSize)
                         player.damage();
                 }
                 else
@@ -178,7 +180,6 @@ namespace RobotShootans.Entities
                     Screen.addEntity(new Explosion(ConvertUnits.ToDisplayUnits(_physicsBody.Position), 3));
                 }
                 Screen.removeEntity(this);
-                _isDead = true;
                 _robotKilled.Play();
             }
         }

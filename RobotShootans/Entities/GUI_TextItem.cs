@@ -47,6 +47,12 @@ namespace RobotShootans.Entities
         /// <summary>The Y scale of the text</summary>
         public float scaleY { get { return _scale.Y; } set { _scale.Y = value; } }
 
+        Vector2 _textSize;
+        /// <summary>
+        /// The size of the text
+        /// </summary>
+        public Vector2 TextSize { get { return _textSize * _scale; } }
+
         /// <summary>The rotation of the text</summary>
         protected float _rotation;
 
@@ -95,7 +101,7 @@ namespace RobotShootans.Entities
         {
             _displayText = textIn;
 
-            Vector2 stringSize = _textFont.MeasureString(textIn);
+            _textSize = _textFont.MeasureString(textIn);
 
             switch (_originPosition)
             {
@@ -103,16 +109,16 @@ namespace RobotShootans.Entities
                     _origin = new Vector2(0f, 0f);
                     break;
                 case OriginPosition.TOPRIGHT:
-                    _origin = new Vector2(stringSize.X, 0f);
+                    _origin = new Vector2(_textSize.X, 0f);
                     break;
                 case OriginPosition.BOTTOMLEFT:
-                    _origin = new Vector2(0f, stringSize.Y);
+                    _origin = new Vector2(0f, _textSize.Y);
                     break;
                 case OriginPosition.BOTTOMRIGHT:
-                    _origin = new Vector2(stringSize.X, stringSize.Y);
+                    _origin = new Vector2(_textSize.X, _textSize.Y);
                     break;
                 case OriginPosition.CENTER:
-                    _origin = new Vector2(stringSize.X / 2f, stringSize.Y / 2f);
+                    _origin = new Vector2(_textSize.X / 2f, _textSize.Y / 2f);
                     break;
             }
         }

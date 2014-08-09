@@ -101,7 +101,7 @@ namespace RobotShootans.Entities
             _physicsBody.Position = ConvertUnits.ToSimUnits(_playerSprite.Position);
             _physicsBody.IsStatic = false;
 
-            _shieldTex = new ColouredCircle(_playerSprite.Position, frameHeight / 2, new Color(0, 0, 255, 0));
+            _shieldTex = new ColouredCircle(_playerSprite.Position, frameHeight / 3, new Color(0, 0, 255, 0));
             Screen.addEntity(_shieldTex);
 
             _physicsBody.OnCollision += onCollision;

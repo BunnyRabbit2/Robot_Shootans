@@ -1,20 +1,21 @@
-[09/08/2014][12:06:13]: INFO - Started Engine for game: Robot Shootans
-[09/08/2014][12:06:13]: INFO - Version number: 0.9.5334.19985
-[09/08/2014][12:06:13]: INFO - Loading Engine Content
-[09/08/2014][12:06:13]: INFO - Done loading content
-[09/08/2014][12:06:13]: INFO - Added GameScreen: SPLASH SCREEN
-[09/08/2014][12:06:14]: INFO - Removed GameScreen: SPLASH SCREEN
-[09/08/2014][12:06:14]: INFO - Added GameScreen: MENU SCREEN
-[09/08/2014][12:06:15]: INFO - Removed GameScreen: MENU SCREEN
-[09/08/2014][12:06:15]: INFO - Added GameScreen: GAMEPLAY SCREEN
-[09/08/2014][12:06:15]: INFO - Added GameScreen: PRE GAME SCREEN
-[09/08/2014][12:06:15]: INFO - Removed GameScreen: PRE GAME SCREEN
-[09/08/2014][12:06:20]: INFO - Added GameScreen: PAUSE SCREEN
-[09/08/2014][12:06:24]: INFO - Removed GameScreen: PAUSE SCREEN
-[09/08/2014][12:06:24]: INFO - Removed GameScreen: GAMEPLAY SCREEN
-[09/08/2014][12:06:24]: INFO - Added GameScreen: MENU SCREEN
-[09/08/2014][12:06:25]: INFO - Added GameScreen: OPTIONS SCREEN
-[09/08/2014][12:06:26]: INFO - Removed GameScreen: OPTIONS SCREEN
-[09/08/2014][12:06:28]: INFO - Unloading all screens
-[09/08/2014][12:06:28]: INFO - Finished unloading all screens
-[09/08/2014][12:06:28]: INFO - Closing GameEngine down
+[09/08/2014][13:21:54]: INFO - Started Engine for game: Robot Shootans
+[09/08/2014][13:21:54]: INFO - Version number: 0.9.5334.22256
+[09/08/2014][13:21:54]: INFO - Loading Engine Content
+[09/08/2014][13:21:54]: INFO - Done loading content
+[09/08/2014][13:21:54]: INFO - Starting Song file named ObservingTheStar
+[09/08/2014][13:21:54]: INFO - Added GameScreen: SPLASH SCREEN
+[09/08/2014][13:21:55]: INFO - Removed GameScreen: SPLASH SCREEN
+[09/08/2014][13:21:55]: INFO - Added GameScreen: MENU SCREEN
+[09/08/2014][13:21:55]: INFO - Removed GameScreen: MENU SCREEN
+[09/08/2014][13:21:55]: INFO - Added GameScreen: GAMEPLAY SCREEN
+[09/08/2014][13:21:55]: INFO - Added GameScreen: PRE GAME SCREEN
+[09/08/2014][13:21:56]: INFO - Removed GameScreen: PRE GAME SCREEN
+[09/08/2014][13:21:56]: INFO - Starting Song file named DST-TowerDefenseTheme_1
+[09/08/2014][13:21:56]: INFO - Starting Song file named ObservingTheStar
+[09/08/2014][13:21:56]: INFO - Added GameScreen: PAUSE SCREEN
+[09/08/2014][13:22:10]: INFO - Removed GameScreen: PAUSE SCREEN
+[09/08/2014][13:22:10]: INFO - Removed GameScreen: GAMEPLAY SCREEN
+[09/08/2014][13:22:10]: INFO - Added GameScreen: MENU SCREEN
+[09/08/2014][13:22:12]: INFO - Unloading all screens
+[09/08/2014][13:22:12]: INFO - Finished unloading all screens
+[09/08/2014][13:22:12]: INFO - Closing GameEngine down
