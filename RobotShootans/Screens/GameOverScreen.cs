@@ -79,8 +79,9 @@ namespace RobotShootans.Screens
 
             if (InputHelper.isKeyPressNew(Keys.Enter))
             {
+                HighScores.addScore(_endScore);
                 Engine.removeGameScreen(this);
-                Engine.pushGameScreen(new HighScoreScreen(_endScore));
+                Engine.pushGameScreen(new HighScoreScreen());
             }
 
             base.Update(gameTime);

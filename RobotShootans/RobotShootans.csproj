@@ -41,6 +41,7 @@
     <Compile Include="Engine\EntityBag.cs" />
     <Compile Include="Engine\GameEvent.cs" />
     <Compile Include="Engine\GameOptions.cs" />
+    <Compile Include="Engine\HighScores.cs" />
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\HelperFunctions.cs" />
     <Compile Include="Engine\OggStream.cs" />
@@ -127,6 +128,7 @@
     <None Include="Docs\logFile.txt" />
     <None Include="Docs\options.xml" />
     <None Include="Docs\TODO list.txt" />
+    <Content Include="Docs\high-scores.xml" />
     <Content Include="Fira-Sans\SIL Open Font License.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Content\images\farseer-logo-512px.xnb">

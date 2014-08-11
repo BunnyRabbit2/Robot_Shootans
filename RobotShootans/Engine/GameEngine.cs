@@ -157,6 +157,8 @@ namespace RobotShootans.Engine
 
             InputHelper.InitialiseInputHelper();
 
+            HighScores.Initialise();
+
             LogFile.ClearLogFile();
             LogFile.LogStringLine("Started Engine for game: " + _gameName, LogType.INFO);
             LogFile.LogStringLine("Version number: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
@@ -209,6 +211,7 @@ namespace RobotShootans.Engine
         /// </summary>
         public void UnloadContent()
         {
+            HighScores.writeHighScores();
             _gameOptions.WriteOptions();
             StopSong();
             unloadScreens();

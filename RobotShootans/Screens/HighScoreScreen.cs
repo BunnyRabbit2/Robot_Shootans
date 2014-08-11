@@ -13,30 +13,19 @@ using System.Xml.Linq;
 namespace RobotShootans.Screens
 {
     /// <summary>
-    /// Struct used for XML high score sheet
+    /// Screen for displaying the high scores
     /// </summary>
-    public struct Score
-    {
-        /// <summary>Name of the person who scored the score</summary>
-        public string TheName;
-        /// <summary>The score of the person who scored the score</summary>
-        public int TheScore;
-        /// <summary>How many robots were killed by the person who scored the score</summary>
-        public int TheRobotsKilled;
-    }
-
     public class HighScoreScreen : GameScreen
     {
-        Score _scoreIn;
-
-        Score[] _scores;
         GUI_TextItem[] _highScoreText;
 
-        public HighScoreScreen(Score scoreIn, bool blockUpdatingIn = true)
+        /// <summary>
+        /// Creates the HighScoreScreen
+        /// </summary>
+        /// <param name="blockUpdatingIn"></param>
+        public HighScoreScreen(bool blockUpdatingIn = true)
             : base (blockUpdatingIn)
         {
-            _scoreIn = scoreIn;
-
             _screenName = "HIGH SCORE SCREEN";
         }
 
@@ -49,17 +38,11 @@ namespace RobotShootans.Screens
             bg.DrawOrder = 0;
             addEntity(bg);
 
-            _scores = new Score[10];
-            loadHighScores();
-
-            if (_scoreIn.TheScore != 0)
-            {
-                addScore(_scoreIn);
-            }
-
             _highScoreText = new GUI_TextItem[33];
 
             float screenDiff = 1f / 15f;
+
+            Score[] _scores = HighScores.Scores;
 
             for (int i = 0; i < 11; i++)
             {
@@ -111,14 +94,6 @@ namespace RobotShootans.Screens
         }
 
         /// <summary>
-        /// Unloads the screen and writes the current top ten score out
-        /// </summary>
-        public override void unloadGameScreen()
-        {
-            writeHighScores();
-        }
-
-        /// <summary>
         /// Updates the Game Over screen. Will restart the game
         /// </summary>
         /// <param name="gameTime"></param>
@@ -126,114 +101,12 @@ namespace RobotShootans.Screens
         {
             if (InputHelper.isKeyPressNew(Keys.Escape))
             {
+                if (!Engine.containsScreen("MENU SCREEN"))
+                    Engine.pushGameScreen(new MenuScreen());
                 Engine.removeGameScreen(this);
             }
 
             base.Update(gameTime);
-        }
-
-        private void loadHighScores()
-        {
-            List<Score> loadedScores = new List<Score>();
-
-#if DEBUG
-            if (File.Exists("../../../Docs/high-scores.xml"))
-            {
-                XDocument doc = XDocument.Load("../../../Docs/high-scores.xml");
-#else
-            if ( File.Exists("options.xml") )
-            {
-                XDocument doc = XDocument.Load("high-scores.xml");
-#endif
-                var highScores = doc.Descendants("high-scores");
-
-                foreach (var hScore in highScores)
-                {
-                    var allScores = hScore.Descendants("high-score");
-
-                    foreach (var h in allScores)
-                    {
-                        Score s = new Score();
-
-                        s.TheName = h.Element("name").Value;
-                        s.TheScore = int.Parse(h.Element("score").Value);
-                        s.TheRobotsKilled = int.Parse(h.Element("robots-killed").Value);
-                        loadedScores.Add(s);
-                    }
-                }
-            }
-            else
-            {
-                LogFile.LogStringLine("Failed to find high-scores.xml. No scores loaded");
-            }
-
-            List<Score> sortedScores = loadedScores.OrderByDescending(s => s.TheScore).ToList();
-
-            Score def = new Score();
-            def.TheScore = 0;
-            def.TheRobotsKilled = 0;
-            def.TheName = "AAA";
-
-            for(int i = 0; i < 10; i++)
-            {
-                if(i > sortedScores.Count - 1)
-                    _scores[i] = def;
-                else
-                    _scores[i] = sortedScores[i];
-            }
-
-            writeHighScores();
-        }
-
-        /// <summary>
-        /// Adds a score to the screen
-        /// </summary>
-        /// <param name="scoreIn"></param>
-        public void addScore(Score scoreIn)
-        {
-            List<Score> sortedScores = _scores.OrderByDescending(s => s.TheScore).ToList();
-
-            Score def = new Score();
-            def.TheScore = 0;
-            def.TheRobotsKilled = 0;
-            def.TheName = "AAA";
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (i > sortedScores.Count - 1)
-                    _scores[i] = def;
-                else
-                    _scores[i] = sortedScores[i];
-            }
-        }
-
-        private void writeHighScores()
-        {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-#if DEBUG
-            XmlWriter highScoresOut = XmlWriter.Create("../../../Docs/high-scores.xml", settings);
-#else
-            XmlWriter highScoresOut = XmlWriter.Create("high-scores.xml", settings);
-#endif
-            highScoresOut.WriteStartDocument();
-            highScoresOut.WriteStartElement("high-scores");
-
-            for(int i = 0; i < 10; i++)
-            {
-                highScoresOut.WriteStartElement("high-score");
-
-                highScoresOut.WriteElementString("score", _scores[i].TheScore.ToString());
-                highScoresOut.WriteElementString("name", _scores[i].TheName.ToString());
-                highScoresOut.WriteElementString("robots-killed", _scores[i].TheRobotsKilled.ToString());
-
-                highScoresOut.WriteEndElement();
-            }
-
-            highScoresOut.WriteEndElement();
-            highScoresOut.WriteEndDocument();
-
-            highScoresOut.Close();
         }
     }
 }

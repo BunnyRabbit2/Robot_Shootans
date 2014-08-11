@@ -116,7 +116,7 @@ namespace RobotShootans.Screens
                 }
                 else if (_currentSelection == 2)
                 {
-                    Engine.pushGameScreen(new HighScoreScreen(new Score()));
+                    Engine.pushGameScreen(new HighScoreScreen());
                 }
                 else if (_currentSelection == 3)
                 {

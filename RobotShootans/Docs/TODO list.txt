@@ -12,7 +12,7 @@
 - Final run to release version
 	- Implement exlposions for when robots die and when rockets hit something /
 	- Implement Rocket Launcher /
-	- Implement high score with some sort of security on it
+	- Implement high score with some sort of security on it /
 	- Complete any partial implementations of stuff
 	- Clean up anu bugs/problems
 	- Replace all Content with new stuff made specifically for Robot Shootans
@@ -26,4 +26,3 @@
 		- New music
 	1.0
 
-TODO: Add high score screen/table

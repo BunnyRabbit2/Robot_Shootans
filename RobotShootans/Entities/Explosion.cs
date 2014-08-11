@@ -23,6 +23,7 @@ namespace RobotShootans.Entities
         float _scale;
 
         int _expSize;
+        /// <summary>The size of the explosion. Size of animation * scale</summary>
         public int ExpSize { get { return _expSize * (int)_scale; } }
 
         /// <summary>
