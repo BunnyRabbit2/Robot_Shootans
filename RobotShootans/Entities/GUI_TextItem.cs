@@ -12,6 +12,8 @@ namespace RobotShootans.Entities
     {
         /// <summary>The text being displayed</summary>
         protected string _displayText;
+        /// <summary>The text being displayed</summary>
+        public string DisplayText { get { return _displayText; } }
 
         /// <summary>The font to use with the text</summary>
         protected SpriteFont _textFont;

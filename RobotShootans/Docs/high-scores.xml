@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <high-scores>
   <high-score>
+    <score>355</score>
+    <name>_AA</name>
+    <robots-killed>6</robots-killed>
+  </high-score>
+  <high-score>
+    <score>225</score>
+    <name>AAA</name>
+    <robots-killed>3</robots-killed>
+  </high-score>
+  <high-score>
+    <score>190</score>
+    <name>RBT</name>
+    <robots-killed>14</robots-killed>
+  </high-score>
+  <high-score>
     <score>55</score>
     <name>RBT</name>
     <robots-killed>0</robots-killed>
@@ -11,23 +26,8 @@
     <robots-killed>0</robots-killed>
   </high-score>
   <high-score>
-    <score>0</score>
-    <name>AAA</name>
-    <robots-killed>0</robots-killed>
-  </high-score>
-  <high-score>
-    <score>0</score>
-    <name>AAA</name>
-    <robots-killed>0</robots-killed>
-  </high-score>
-  <high-score>
-    <score>0</score>
-    <name>AAA</name>
-    <robots-killed>0</robots-killed>
-  </high-score>
-  <high-score>
-    <score>0</score>
-    <name>AAA</name>
+    <score>10</score>
+    <name>CAT</name>
     <robots-killed>0</robots-killed>
   </high-score>
   <high-score>

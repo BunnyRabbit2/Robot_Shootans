@@ -106,6 +106,8 @@ namespace RobotShootans.Entities
 
             _physicsBody.OnCollision += onCollision;
 
+            changeWeapon(new Pistol());
+
             _loaded = true;
         }
 

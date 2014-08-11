@@ -16,6 +16,8 @@ namespace RobotShootans.Screens
         RobotSpawner _robotSpawner;
         PowerUpSpawner _powerUpSpawner;
 
+        int _robotsKilled = 0;
+
         int _startTimer; // Used to start the game after a few seconds have passed
         bool _firstUpdate; // Used for stuff
 
@@ -77,10 +79,16 @@ namespace RobotShootans.Screens
                 _gameStarted = false;
                 returnV = true;
             }
+            else if(eventIn.EventType == EventType.SCORE_CHANGED)
+            {
+                _robotsKilled++;
+            }
             else if(eventIn.EventType == EventType.GAME_OVER)
             {
                 Engine.removeGameScreen(this);
-                Engine.pushGameScreen(new GameOverScreen(true, (Score)eventIn.UserData));
+                Score s = (Score)eventIn.UserData;
+                s.TheRobotsKilled = _robotsKilled;
+                Engine.pushGameScreen(new GameOverScreen(true, s));
                 returnV = true;
             }
 
