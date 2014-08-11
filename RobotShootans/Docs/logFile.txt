@@ -1,13 +1,13 @@
-[11/08/2014][12:05:24]: INFO - Started Engine for game: Robot Shootans
-[11/08/2014][12:05:24]: INFO - Version number: 0.9.5336.19960
-[11/08/2014][12:05:24]: INFO - Loading Engine Content
-[11/08/2014][12:05:24]: INFO - Done loading content
-[11/08/2014][12:05:24]: INFO - Starting Song file named ObservingTheStar
-[11/08/2014][12:05:24]: INFO - Added GameScreen: SPLASH SCREEN
-[11/08/2014][12:05:29]: INFO - Removed GameScreen: SPLASH SCREEN
-[11/08/2014][12:05:29]: INFO - Added GameScreen: MENU SCREEN
-[11/08/2014][12:05:31]: INFO - Added GameScreen: HIGH SCORE SCREEN
-[11/08/2014][12:05:33]: INFO - Removed GameScreen: HIGH SCORE SCREEN
-[11/08/2014][12:05:33]: INFO - Unloading all screens
-[11/08/2014][12:05:33]: INFO - Finished unloading all screens
-[11/08/2014][12:05:33]: INFO - Closing GameEngine down
+[11/08/2014][12:21:32]: INFO - Started Engine for game: Robot Shootans
+[11/08/2014][12:21:32]: INFO - Version number: 0.9.5336.20444
+[11/08/2014][12:21:32]: INFO - Loading Engine Content
+[11/08/2014][12:21:32]: INFO - Done loading content
+[11/08/2014][12:21:32]: INFO - Starting Song file named ObservingTheStar
+[11/08/2014][12:21:32]: INFO - Added GameScreen: SPLASH SCREEN
+[11/08/2014][12:21:34]: INFO - Removed GameScreen: SPLASH SCREEN
+[11/08/2014][12:21:34]: INFO - Added GameScreen: MENU SCREEN
+[11/08/2014][12:21:35]: INFO - Added GameScreen: HIGH SCORE SCREEN
+[11/08/2014][12:21:38]: INFO - Removed GameScreen: HIGH SCORE SCREEN
+[11/08/2014][12:21:39]: INFO - Unloading all screens
+[11/08/2014][12:21:39]: INFO - Finished unloading all screens
+[11/08/2014][12:21:39]: INFO - Closing GameEngine down

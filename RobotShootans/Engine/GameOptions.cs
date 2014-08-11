@@ -80,18 +80,25 @@ namespace RobotShootans.Engine
 
                 foreach (var thing in o)
                 {
-                    var i = thing.Element("music-vol").Value;
+                    // Attempts to parse options in and if a parse fails it defaults the value
 
-                    _musicVolume = int.Parse(thing.Element("music-vol").Value);
-                    _sfxVolume = int.Parse(thing.Element("sfx-vol").Value);
+                    if (!int.TryParse(thing.Element("music-vol").Value, out _musicVolume))
+                        _musicVolume = 10;
+                    if (!int.TryParse(thing.Element("sfx-vol").Value, out _sfxVolume))
+                        _sfxVolume = 10;
 
-                    _musicOn = bool.Parse(thing.Element("music-on").Value);
-                    _sfxOn = bool.Parse(thing.Element("sfx-on").Value);
+                    if (!bool.TryParse(thing.Element("music-on").Value, out _musicOn))
+                        _musicOn = true;
+                    if (!bool.TryParse(thing.Element("sfx-on").Value, out _sfxOn))
+                        _sfxOn = true;
 
-                    _windowWidth = int.Parse(thing.Element("window-width").Value);
-                    _windowHeight = int.Parse(thing.Element("window-height").Value);
+                    if (!int.TryParse(thing.Element("window-width").Value, out _windowWidth))
+                        _windowWidth = 960;
+                    if (!int.TryParse(thing.Element("window-height").Value, out _windowHeight))
+                        _windowHeight = 600;
 
-                    _fullScreen = bool.Parse(thing.Element("full-screen").Value);
+                    if (!bool.TryParse(thing.Element("full-screen").Value, out _fullScreen))
+                        _fullScreen = false;
                 }
             }
             else

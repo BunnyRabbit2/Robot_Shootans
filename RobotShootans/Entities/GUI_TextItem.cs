@@ -99,6 +99,10 @@ namespace RobotShootans.Entities
         /// <param name="textIn"></param>
         public void setText(string textIn)
         {
+            // Stops errors later on
+            if (textIn == null)
+                textIn = "";
+
             _displayText = textIn;
 
             _textSize = _textFont.MeasureString(textIn);
